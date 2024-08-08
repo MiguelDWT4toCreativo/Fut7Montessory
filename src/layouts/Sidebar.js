@@ -21,7 +21,7 @@ export default class Sidebar extends Component {
         return (
             <div className="sidebar">
                 <div className="sidebar-header">
-                    <Link to="/dashboard/finance" className="sidebar-logo">Fut7</Link>
+                    <Link to="/dashboard/finance" className="sidebar-logo">FUT7</Link>
                 </div>
                 <PerfectScrollbar className="sidebar-body" ref={ref => this._scrollBarRef = ref}>
                     <SidebarMenu onUpdateSize={() => this._scrollBarRef.updateScroll()} />
@@ -33,16 +33,21 @@ export default class Sidebar extends Component {
                         </div>
                         <div className="sidebar-footer-body">
                             <h6><Link to="../pages/profile.html">Usuario</Link></h6>
+                            {/**<p>Premium Member</p> */}
                         </div>
                         <Link onClick={this.toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link>
                     </div>
                     <div className="sidebar-footer-menu">
                         <nav className="nav">
-                            <Link to=""><i className="ri-profile-line"></i> Perfil</Link>
+                            <Link to="/pages/profile"><i className="ri-edit-2-line"></i> Perfil</Link>
+                            <Link to="/pages/signin"><i className="ri-logout-box-r-line"></i> Cerrar sesión</Link>
                         </nav>
                         <hr />
-                        <nav className="nav">
-                            <Link to=""><i className="ri-logout-box-r-line"></i> Cerrar sesión</Link>
+                        <nav className="nav">                           
+                            <Link to=""></Link>
+                            <Link to=""></Link>
+                            <Link to=""></Link>
+                            <Link to=""></Link>                            
                         </nav>
                     </div>
                 </div>
@@ -112,23 +117,23 @@ class SidebarMenu extends Component {
 
     render() {
         return (
-            <React.Fragment>
+            <React.Fragment>                
                 <div className="nav-group show">
-                    <div className="nav-label" onClick={this.toggleMenu}>Dashboard</div>
-                    {this.populateMenu(dashboardMenu)}
+                    {/*<div className="nav-label" onClick={this.toggleMenu}>Inicio</div>*/}
+                    {this.populateMenu(dashboardMenu)}                    
                 </div>
-                <div className="nav-group show">
+                {/*<div className="nav-group show">
                     <div className="nav-label" onClick={this.toggleMenu}>Applications</div>
-                    {this.populateMenu(applicationsMenu)}
-                </div>
-                <div className="nav-group show">
+                    {this.populateMenu(applicationsMenu)}                    
+                </div>*/}
+                {/**<div className="nav-group show">
                     <div className="nav-label" onClick={this.toggleMenu}>Pages</div>
                     {this.populateMenu(pagesMenu)}
                 </div>
                 <div className="nav-group show">
                     <div className="nav-label" onClick={this.toggleMenu}>UI Elements</div>
                     {this.populateMenu(uiElementsMenu)}
-                </div>
+                </div> */}
             </React.Fragment>
         )
     }

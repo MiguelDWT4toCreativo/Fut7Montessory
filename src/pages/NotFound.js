@@ -11,7 +11,7 @@ export default function NotFound() {
     <div className="page-error">
       <div className="header">
         <Container>
-          <Link to="/" className="header-logo">dashbyte</Link>
+          <Link to="/" className="header-logo">FUT7</Link>
           <Nav className="nav-icon">
             <Nav.Link href=""><i className="ri-twitter-fill"></i></Nav.Link>
             <Nav.Link href=""><i className="ri-github-fill"></i></Nav.Link>
@@ -25,9 +25,9 @@ export default function NotFound() {
           <Row className="gx-5">
             <Col lg="5" className="d-flex flex-column align-items-center">
               <h1 className="error-number">404</h1>
-              <h2 className="error-title">Page Not Found</h2>
-              <p className="error-text">Oopps. The page you were looking for doesn't exist. You may have mistyped the address or the page may have moved.</p>
-              <Link to="/dashboard/sales" className="btn btn-primary btn-error">Back to Dashboard</Link>
+              <h2 className="error-title">Página no encontrada</h2>
+              <p className="error-text">Oops. La página que estabas buscando no existe. Es posible que hayas escrito mal la dirección o que la página se haya movido.</p>
+              <Link to="/dashboard/finance" className="btn btn-primary btn-error">Regresar al inicio</Link>
             </Col>
             <Col xs="8" lg="6" className="mb-5 mb-lg-0">
               <object type="image/svg+xml" data={pageSvg} className="w-100" aria-label="svg image"></object>

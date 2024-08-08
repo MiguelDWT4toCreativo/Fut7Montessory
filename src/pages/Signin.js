@@ -9,7 +9,7 @@ export default function Signin() {
         <Card.Header>
           <Link to="/" className="header-logo mb-4">FUT7</Link>
           <Card.Title>Inicio de sesión</Card.Title>
-          <Card.Text>¡Bienvenido! Por favor ingresa los datos correctos para continuar.</Card.Text>
+          <Card.Text>¡Bienvenido! Por favor, ingresa los datos correctos para continuar.</Card.Text>
         </Card.Header>
         <Card.Body>
           <Form method="get" action="/dashboard/finance">
