@@ -45,6 +45,239 @@ export default function AppCalendar() {
   const handleModalClose = () => setModalShow(false);
   const handleModalShow = () => setModalShow(true);
 
+   // Inicio de funcion calendario horas
+  // console.log("script funcionando")
+
+  const [horaInicio, sethoraInicio] = useState('');
+  const [horaFinDisabled, setHoraFinDisabled] = useState(true);
+  const [horaFin, sethoraFin] = useState([]);
+
+  const handleHoraInicioChange = (event) => {
+    const value = event.target.value;
+    sethoraInicio(value);
+
+    if (value === "08:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '09:00', label: '09:00AM' },
+        { value: '09:30', label: '09:30AM' },
+        { value: '10:00', label: '10:00AM' },
+      ]);
+    } else if (value === "08:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '09:30', label: '09:30AM' },
+        { value: '10:00', label: '10:00AM' },
+        { value: '10:30', label: '10:30AM' },
+      ]);
+    } else if (value === "09:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '10:00', label: '10:00AM' },
+        { value: '10:30', label: '10:30AM' },
+        { value: '11:00', label: '11:00AM' },
+      ]);
+    } else if (value === "09:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '10:30', label: '10:30AM' },
+        { value: '11:00', label: '11:00AM' },
+        { value: '11:30', label: '11:30AM' },
+      ]);
+    } else if (value === "10:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '11:00', label: '11:00AM' },
+        { value: '11:30', label: '11:30AM' },
+        { value: '12:00', label: '12:00PM' },
+      ]);
+    } else if (value === "10:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '11:30', label: '11:30AM' },
+        { value: '12:00', label: '12:00PM' },
+        { value: '12:30', label: '12:30PM' },
+      ]);
+    } else if (value === "11:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '12:00', label: '12:00PM' },
+        { value: '12:30', label: '12:30PM' },
+        { value: '13:00', label: '01:00PM' },
+      ]);
+    } else if (value === "11:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '12:30', label: '12:30PM' },
+        { value: '13:00', label: '01:00PM' },
+        { value: '13:30', label: '01:30PM' },
+      ]);
+    } else if (value === "12:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '13:00', label: '01:00PM' },
+        { value: '13:30', label: '01:30PM' },
+        { value: '14:00', label: '02:00PM' },
+      ]);
+    } else if (value === "12:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '13:30', label: '01:30PM' },
+        { value: '14:00', label: '02:00PM' },
+        { value: '14:30', label: '02:30PM' },
+      ]);
+    } else if (value === "13:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '14:00', label: '02:00PM' },
+        { value: '14:30', label: '02:30PM' },
+        { value: '15:00', label: '03:00PM' },
+      ]);
+    } else if (value === "13:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '14:30', label: '02:30PM' },
+        { value: '15:00', label: '03:00PM' },
+        { value: '15:30', label: '03:30PM' },
+      ]);
+    } else if (value === "14:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '15:00', label: '03:00PM' },
+        { value: '15:30', label: '03:30PM' },
+        { value: '16:00', label: '04:00PM' },
+      ]);
+    } else if (value === "14:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '15:30', label: '03:30PM' },
+        { value: '16:00', label: '04:00PM' },
+        { value: '16:30', label: '04:30PM' },
+      ]);
+    } else if (value === "15:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '16:00', label: '04:00PM' },
+        { value: '16:30', label: '04:30PM' },
+        { value: '17:00', label: '05:00PM' },
+      ]);
+    } else if (value === "15:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '16:30', label: '04:30PM' },
+        { value: '17:00', label: '05:00PM' },
+        { value: '17:30', label: '05:30PM' },
+      ]);
+    } else if (value === "16:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '17:00', label: '05:00PM' },
+        { value: '17:30', label: '05:30PM' },
+        { value: '18:00', label: '06:00PM' },
+      ]);
+    } else if (value === "16:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '17:30', label: '05:30PM' },
+        { value: '18:00', label: '06:00PM' },
+        { value: '18:30', label: '06:30PM' },
+      ]);
+    } else if (value === "17:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '18:00', label: '06:00PM' },
+        { value: '18:30', label: '06:30PM' },
+        { value: '19:00', label: '07:00PM' },
+      ]);
+    } else if (value === "17:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '18:30', label: '06:30PM' },
+        { value: '19:00', label: '07:00PM' },
+        { value: '19:30', label: '06:30PM' },
+      ]);
+    } else if (value === "18:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '19:00', label: '07:00PM' },
+        { value: '19:30', label: '07:30PM' },
+        { value: '20:00', label: '08:00PM' },
+      ]);
+    } else if (value === "18:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '19:30', label: '07:30PM' },
+        { value: '20:00', label: '08:00PM' },
+        { value: '20:30', label: '08:30PM' },
+      ]);
+    } else if (value === "19:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '20:00', label: '08:00PM' },
+        { value: '20:30', label: '08:30PM' },
+        { value: '21:00', label: '09:00PM' },
+      ]);
+    } else if (value === "19:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '20:30', label: '08:30PM' },
+        { value: '21:00', label: '09:00PM' },
+        { value: '21:30', label: '09:30PM' },
+      ]);
+    } else if (value === "20:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '21:00', label: '09:00PM' },
+        { value: '21:30', label: '09:30PM' },
+        { value: '22:00', label: '10:00PM' },
+      ]);
+    } else if (value === "20:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '21:30', label: '09:30PM' },
+        { value: '22:00', label: '10:00PM' },
+        { value: '22:30', label: '10:30PM' },
+      ]);
+    } else if (value === "21:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '22:00', label: '10:00PM' },
+        { value: '22:30', label: '10:30PM' },
+        { value: '23:00', label: '11:00PM' },
+      ]);
+    } else if (value === "21:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '22:30', label: '10:30PM' },
+        { value: '23:00', label: '11:00PM' },
+        { value: '23:30', label: '11:30PM' },
+      ]);
+    } else if (value === "22:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '23:00', label: '11:00PM' },
+        { value: '23:30', label: '11:30PM' },
+        { value: '00:00', label: '12:00AM' },
+      ]);
+    } else if (value === "22:30") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '23:30', label: '11:30PM' },
+        { value: '00:00', label: '12:00AM' },
+      ]);
+    } else if (value === "23:00") {
+      setHoraFinDisabled(false);
+      sethoraFin([
+        { value: '00:00', label: '12:00AM' },
+      ]);
+    } else {
+      setHoraFinDisabled(true);
+      sethoraFin([]);
+    }
+  }
+
+  // Fin de funcion calendario horas
+
   return (
     <React.Fragment>
       <Header />
@@ -156,22 +389,51 @@ export default function AppCalendar() {
                 </Col>
                 <Col>
                   <Form.Label>Inicio:</Form.Label>
-                  <Form.Select>
-                    <option value="">Hora</option>
-                    <option value="12:00AM">12:00AM</option>
-                    <option value="12:15AM">12:15AM</option>
-                    <option value="12:30AM">12:30AM</option>
-                    <option value="12:45AM">12:45AM</option>
+                  <Form.Select id="horaInicio" name="horaInicio" required value={horaInicio}
+                    onChange={handleHoraInicioChange}>
+                    <option>Hora...</option>
+                    <option value="08:00">08:00 A.M</option>
+                    <option value="08:30">08:30 A.M</option>
+                    <option value="09:00">09:00 A.M</option>
+                    <option value="09:30">09:30 A.M</option>
+                    <option value="10:00">10:00 A.M</option>
+                    <option value="10:30">10:30 A.M</option>
+                    <option value="11:00">11:00 A.M</option>
+                    <option value="11:30">11:30 A.M</option>
+                    <option value="12:00">12:00 P.M</option>
+                    <option value="12:30">12:30 P.M</option>
+                    <option value="13:00">01:00 P.M</option>
+                    <option value="13:30">01:30 P.M</option>
+                    <option value="14:00">02:00 P.M</option>
+                    <option value="14:30">02:30 P.M</option>
+                    <option value="15:00">03:00 P.M</option>
+                    <option value="15:30">03:30 P.M</option>
+                    <option value="16:00">04:00 P.M</option>
+                    <option value="16:30">04:30 P.M</option>
+                    <option value="17:00">05:00 P.M</option>
+                    <option value="17:30">05:30 P.M</option>
+                    <option value="18:00">06:00 P.M</option>
+                    <option value="18:30">06:30 P.M</option>
+                    <option value="19:00">07:00 P.M</option>
+                    <option value="19:30">07:30 P.M</option>
+                    <option value="20:00">08:00 P.M</option>
+                    <option value="20:30">08:30 P.M</option>
+                    <option value="21:00">09:00 P.M</option>
+                    <option value="21:30">09:30 P.M</option>
+                    <option value="22:00">10:00 P.M</option>
+                    <option value="22:30">10:30 P.M</option>
+                    <option value="23:00">11:00 P.M</option>
                   </Form.Select>
                 </Col>
                 <Col>
                   <Form.Label>Finalización:</Form.Label>
-                  <Form.Select>
+                  <Form.Select id="horaFin" name="horaFin" required disabled={horaFinDisabled}>
                     <option value="">Hora</option>
-                    <option value="12:00AM">12:00AM</option>
-                    <option value="12:15AM">12:15AM</option>
-                    <option value="12:30AM">12:30AM</option>
-                    <option value="12:45AM">12:45AM</option>
+                    {horaFin.map((option) => (
+                      <option key={option.value} value={option.value}>
+                        {option.label}
+                      </option>
+                    ))}
                   </Form.Select>
                 </Col>
               </Row>
