@@ -238,40 +238,38 @@ export default function Contacts() {
           <PerfectScrollbar className="contact-sidebar">
             <div className="mb-4">
               <Button variant="primary" className="btn-contact-new">
-                <i className="ri-add-fill"></i> Add New Contact
+                <i className="ri-add-fill"></i> Añadir nuevo cliente
               </Button>
             </div>
-
             <Nav className="nav-sidebar">
-              <Nav.Link href="" className="active"><i className="ri-contacts-fill"></i>All Contacts <small>264</small></Nav.Link>
-              <Nav.Link href=""><i className="ri-archive-line"></i> Archive</Nav.Link>
+              <Nav.Link href=""><i className="ri-download-2-line"></i> Importar</Nav.Link>
+              <Nav.Link href=""><i className="ri-upload-2-line"></i> Exportar</Nav.Link>
+              {/**<Nav.Link href=""><i className="ri-printer-line"></i> Imprimir</Nav.Link> */}
+            </Nav>
+            <hr />
+            <Nav className="nav-sidebar">
+              <Nav.Link href="" className="active"><i className="ri-contacts-fill"></i>Todos los clientes <small>264</small></Nav.Link>
+              {/**<Nav.Link href=""><i className="ri-archive-line"></i> Archive</Nav.Link>
               <Nav.Link href=""><i className="ri-group-line"></i> Other Contacts <small>25</small></Nav.Link>
-              <Nav.Link href=""><i className="ri-delete-bin-line"></i> Trash</Nav.Link>
+              <Nav.Link href=""><i className="ri-delete-bin-line"></i> Trash</Nav.Link> */}
             </Nav>
 
-            <hr />
+            {/**<hr />
 
             <label className="sidebar-label mb-2">Labels</label>
             <Nav className="nav-sidebar">
               <Nav.Link href=""><i className="ri-price-tag-line"></i> From Google <small>65</small></Nav.Link>
               <Nav.Link href=""><i className="ri-price-tag-line"></i> From iPhone <small>24</small></Nav.Link>
               <Nav.Link href=""><i className="ri-price-tag-line"></i> 11/08 Import <small>36</small></Nav.Link>
-            </Nav>
+            </Nav> */}
 
-            <hr />
+            
 
-            <Nav className="nav-sidebar">
-              <Nav.Link href=""><i className="ri-download-2-line"></i> Import</Nav.Link>
-              <Nav.Link href=""><i className="ri-upload-2-line"></i> Export</Nav.Link>
-              <Nav.Link href=""><i className="ri-printer-line"></i> Print</Nav.Link>
-            </Nav>
+            
 
-          </PerfectScrollbar>
-          <div className="contact-body">
-            <div className="contact-list">
-              <div className="contact-list-header">
+            {/**<div className="contact-list-header">
                 <Link onClick={sidebarShow} href="#" className="contact-menu d-xl-none"><i className="ri-arrow-left-line"></i></Link>
-                <h6 className="sidebar-title me-auto">All Contacts</h6>
+                <h6 className="sidebar-title me-auto">Clientes</h6>
 
                 <Dropdown align="end">
                   <Dropdown.Toggle as={CustomToggle}>
@@ -283,8 +281,12 @@ export default function Contacts() {
                     <Dropdown.Item href=""><i className="ri-list-settings-line"></i> Contact Settings</Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-              </div>
+              </div> */}
 
+
+          </PerfectScrollbar>
+          <div className="contact-body">
+            <div className="contact-list">             
               <PerfectScrollbar className="contact-list-body">
                 {contactGroup.map((contact, index) => (
                   <React.Fragment key={index}>
@@ -312,7 +314,6 @@ export default function Contacts() {
                   </React.Fragment>
                 ))}
               </PerfectScrollbar>
-
             </div>
 
             <PerfectScrollbar className="contact-content">
@@ -321,54 +322,54 @@ export default function Contacts() {
                 <div className="me-4 mb-3 mb-sm-0"><Avatar img={img11} /></div>
                 <div className="flex-fill">
                   <h4 className="mb-1 text-dark fw-semibold">Abigaile Johnson</h4>
-                  <p>Software Engineer at Themepixels, Inc.</p>
+                  {/** <p>Software Engineer at Themepixels, Inc.</p> */}
                   <div className="d-flex">
-                    <Button variant="primary" className="px-5">Message</Button>
-                    <Button variant="" className="btn-icon btn-gray ms-1"><i className="ri-star-line"></i></Button>
-                    <Button variant="" className="btn-icon btn-gray ms-1"><i className="ri-more-fill"></i></Button>
+                    <Button variant="primary" className="px-5">Mensaje</Button>
+                    <Button variant="" className="btn-icon btn-danger ms-1"><i className="ri-delete-bin-line"></i></Button>
+                    <Button variant="" className="btn-icon btn-secondary ms-1"><i className="ri-edit-line"></i></Button>
+                    {/**<Button variant="" className="btn-icon btn-gray ms-1"><i className="ri-edit-line"></i></Button>
+                        <Button variant="" className="btn-icon btn-gray ms-1"><i className="ri-more-fill"></i></Button>*/}
                   </div>
                 </div>
               </div>
 
-              <hr />
+              {/**<hr />
 
               <Row>
                 <Col xs="4" className="text-end text-secondary">Status</Col>
                 <Col>
                   <strong className="fw-semibold">Do Not Disturb</strong> - Gambler, Tea Drinker, Ultimate Piggie, Replacement President of a Major Soft Drink Manufacturer. When I give out candies, I give people the flavour I don't like.
                 </Col>
-              </Row>
+              </Row> */}
 
               <hr />
 
               <Row>
-                <Col xs="4" className="text-end text-secondary">Email</Col>
-                <Col>abigaile@johnson.com<br />ajohnson@gmail.com</Col>
+                <Col xs="4" className="text-end text-secondary">Correo</Col>
+                <Col>abigaile@johnson.com</Col>
               </Row>
               <Row className="mt-2">
-                <Col xs="4" className="text-end text-secondary">Phone</Col>
+                <Col xs="4" className="text-end text-secondary">Teléfono</Col>
                 <Col>234-5678-901</Col>
               </Row>
-              <Row className="mt-2">
+              {/**<Row className="mt-2">
                 <Col xs="4" className="text-end text-secondary">Location</Col>
                 <Col>Bay Area, San Francisco, CA</Col>
-              </Row>
+              </Row> */}
 
               <hr />
 
               <Nav className="nav-sidebar">
-                <Nav.Link href=""><i className="ri-check-double-line"></i> Activity</Nav.Link>
+                {/**<Nav.Link href=""><i className="ri-check-double-line"></i> Activity</Nav.Link>
                 <Nav.Link href=""><i className="ri-list-check-2"></i> Call &amp; Message Logs</Nav.Link>
                 <Nav.Link href=""><i className="ri-share-forward-line"></i> Share Contact</Nav.Link>
-                <Nav.Link href=""><i className="ri-forbid-line"></i> Block Contact</Nav.Link>
-                <Nav.Link href=""><i className="ri-delete-bin-line"></i> Delete Contact</Nav.Link>
+                <Nav.Link href=""><i className="ri-forbid-line"></i> Block Contact</Nav.Link> 
+                <Nav.Link href=""><i className="ri-delete-bin-line"></i> Eliminar contacto</Nav.Link>*/}
               </Nav>
 
             </PerfectScrollbar>
-
           </div>
         </div>
-
         <Footer />
       </div>
     </React.Fragment>

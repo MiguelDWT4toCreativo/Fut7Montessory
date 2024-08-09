@@ -49,56 +49,61 @@ export default function Email() {
       <div className={"main main-email" + (showContent? " show-content" : "") + (showSidebar? " show" : "") }>
         <PerfectScrollbar className="email-sidebar p-4">
           <div className="d-grid mb-4">
-            <Button variant="primary" onClick={() => setShowCompose(true)}>Compose</Button>
+            <Button variant="primary" onClick={() => setShowCompose(true)}>Mensaje Nuevo</Button>
           </div>
 
           <Nav className="nav-sidebar">
-            <Nav.Link href="" className="active"><i className="ri-inbox-fill"></i> Inbox</Nav.Link>
-            <Nav.Link href=""><i className="ri-mail-star-line"></i> Starred</Nav.Link>
-            <Nav.Link href=""><i className="ri-bookmark-line"></i> Important</Nav.Link>
-            <Nav.Link href=""><i className="ri-mail-send-line"></i> Sent Mail</Nav.Link>
+            <Nav.Link href="" className="active"><i className="ri-inbox-fill"></i> Bandeja de entrada</Nav.Link>
+            <Nav.Link href=""><i className="ri-mail-star-line"></i> Marcado</Nav.Link>
+            <Nav.Link href=""><i className="ri-mail-send-line"></i> Enviado</Nav.Link>
+            <Nav.Link href=""><i className="ri-delete-bin-line"></i> Papelera</Nav.Link>
+
+            {/*<Nav.Link href=""><i className="ri-bookmark-line"></i> Important</Nav.Link>
             <Nav.Link href=""><i className="ri-draft-line"></i> Drafts</Nav.Link>
-            <Nav.Link href=""><i className="ri-spam-line"></i> Spam</Nav.Link>
-            <Nav.Link href=""><i className="ri-delete-bin-line"></i> Trash</Nav.Link>
+            <Nav.Link href=""><i className="ri-spam-line"></i> Spam</Nav.Link> */}
+
           </Nav>
 
           <hr />
 
-          <label className="sidebar-label mb-2">Labels</label>
+          
+           {/**<label className="sidebar-label mb-2">Categorías</label>
           <Nav className="nav-sidebar">
-            <Nav.Link href=""><i className="ri-group-line"></i> Social</Nav.Link>
-            <Nav.Link href=""><i className="ri-folder-info-line"></i> Updates</Nav.Link>
+            <Nav.Link href=""><i className="ri-folder-info-line"></i> Notificaciones</Nav.Link>
+
+
+
+            <Nav.Link href=""><i className="ri-group-line"></i> Recordatorios</Nav.Link>
             <Nav.Link href=""><i className="ri-trophy-line"></i> Promotions</Nav.Link>
             <Nav.Link href=""><i className="ri-discuss-line"></i> Forums</Nav.Link>
             <Nav.Link href=""><i className="ri-exchange-dollar-line"></i> Finance</Nav.Link>
-            <Nav.Link href=""><i className="ri-bug-line"></i> Bug Reports</Nav.Link>
+            <Nav.Link href=""><i className="ri-bookmark-line"></i> Bug Reports</Nav.Link>
           </Nav>
+            */}
         </PerfectScrollbar>
         <PerfectScrollbar className="email-list">
           <div className="email-list-header pe-3">
             <Link href="" className="email-menu" onClick={() => setShowSidebar(!showSidebar)}><i className="ri-arrow-left-line"></i></Link>
 
-            <h5 className="mb-0">Inbox</h5>
+            <h5 className="mb-0">Correos</h5>
 
             <Dropdown align="end" className="ms-auto">
               <Dropdown.Toggle as={CustomToggle}>
                 <i className="ri-more-2-fill"></i>
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <label>Select</label>
-                <Dropdown.Item href="" className="active">None</Dropdown.Item>
-                <Dropdown.Item href="">All</Dropdown.Item>
-                <Dropdown.Item href="">Read</Dropdown.Item>
-                <Dropdown.Item href="">Unread</Dropdown.Item>
-                <Dropdown.Item href="">Starred</Dropdown.Item>
-                <Dropdown.Item href="">Custom</Dropdown.Item>
+                <label>Seleccionar</label>
+                <Dropdown.Item href="" className="active">Todo</Dropdown.Item>
+                <Dropdown.Item href="">Disponibles</Dropdown.Item>
+                <Dropdown.Item href="">Recordatorios</Dropdown.Item>
+                <Dropdown.Item href="">Alertas</Dropdown.Item>                
               </Dropdown.Menu>
             </Dropdown>
           </div>
 
           {[
             {
-              "date": "Today",
+              "date": "Hoy",
               "emails": [
                 {
                   "unread": true,
@@ -118,7 +123,7 @@ export default function Email() {
                 }
               ]
             }, {
-              "date": "Yesterday",
+              "date": "Ayer",
               "emails": [
                 {
                   "avatar": img19,
@@ -240,12 +245,12 @@ export default function Email() {
         </PerfectScrollbar>
 
         <PerfectScrollbar className={"email-content" + (showContent ? " show" : "")}>
-          <div className="email-content-empty">No email has been selected</div>
+          <div className="email-content-empty">Ningún correo ha sido seleccionado</div>
           <div className="email-content-header">
             <Nav as="nav">
               <Nav.Link href="#" className="d-xl-none" onClick={() => setShowContent(false)}><i className="ri-arrow-left-line"></i></Nav.Link>
               {[
-                {
+                {/**{
                   "title": "Archive",
                   "icon": "ri-archive-drawer-line"
                 }, {
@@ -253,18 +258,18 @@ export default function Email() {
                   "icon": "ri-spam-2-line"
                 }, {
                   "title": "Labels",
-                  "icon": "ri-price-tag-line"
-                }, {
-                  "title": "Print",
+                  "icon": "ri-price-tag-line" 
+                }, */},{
+                  "title": "Imprimir",
                   "icon": "ri-printer-line"
-                }, {
+                },{/** {
                   "title": "Delete",
                   "icon": "ri-delete-bin-5-line",
                   "addonClass": "ms-auto"
                 }, {
                   "title": "More",
                   "icon": "ri-more-2-fill"
-                }
+                } */}
               ].map((menu, index) => (
                 <OverlayTrigger key={index} placement="bottom" overlay={<Tooltip>{menu.title}</Tooltip>}>
                   <Nav.Link className={menu.addonClass && menu.addonClass}><i className={menu.icon}></i></Nav.Link>
@@ -282,15 +287,15 @@ export default function Email() {
                 </div>
                 <div className="me-auto">
                   <p className="mb-0">
-                    <strong>David Doe </strong>
-                    <span className="text-secondary">&lt;david.doe@domain.com&gt;</span>
+                    <strong>Will </strong>
+                    <span className="text-secondary">&lt;futbol.7@gmail.com&gt;</span>
                   </p>
                   <p className="mb-0">
                     <span className="text-secondary">To: </span>
                     <strong>Themepixels</strong>
                   </p>
                 </div>
-                <span className="fs-xs text-secondary d-none">11:15am (3 hours ago)</span>
+                <span className="fs-xs text-secondary d-none">11:15am (hace 3 horas)</span>
                 <Nav className="nav-icon ms-3">
                   <Nav.Link href="" className="d-none d-sm-block"><i className="ri-star-line"></i></Nav.Link>
                   <Nav.Link href="" className="d-none d-sm-block"><i className="ri-reply-line"></i></Nav.Link>
@@ -301,34 +306,32 @@ export default function Email() {
               <div>
                 <h4 className="text-dark mb-4">Asking some few questions</h4>
 
-                <p>Dear Maam/Sir,</p>
-
-                <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).</p>
+                <p>Querido <b>Samuel Briseño</b>,</p>
 
                 <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 
                 <p>It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
 
-                <p>Best regards,<br /><strong>David Doe</strong></p>
+                <p>Le saluda,<br /><strong className="header-logo">FUT7</strong></p>
 
                 <hr className="my-4" />
 
-                <label className="section-label mb-2">2 Attachments</label>
+                <label className="section-label mb-2">1 Archivo</label>
                 <Row className="g-3 row-cols-auto">
                   <Col>
                     <Card className="card-attachment">
                       <Card.Body>
-                        <div className="card-icon primary">
-                          <i className="ri-file-zip-line"></i>
+                        <div className="card-icon card-danger">
+                          <i className="ri-file-ppt-line"></i>
                         </div>
                         <div className="card-content">
-                          <h6><Link to="#">MarketingAssets.zip</Link></h6>
+                          <h6><Link to="#">Reserva_45682.pdf</Link></h6>
                           <span>835kb</span>
                         </div>
                       </Card.Body>
                     </Card>
                   </Col>
-                  <Col>
+                  {/**<Col>
                     <Card className="card-attachment">
                       <Card.Body>
                         <div className="card-icon success">
@@ -340,7 +343,7 @@ export default function Email() {
                         </div>
                       </Card.Body>
                     </Card>
-                  </Col>
+                  </Col> */}
                 </Row>
 
               </div>
@@ -349,7 +352,7 @@ export default function Email() {
             <hr className="my-4" />
 
             <div className="compose-wrapper">
-              <Form.Control as="textarea" rows="4" placeholder="Type here to Reply or Forward"></Form.Control>
+              <Form.Control as="textarea" rows="4" placeholder="Escribe aquí para responder o reenviar"></Form.Control>
               <div className="d-flex align-items-center mt-1">
                 <Nav className="nav-icon py-3">
                   <Nav.Link href=""><i className="ri-bold"></i></Nav.Link>
@@ -360,7 +363,7 @@ export default function Email() {
                   <Nav.Link href=""><i className="ri-attachment-line"></i></Nav.Link>
                   <Nav.Link href=""><i className="ri-image-line"></i></Nav.Link>
                 </Nav>
-                <Button variant="primary" className="ms-auto">Reply</Button>
+                <Button variant="primary" className="ms-auto">Responder</Button>
               </div>
             </div>
 
@@ -370,7 +373,7 @@ export default function Email() {
         <div className={"compose" + (!showCompose? " d-none" : "") + (maximize? " fullscreen" : "") + (minimize? " minimize" : "")}>
           <div className="compose-content">
             <div className="compose-header">
-              <h6 className="compose-title">New Message</h6>
+              <h6 className="compose-title">Nuevo Mensaje</h6>
               <Nav as="nav">
                 <Nav.Link 
                   href="#" 
@@ -394,10 +397,10 @@ export default function Email() {
             </div>
             <div className="compose-body">
               <Form.Group>
-                <Form.Control type="text" placeholder="Enter receipient's email address" />
+                <Form.Control type="text" placeholder="Dirección de correo electrónico del destinatario" />
               </Form.Group>
               <Form.Group>
-                <Form.Control type="text" placeholder="Enter subject" />
+                <Form.Control type="text" placeholder="Asunto" />
               </Form.Group>
               <Form.Group>
                 <Form.Control as="textarea" rows="10" />
@@ -421,7 +424,7 @@ export default function Email() {
               <Nav.Link href=""><i className="ri-more-2-fill"></i></Nav.Link>
             </Nav>
             <div className="compose-footer">
-              <Button variant="primary" type="submit" className="btn-icontext">Send</Button>
+              <Button variant="primary" type="submit" className="btn-icontext">Enviar</Button>
               <Button variant="" className="btn-white btn-icon"><i className="ri-delete-bin-line"></i></Button>
             </div>
           </div>

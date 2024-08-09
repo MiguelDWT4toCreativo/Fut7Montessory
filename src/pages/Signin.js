@@ -12,7 +12,7 @@ export default function Signin() {
           <Card.Text>¡Bienvenido! Por favor, ingresa los datos correctos para continuar.</Card.Text>
         </Card.Header>
         <Card.Body>
-          <Form method="get" action="/dashboard/finance">
+          <Form method="get" action="/dashboard/helpdesk">
             <div className="mb-4">
               <Form.Label >Correo electrónico</Form.Label>
               <Form.Control type="text" placeholder="Ingrese Correo Electrónico" value="me@themepixels.com" />

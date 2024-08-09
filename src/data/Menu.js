@@ -5,7 +5,7 @@ const dashboardMenu = [
     "link": "dashboard/helpdesk",
     "icon": "ri-pie-chart-2-line"
   }, {
-    "label": "Calendar",
+    "label": "Calendario Rentas",
     "link": "/apps/calendar",
     "icon": "ri-calendar-line"
   },
@@ -13,6 +13,14 @@ const dashboardMenu = [
     "label": "Chat",
     "link": "/apps/email",
     "icon": "ri-mail-send-line"
+  },{
+    "label": "Clientes",
+    "link": "/apps/contacts",
+    "icon": "ri-contacts-book-line"
+  },{
+    "label": "Reglamento",
+    "link": "/pages/faq",
+    "icon": "ri-file-list-3-line"
   },
 
   
@@ -70,11 +78,7 @@ const applicationsMenu = [
     "link": "/apps/chat",
     "icon": "ri-question-answer-line"
   }, */
-  {
-    "label": "Contacts",
-    "link": "/apps/contacts",
-    "icon": "ri-contacts-book-line"
-  },
+  
   {
     "label": "Task Manager",
     "link": "/apps/tasks",
@@ -188,10 +192,7 @@ const pagesMenu = [
         "label": "Pricing",
         "link": "/pages/pricing"
       },
-      {
-        "label": "FAQ",
-        "link": "/pages/faq"
-      }
+      
     ]
   }
 ];
