@@ -19,11 +19,11 @@ import {
   //otherEvents
 } from "../data/CalendarEvents";
 
-import img6 from "../assets/img/img6.jpg";
-import img8 from "../assets/img/img8.jpg";
-import img10 from "../assets/img/img10.jpg";
-import img12 from "../assets/img/img12.jpg";
-import img14 from "../assets/img/img14.jpg";
+// import img6 from "../assets/img/img6.jpg";
+// import img8 from "../assets/img/img8.jpg";
+// import img10 from "../assets/img/img10.jpg";
+// import img12 from "../assets/img/img12.jpg";
+// import img14 from "../assets/img/img14.jpg";
 import img15 from "../assets/img/img15.jpg";
 
 export default function AppCalendar() {
@@ -292,19 +292,19 @@ export default function AppCalendar() {
 
             <div className="mb-5"></div>
 
-            <h5 className="section-title section-title-sm mb-4">Reservas de hoy</h5>
+            {/* <h5 className="section-title section-title-sm mb-4">Reservas de hoy</h5> */}
 
             <ul className="event-group mb-5">
               {[
-                {
-                  "title": "#127863",
-                  "schedule": "08:30am - 11:30am",
-                  "mutual": {
-                    "avatar": [img15],
-                    "user": "Lea",
-                    "count": 4
-                  }
-                }, 
+                // {
+                //   "title": "#127863",
+                //   "schedule": "08:30am - 11:30am",
+                //   "mutual": {
+                //     "avatar": [img15],
+                //     "user": "Lea",
+                //     "count": 4
+                //   }
+                // }, 
               ].map((event, index) => (
                 <li className="event-item" key={index}>
                   <div className="event-body">
@@ -328,9 +328,6 @@ export default function AppCalendar() {
               <Nav.Link href="" className="calendar"><span></span> Confirmadas</Nav.Link>
               <Nav.Link href="" className="birthday"><span></span> Pendientes</Nav.Link>
               <Nav.Link href="" className="holiday"><span></span> Finalizadas</Nav.Link>
-             {/** <Nav.Link href="" className="discover"><span></span> Discovered Events</Nav.Link>
-              <Nav.Link href="" className="meetup"><span></span> Meetup Events</Nav.Link>
-              <Nav.Link href="" className="other"><span></span> Other Events</Nav.Link> */}
             </Nav>
 
           </PerfectScrollbar>
@@ -350,9 +347,6 @@ export default function AppCalendar() {
               calendarEvents,
               birthdayEvents,
               holidayEvents,
-              //discoveredEvents,
-              //meetupEvents,
-              //otherEvents
             ]}
             customButtons={
               {

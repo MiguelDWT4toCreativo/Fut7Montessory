@@ -10,16 +10,10 @@ const calendarEvents = {
   borderColor: '#10b759',
   events: [
     {
-      id: '11',
-      start: curYear+'-'+curMonth+'-26',
-      end: curYear+'-'+curMonth+'-27',
-      title: 'Memorial Day'
-    },
-    {
       id: '12',
       start: curYear+'-'+curMonth+'-28',
-      end: curYear+'-'+curMonth+'-29',
-      title: 'Veteran\'s Day'
+      end: curYear+'-'+curMonth+'-28',
+      title: 'Aurelia'
     }
   ]
 };
@@ -34,7 +28,7 @@ const birthdayEvents = {
       id: '11',
       start: curYear+'-'+curMonth+'-06',
       end: curYear+'-'+curMonth+'-06',
-      title: 'Memorial Day'
+      title: 'Yoali'
     },
    
   ]
@@ -42,14 +36,14 @@ const birthdayEvents = {
 
 const holidayEvents = {
   id: 3,
-  backgroundColor: '#63708B',
+  backgroundColor: '#ea4b58',
   borderColor: '#00194f',
   events: [
     {
       id: '10',
       start: curYear+'-'+curMonth+'-04',
-      end: curYear+'-'+curMonth+'-06',
-      title: 'Feast Day'
+      end: curYear+'-'+curMonth+'-04',
+      title: 'Miguel'
     },
     
   ]
