@@ -5,7 +5,7 @@ const dashboardMenu = [
     "link": "dashboard/helpdesk",
     "icon": "ri-pie-chart-2-line"
   }, {
-    "label": "Calendar",
+    "label": "Calendario Rentas",
     "link": "/apps/calendar",
     "icon": "ri-calendar-line"
   },
