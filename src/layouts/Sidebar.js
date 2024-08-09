@@ -42,13 +42,6 @@ export default class Sidebar extends Component {
                             <Link to="/pages/profile"><i className="ri-edit-2-line"></i> Perfil</Link>
                             <Link to="/pages/signin"><i className="ri-logout-box-r-line"></i> Cerrar sesión</Link>
                         </nav>
-                        <hr />
-                        <nav className="nav">                           
-                            <Link to=""></Link>
-                            <Link to=""></Link>
-                            <Link to=""></Link>
-                            <Link to=""></Link>                            
-                        </nav>
                     </div>
                 </div>
             </div>
