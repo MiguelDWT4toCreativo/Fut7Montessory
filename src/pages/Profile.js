@@ -1,9 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Card, Col, Nav, Row } from "react-bootstrap";
+import {Button, Form,Card, Col, Nav, Row } from "react-bootstrap";
 import Footer from "../layouts/Footer";
 import HeaderMobile from "../layouts/HeaderMobile";
 import Avatar from "../components/Avatar";
+import ReactApexChart from "react-apexcharts";
+import { dp3 } from "../data/DashboardData";
+
+
 
 import img1 from "../assets/img/img1.jpg";
 import img5 from "../assets/img/img5.jpg";
@@ -14,6 +18,53 @@ import img9 from "../assets/img/img9.jpg";
 import img10 from "../assets/img/img10.jpg";
 import img11 from "../assets/img/img11.jpg";
 import img12 from "../assets/img/img12.jpg";
+
+
+const seriesSix = [{
+  name: 'series1',
+  data: dp3
+}, {
+  name: 'series2',
+  data: dp3
+}];
+const optionSix = {
+  chart: {
+    parentHeightOffset: 0,
+    toolbar: {
+      show: false
+    },
+    stacked: true,
+    sparkline: {
+      enabled: true
+    }
+  },
+  colors: ['#506fd9', '#85b6ff'],
+  stroke: {
+    curve: 'straight',
+    width: [0, 0]
+  },
+  yaxis: {
+    min: 0,
+    max: 60,
+    show: false
+  },
+  xaxis: {
+    min: 20,
+    max: 30
+  },
+  fill: {
+    type: 'gradient',
+    gradient: {
+      opacityFrom: 0.75,
+      opacityTo: 0.25,
+    }
+  },
+  legend: { show: false },
+  tooltip: { enabled: false }
+};
+
+
+
 
 export default function Profile() {
   return (
@@ -27,13 +78,34 @@ export default function Profile() {
                 <img src={img1} className="img-fluid" alt="..." />
               </div>
               <div className="media-body">
-                <h5 className="media-name">Usuario</h5>
-                <p className="d-flex gap-2 mb-4"><i className="ri-user-line"></i> Tipo de usuario</p>
+                <Row>
+                  <Col>
+                    <h5 className="media-name">Usuario</h5>
+                    <p className="d-flex gap-2 mb-4"><i className="ri-user-line"></i> Tipo de usuario</p>                  
+                  </Col>
+
+                  <Col className="d-flex">
+                      {/**<Button variant="primary" className="px-5"><i className="ri-delete-bin-line"></i> Eliminar cuenta</Button> 
+                      <Button variant="" className="btn-icon btn-primary ms-1"><i className="ri-edit-line"></i></Button>
+                      <Button variant="" className="btn-icon btn-danger ms-1"><i className="ri-delete-bin-line"></i></Button>*/}
+                  </Col>                
+                </Row>
+<ul className="list-contact-info">
+              {/*<h5 className="section-title mb-4">Contact Information</h5>
+              <li><i className="ri-building-fill"></i><span>Bay Area, San Francisco, CA</span></li>
+              <li><i className="ri-home-8-fill"></i><span>Westfield, Oakland, CA</span></li>*/}
+              <li><i className="ri-phone-fill"></i><span>(+52) 771 345 6789</span></li>
+              <li><i className="ri-mail-fill"></i><span>you@youremail.com</span></li>
+            </ul>
+                  
+                  <hr className="my-4 opacity-0" />
+
+            
                 {/**<p className="mb-0">Redhead, Innovator, Saviour of Mankind, Hopeless Romantic, Attractive 20-something Yogurt Enthusiast. You can replace this with any content and adjust it as needed... <Link to="">Read more</Link></p> */}
               </div>
             </div>
 
-            <Row className="row-cols-sm-auto g-4 g-md-5 g-xl-4 g-xxl-5">
+            {/**<Row className="row-cols-sm-auto g-4 g-md-5 g-xl-4 g-xxl-5">
               {[
                 {
                   "icon": "ri-medal-2-line",
@@ -63,16 +135,16 @@ export default function Profile() {
                   </div>
                 </Col>
               ))}
-            </Row>
+            </Row> */}
 
             <Nav className="nav-line mt-5">
-              <Nav.Link href="" className="active">Post &amp; Activity</Nav.Link>
-              <Nav.Link href="">Personal Information</Nav.Link>
+              <Nav.Link href="" className="active">Información personal</Nav.Link>
+              {/**<Nav.Link href="">Personal Information</Nav.Link>
               <Nav.Link href="">Connections</Nav.Link>
-              <Nav.Link href="">Profile Settings</Nav.Link>
+              <Nav.Link href="">Profile Settings</Nav.Link> */}
             </Nav>
 
-            <div className="post-bar mt-4">
+            {/**<div className="post-bar mt-4">
               <div className="post-bar-item gap-2">
                 <i className="ri-edit-2-line"></i>
                 <Link to="">Share an update</Link>
@@ -86,15 +158,75 @@ export default function Profile() {
               <div className="post-bar-item">
                 <Link to=""><i className="ri-article-line"></i></Link>
               </div>
-            </div>
+            </div> */}
 
-            <Card className="card-post mt-4">
+
+            {/**<Card className="card-post mt-4">
               <Card.Header>
-                <Card.Title>Recent Activity</Card.Title>
+                <Card.Title>Tarjeta</Card.Title>
                 <Link to="" className="link-more"><i className="ri-more-2-fill"></i></Link>
               </Card.Header>
               <Card.Body>
-                <div className="post-header mb-3">
+                <div md="5" xl="5">
+                  <Card className="card-one card-wallet">
+                    <Card.Body>
+                      <div className="finance-icon">
+                        <i className="ri-mastercard-fill"></i>
+                        <i className="ri-visa-line"></i>
+                      </div>
+                      <label className="card-title mb-1">Available Balance</label>
+                      <h2 className="card-value mb-auto"><span>$</span>130,058.50</h2>
+
+                      <label className="card-title mb-1">Account Number</label>
+                      <div className="d-flex align-items-center gap-4 mb-3">
+                        <div className="d-flex gap-1">
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                        </div>
+                        <div className="d-flex gap-1">
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                        </div>
+                        <div className="d-flex gap-1">
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                        </div>
+                        <h5 className="ff-numerals mb-0">5314</h5>
+                      </div>
+
+                      <label className="card-title mb-1">Account Name</label>
+                      <h5 className="mb-0">Richard M. Christensen</h5>
+                    </Card.Body>
+                    <ReactApexChart series={seriesSix} options={optionSix} height={268} type="area" className="apex-chart-two" />
+                  </Card>
+                </div>
+              </Card.Body>
+            </Card>
+ */}
+
+
+
+
+
+
+
+
+
+
+
+            <Card className="card-post mt-4">
+              <Card.Header>
+                <Card.Title>Tarjeta</Card.Title>
+                <Link to="" className="link-more"><i className="ri-more-2-fill"></i></Link>
+              </Card.Header>
+              <Card.Body>
+                {/**<div className="post-header mb-3">
                   <Link to=""><Avatar initial="s" status="online" /></Link>
                   <div className="post-content">
                     <h6>Bethany Hartsfield</h6>
@@ -103,30 +235,102 @@ export default function Profile() {
                   <span className="post-date">3 days ago</span>
                 </div>
                 <p className="post-text">Our team is expanding again. We are looking for a Product Manager and Software Engineer to drive our new aspects of our capital projects. If you're interested, please drop a comment here or simply message me. <Link to="">#softwareengineer</Link> <Link to="">#engineering</Link></p>
-
+*/}
                 <div className="post-preview">
-                  <Row className="g-3">
-                    <Col sm="4">
-                      <img src={img5} className="img-fluid" alt="" />
+                  <Row className="g-2">
+                    <Col sm="5">
+                    <div md="5" xl="5">
+                  <Card className="card-one card-wallet">
+                    <Card.Body>
+                      <div className="finance-icon">
+                        <i className="ri-mastercard-fill"></i>
+                        <i className="ri-visa-line"></i>
+                      </div>
+                      <label className="card-title mb-1">Available Balance</label>
+                      <h2 className="card-value mb-auto"><span>$</span>130,058.50</h2>
+
+                      <label className="card-title mb-1">Account Number</label>
+                      <div className="d-flex align-items-center gap-4 mb-3">
+                        <div className="d-flex gap-1">
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                        </div>
+                        <div className="d-flex gap-1">
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                        </div>
+                        <div className="d-flex gap-1">
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                          <span className="badge-dot"></span>
+                        </div>
+                        <h5 className="ff-numerals mb-0">5314</h5>
+                      </div>
+
+                      <label className="card-title mb-1">Account Name</label>
+                      <h5 className="mb-0">Richard M. Christensen</h5>
+                    </Card.Body>
+                    <ReactApexChart series={seriesSix} options={optionSix} height={268} type="area" className="apex-chart-two" />
+                  </Card>
+                </div>
                     </Col>
                     <Col sm>
-                      <h5>We're hiring of Product Manager</h5>
-                      <p>Full-time, $60,000 - $80,000 annual</p>
-                      <span>Bay Area, San Francisco, California</span>
-                    </Col>
+                      <h5>Información bancaria: </h5>
+                      {/**<p>Full-time, $60,000 - $80,000 annual</p>
+                      <span>Bay Area, San Francisco, California</span> */}
+                      <div className="mb-4">
+                      <Row className="g-2 align-items-center mb-4">
+                        <Col md="5">
+                          <h6>Nombre: </h6>
+                        </Col>
+                        <Col md>
+                          <Form.Control type="text" placeholder="Ingrese el nombre completo" />
+                        </Col>
+                      </Row>
+                      <Row className="g-2 align-items-center mb-4">
+                        <Col md="5">
+                          <h6>Número de tarjeta: </h6>
+                        </Col>
+                        <Col md>
+                          <Form.Control type="text" placeholder="Ingrese el número correctamente" />
+                        </Col>
+                      </Row>
+                      <Row className="g-2 align-items-center mb-4">
+                        <Col md="5">
+                          <h6>Fecha válida: </h6>
+                        </Col>
+                        <Col md>
+                          <Form.Control type="date"  />
+                        </Col>
+                      </Row>
+                      <Row className="g-2 align-items-center mb-4">
+                        <Col md="5">
+                          <h6>CVV: </h6>
+                        </Col>
+                        <Col md>
+                          <Form.Control type="text" placeholder="Ingrese la clave correctamente" />
+                        </Col>
+                      </Row>
+                      </div>
+                    </Col> 
                   </Row>
                 </div>
               </Card.Body>
               <Card.Footer>
-                <Nav>
+               {/** <Nav>
                   <Nav.Link href=""><i className="ri-thumb-up-line"></i> Like</Nav.Link>
                   <Nav.Link href=""><i className="ri-chat-1-line"></i> Comment</Nav.Link>
                   <Nav.Link href=""><i className="ri-share-forward-line"></i> Share</Nav.Link>
-                </Nav>
+                </Nav> */}
               </Card.Footer>
             </Card>
 
-            <Card className="card-post mt-4">
+            {/**<Card className="card-post mt-4">
               <Card.Header>
                 <Card.Title>Work Experience</Card.Title>
                 <Link to="" className="link-more"><i className="ri-more-2-fill"></i></Link>
@@ -151,9 +355,9 @@ export default function Profile() {
                   <Nav.Link href="">Show more experiences (4) <i className="ri-arrow-down-s-line"></i></Nav.Link>
                 </Nav>
               </Card.Footer>
-            </Card>
+            </Card> */}
 
-            <Card className="card-post mt-4">
+            {/**<Card className="card-post mt-4">
               <Card.Header>
                 <Card.Title>Interests</Card.Title>
                 <Link to="" className="link-more"><i className="ri-more-2-fill"></i></Link>
@@ -186,9 +390,12 @@ export default function Profile() {
                   <Nav.Link href="">Show more interests (1) <i className="ri-arrow-down-s-line"></i></Nav.Link>
                 </Nav>
               </Card.Footer>
-            </Card>
+            </Card> */}
           </Col>
-          <Col xl="4" xxl="3" className="d-none d-xl-block">
+
+
+
+          {/**<Col xl="4" xxl="3" className="d-none d-xl-block">
             <h5 className="section-title mb-4">Mutual Connections</h5>
             <div className="profile-mutual">
               <ul className="mutual-group mb-3">
@@ -274,18 +481,10 @@ export default function Profile() {
                   </div>
                 </li>
               ))}
-            </ul>
+            </ul> */}
 
-            <hr className="my-4 opacity-0" />
-
-            <h5 className="section-title mb-4">Contact Information</h5>
-            <ul className="list-contact-info">
-              <li><i className="ri-building-fill"></i><span>Bay Area, San Francisco, CA</span></li>
-              <li><i className="ri-home-8-fill"></i><span>Westfield, Oakland, CA</span></li>
-              <li><i className="ri-phone-fill"></i><span>(+1) 012 345 6789</span></li>
-              <li><i className="ri-mail-fill"></i><span>you@youremail.com</span></li>
-            </ul>
-
+            
+            {/**
             <hr className="my-4 opacity-0" />
 
             <h5 className="section-title mb-4">Social Channel</h5>
@@ -293,8 +492,8 @@ export default function Profile() {
               <li><i className="ri-twitter-fill"></i><span>@username</span></li>
               <li><i className="ri-instagram-fill"></i><span>@username</span></li>
               <li><i className="ri-messenger-fill"></i><span>@username</span></li>
-            </ul>
-          </Col>
+            </ul> 
+          </Col>*/}
         </Row>
         <Footer />
       </div>
