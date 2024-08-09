@@ -13,6 +13,10 @@ const dashboardMenu = [
     "label": "Chat",
     "link": "/apps/email",
     "icon": "ri-mail-send-line"
+  },{
+    "label": "Clientes",
+    "link": "/apps/contacts",
+    "icon": "ri-contacts-book-line"
   },
 
   
@@ -70,11 +74,7 @@ const applicationsMenu = [
     "link": "/apps/chat",
     "icon": "ri-question-answer-line"
   }, */
-  {
-    "label": "Contacts",
-    "link": "/apps/contacts",
-    "icon": "ri-contacts-book-line"
-  },
+  
   {
     "label": "Task Manager",
     "link": "/apps/tasks",
