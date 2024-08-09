@@ -322,7 +322,7 @@ export default function Email() {
                     <Card className="card-attachment">
                       <Card.Body>
                         <div className="card-icon card-danger">
-                          <i className="ri-file-pdf-line"></i>
+                          <i className="ri-file-ppt-line"></i>
                         </div>
                         <div className="card-content">
                           <h6><Link to="#">Reserva_45682.pdf</Link></h6>

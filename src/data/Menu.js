@@ -17,6 +17,10 @@ const dashboardMenu = [
     "label": "Clientes",
     "link": "/apps/contacts",
     "icon": "ri-contacts-book-line"
+  },{
+    "label": "Reglamento",
+    "link": "/pages/faq",
+    "icon": "ri-file-list-3-line"
   },
 
   
@@ -188,10 +192,7 @@ const pagesMenu = [
         "label": "Pricing",
         "link": "/pages/pricing"
       },
-      {
-        "label": "FAQ",
-        "link": "/pages/faq"
-      }
+      
     ]
   }
 ];

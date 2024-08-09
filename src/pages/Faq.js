@@ -8,21 +8,21 @@ export default function Faq() {
     <React.Fragment>
       <HeaderMobile />
       <div className="main main-faq p-4 p-lg-5">
-        <ol className="breadcrumb fs-sm mb-2">
+       {/** <ol className="breadcrumb fs-sm mb-2">
           <Breadcrumb.Item>Pages</Breadcrumb.Item>
           <Breadcrumb.Item>Other Pages</Breadcrumb.Item>
           <Breadcrumb.Item active>FAQ</Breadcrumb.Item>
-        </ol>
-        <h2 className="main-title mb-3">Frequently Asked Questions</h2>
+        </ol> */}
+        <h2 className="main-title mb-3">Reglamentos</h2>
 
         <Row className="g-5">
           <Col xl>
-            <p className="text-secondary mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <p className="text-secondary mb-4"></p>
 
-            <div className="form-search py-2 mb-5">
+            {/**<div className="form-search py-2 mb-5">
               <i className="ri-search-line"></i>
               <Form.Control type="text" placeholder="Search" />
-            </div>
+            </div> */}
 
             <Accordion defaultActiveKey="0" className="accordion-faq">
               <Accordion.Item eventKey="0">
@@ -92,7 +92,7 @@ export default function Faq() {
               </Accordion.Item>
             </Accordion>
           </Col>
-          <Col md="6" lg="7" xl="4" xxl="3">
+         {/** <Col md="6" lg="7" xl="4" xxl="3">
             <h5 className="section-title mb-4">NPM Installation</h5>
 
             <Nav className="nav-classic">
@@ -121,7 +121,7 @@ export default function Faq() {
               <Nav.Link href=""><span>Minimize sass to css without bootstrap</span></Nav.Link>
               <Nav.Link href=""><span>Adding more utilities classes in sass</span></Nav.Link>
             </Nav>
-          </Col>
+          </Col> */}
         </Row>
       </div>
 
