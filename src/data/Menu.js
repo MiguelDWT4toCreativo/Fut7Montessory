@@ -1,11 +1,22 @@
 
 const dashboardMenu = [
   {
-    "label": "Finance Monitoring",
+    "label": "Inicio",
     "link": "/dashboard/finance",
     "icon": "ri-pie-chart-2-line"
+  }, {
+    "label": "Calendar",
+    "link": "/apps/calendar",
+    "icon": "ri-calendar-line"
   },
   {
+    "label": "Chat",
+    "link": "/apps/email",
+    "icon": "ri-mail-send-line"
+  },
+
+  
+  {/**{
     "label": "Events Management",
     "link": "/dashboard/events",
     "icon": "ri-calendar-todo-line"
@@ -39,30 +50,24 @@ const dashboardMenu = [
     "label": "Product Management",
     "link": "/dashboard/product",
     "icon": "ri-suitcase-2-line"
-  }
+  } */}
 ];
 
 const applicationsMenu = [
-  {
+  /**
+   * {
     "label": "File Manager",
     "link": "/apps/file-manager",
     "icon": "ri-folder-2-line"
   },
-  {
-    "label": "Email",
-    "link": "/apps/email",
-    "icon": "ri-mail-send-line"
-  },
-  {
-    "label": "Calendar",
-    "link": "/apps/calendar",
-    "icon": "ri-calendar-line"
-  },
+   */
+ 
+  /**
   {
     "label": "Chat",
     "link": "/apps/chat",
     "icon": "ri-question-answer-line"
-  },
+  }, */
   {
     "label": "Contacts",
     "link": "/apps/contacts",

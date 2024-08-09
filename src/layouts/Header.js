@@ -110,9 +110,28 @@ export default function Header({ onSkin }) {
     <div className="header-main px-3 px-lg-4">
       <Link onClick={toggleSidebar} className="menu-link me-3 me-lg-4"><i className="ri-menu-2-fill"></i></Link>
 
-      <div className=" me-auto">
-       
+      <div className=" me-auto">      
       </div>
+
+      <Dropdown className="dropdown-skin" align="end">
+        <Dropdown.Toggle as={CustomToggle}>
+          <i className="ri-settings-3-line"></i>
+        </Dropdown.Toggle>
+        <Dropdown.Menu className="mt-10-f">
+          <label>Skin Mode</label>
+          <nav className="nav nav-skin">
+            <Link onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link" : "nav-link active"}>Light</Link>
+            <Link onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link active" : "nav-link"}>Dark</Link>
+          </nav>
+          <hr />
+          <label>Sidebar Skin</label>
+          <nav id="sidebarSkin" className="nav nav-skin">
+            <Link onClick={sidebarSkin} className={!(localStorage.getItem("sidebar-skin")) ? "nav-link active" : "nav-link"}>Default</Link>
+            <Link onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "prime") ? "nav-link active" : "nav-link"}>Prime</Link>
+            <Link onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "dark") ? "nav-link active" : "nav-link"}>Dark</Link>
+          </nav>
+        </Dropdown.Menu>
+      </Dropdown>
 
       <Dropdown className="dropdown-notification ms-3 ms-xl-4" align="end">
         <Dropdown.Toggle as={CustomToggle}>
@@ -123,7 +142,7 @@ export default function Header({ onSkin }) {
             <h6 className="dropdown-menu-title">Notificaciones</h6>
           </div>
           {NotificationList()}
-          <div className="dropdown-menu-footer"><Link to="#">Mostrar todas</Link></div>
+          <div className="dropdown-menu-footer"><Link to="/apps/Email">Mostrar todas</Link></div>
         </Dropdown.Menu>
       </Dropdown>
 
@@ -136,7 +155,7 @@ export default function Header({ onSkin }) {
         <Dropdown.Menu className="mt-10-f">
           <div className="dropdown-menu-body">
             <div className="avatar avatar-xl online mb-3"><img src={userAvatar} alt="" /></div>
-            <h5 className="mb-1 text-dark fw-semibold">Shaira Diaz</h5>
+            <h5 className="mb-1 text-dark fw-semibold">Usuario</h5>
             <p className="fs-sm text-secondary"></p>
 
             <nav className="nav">

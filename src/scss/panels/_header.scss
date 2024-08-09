@@ -42,19 +42,16 @@
   color: $dark;
   letter-spacing: -.5px;
   position: relative;
-
   &:hover,
   &:focus { color: $dark; }
-
   &::after {
     content: '';
     position: absolute;
-    bottom: 3.5px;
-    right: -8px;
-    width: 6px;
-    height: 6px;
-    border-radius: 100%;
-    background-color: $primary;
+    bottom: -2px;  /* Ajusta la posición de la línea debajo del texto */
+    left: 0;
+    width: 100%;  /* La línea abarca todo el ancho del texto */
+    height: 2px;  /* Ajusta el grosor de la línea */
+    background-color: $primary;  /* Color de la línea */
   }
 }
 
