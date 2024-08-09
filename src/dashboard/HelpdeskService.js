@@ -7,6 +7,8 @@ import Avatar from "../components/Avatar";
 import { Bar } from 'react-chartjs-2';
 import ReactApexChart from "react-apexcharts";
 import { dp3 } from "../data/DashboardData";
+import { dp33 } from "../data/DashboardData";
+
 
 import img6 from "../assets/img/img6.jpg";
 import img7 from "../assets/img/img7.jpg";
@@ -24,17 +26,17 @@ export default function HelpdeskService() {
 
   //Current Ticket Status
   const dataBar1 = {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    labels: ['Lun','Mar','Mie','Jue','Vier','Sab','Dom'],
     datasets: [{
-      data: [20, 60, 50, 45, 50, 60, 70, 40, 45, 35, 25, 30],
+      data: [20, 60, 50, 45, 50, 60, 70, ],
       backgroundColor: '#506fd9',
       barPercentage: 0.5
-    }, {
+    }, /**{
       data: [10, 40, 30, 40, 60, 55, 45, 35, 30, 20, 15, 20],
       backgroundColor: '#85b6ff',
       barPercentage: 0.5
-    }, {
-      data: [8, 30, 40, 35, 40, 45, 35, 30, 25, 10, 20, 15],
+    }, */ {
+      data: [8, 30, 40, 35, 40, 45, 35, ],
       backgroundColor: '#e2e5ec',
       barPercentage: 0.5
     }]
@@ -128,7 +130,11 @@ export default function HelpdeskService() {
 
   // Complaints Received
   const seriesOne = [{
-    data: dp3
+    //data: dp3
+    
+      data: dp3 // GASTOS
+    ,
+      data: dp33 // INGRESOS
   }];
 
   const optionOne = {
@@ -171,7 +177,7 @@ export default function HelpdeskService() {
   }
 
   // Agent Performance Score
-  const optionTwo = {
+  {/**const optionTwo = {
     chart: {
       parentHeightOffset: 0,
       toolbar: { show: false },
@@ -219,7 +225,62 @@ export default function HelpdeskService() {
     },
     legend: { show: false },
     tooltip: { enabled: false }
-  }
+  } */}
+  // Agent Performance Score
+  const optionTwo = {
+    chart: {
+      parentHeightOffset: 0,
+      toolbar: { show: false },
+      stacked: false // Cambia a falso para no apilar las series
+    },
+    colors: ['#4f6fd9', '#f06548'], // Añade un color para cada serie
+    grid: {
+      borderColor: 'rgba(72,94,144, 0.08)',
+      padding: {
+        top: -20,
+        left: 0,
+        right: -8
+      },
+      yaxis: {
+        lines: { show: false }
+      }
+    },
+    dataLabels: { enabled: false },
+    stroke: {
+      curve: 'straight',
+      width: 1.5
+    },
+    xaxis: {
+      overwriteCategories: ['', 'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC', ''],
+      tickAmount: 13,
+      axisBorder: { show: false },
+      labels: {
+        style: {
+          colors: '#6e7985',
+          fontSize: '10px'
+        }
+      },
+    },
+    yaxis: {
+      min: 0,
+      max: 50,
+      show: true // Mostrar el eje y
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        opacityFrom: 0.5,
+        opacityTo: 0,
+      }
+    },
+    legend: {
+      show: true, // Mostrar leyenda para identificar ambas líneas
+      position: 'top'
+    },
+    tooltip: { enabled: true } // Habilitar tooltip para mostrar los datos
+  };
+  
+
 
   ///// Skin Switch /////
   const currentSkin = (localStorage.getItem('skin-mode')) ? 'dark' : '';
@@ -243,6 +304,69 @@ export default function HelpdeskService() {
     }
   }
 
+
+
+  const seriesSeven = [{
+    data: [10, 12, 18, 25, 15, 30, 40, 10, 20, 12, 16, 60, 20, 15, 10, 60, 50, 40, 80, 100, 30, 40, 10, 20, 12, 16, 60, 20, 15, 60, 20, 15, 10, 60, 50, 40, 30, 40, 10, 20, 16, 60, 20, 15, 60, 20, 15, 10, 60, 50, 40, 30, 40, 10, 20]
+  }, {
+    data: [-10, -12, -18, -25, -15, -30, -40, -10, -20, -12, -16, -60, -20, -15, -10, -60, -50, -40, -80, -40, -30, -40, -10, -20, -12, -16, -60, -20, -15, -60, -20, -15, -10, -60, -50, -40, -30, -40, -10, -20, -40, -10, -20, -12, -16, -60, -20, -15, -60, -20, -15, -10, -60, -50, -40]
+  }];
+  const optionSeven = {
+    chart: {
+      parentHeightOffset: 0,
+      stacked: true,
+      toolbar: { show: false }
+    },
+    colors: ['#506fd9', '#85b6ff'],
+    grid: {
+      borderColor: 'rgba(72,94,144, 0.07)',
+      padding: {
+        top: -20,
+        left: 0,
+        bottom: -5
+      }
+    },
+    plotOptions: {
+      bar: {
+        horizontal: false,
+        columnWidth: '60%',
+        endingShape: 'rounded'
+      },
+    },
+    stroke: {
+      show: true,
+      width: 2,
+      colors: ['transparent']
+    },
+    yaxis: {
+      max: 130,
+      tickAmount: 5,
+      labels: {
+        style: {
+          colors: '#6e7985',
+          fontSize: '10px'
+        }
+      }
+    },
+    xaxis: {
+      type: 'numeric',
+      tickAmount: 10,
+      decimalsInFloat: 0,
+      labels: {
+        style: {
+          colors: '#6e7985',
+          fontSize: '10px',
+          fontWeight: 'bold'
+        }
+      },
+      axisBorder: { show: false }
+    },
+    dataLabels: { enabled: false },
+    fill: { opacity: 1 },
+    legend: { show: false },
+    tooltip: { enabled: false }
+  }
+
   switchSkin(skin);
 
   useEffect(() => {
@@ -256,20 +380,20 @@ export default function HelpdeskService() {
         <div className="d-md-flex align-items-center justify-content-between mb-4">
           <div>
             <ol className="breadcrumb fs-sm mb-1">
-              <li className="breadcrumb-item"><Link href="#">Dashboard</Link></li>
-              <li className="breadcrumb-item active" aria-current="page">Helpdesk Service</li>
+              <li className="breadcrumb-item"><Link href="#">Inicio</Link></li>
+              {/** <li className="breadcrumb-item active" aria-current="page">Helpdesk Service</li>*/}            
             </ol>
-            <h4 className="main-title mb-0">Welcome to Dashboard</h4>
+            <h4 className="main-title mb-0">Monitoreo Diario</h4>
           </div>
           <div className="d-flex align-items-center gap-2 mt-3 mt-md-0">
-            <Button variant="white" className="btn-icon"><i className="ri-share-line fs-18 lh-1"></i></Button>
+            {/*<Button variant="white" className="btn-icon"><i className="ri-share-line fs-18 lh-1"></i></Button>
             <Button variant="white" className="btn-icon"><i className="ri-printer-line fs-18 lh-1"></i></Button>
-            <Button variant="primary" className="btn-icon"><i className="ri-bar-chart-2-line fs-18 lh-1"></i></Button>
+            <Button variant="primary" className="btn-icon"><i className="ri-bar-chart-2-line fs-18 lh-1"></i></Button>*/}
           </div>
         </div>
 
         <Row className="g-3">
-          {[
+          {/**{[
             {
               "bg": "primary",
               "icon": "ri-bell-line",
@@ -320,15 +444,18 @@ export default function HelpdeskService() {
                 </Card.Body>
               </Card>
             </Col>
-          ))}
-          <Col md="7" xl="8">
+          ))} */}
+          
+
+          {/**VENTAS DIARIAS */}
+          <Col md="7" xl="5">
             <Card className="card-one">
               <Card.Header>
-                <Card.Title as="h6">Current Ticket Status</Card.Title>
-                <Nav className="nav-icon nav-icon-sm ms-auto">
+                <Card.Title as="h6">Ventas diarias</Card.Title>
+                {/**<Nav className="nav-icon nav-icon-sm ms-auto">
                   <Nav.Link href=""><i className="ri-refresh-line"></i></Nav.Link>
                   <Nav.Link href=""><i className="ri-more-2-fill"></i></Nav.Link>
-                </Nav>
+                </Nav> */}
               </Card.Header>
               <Card.Body>
                 <div className="chartjs-one">
@@ -337,7 +464,26 @@ export default function HelpdeskService() {
               </Card.Body>
             </Card>
           </Col>
-          <Col md="5" xl="4">
+
+
+
+          <Col md="5" xl="7">
+            <Card className="card-one">
+              <Card.Header>
+                <Card.Title as="h6">Ingresos &amp; Devoluciones</Card.Title>
+                {/*<Nav className="nav-icon nav-icon-sm ms-auto">
+                  <Nav.Link href=""><i className="ri-refresh-line"></i></Nav.Link>
+                  <Nav.Link href=""><i className="ri-more-2-fill"></i></Nav.Link>
+                </Nav>*/}
+              </Card.Header>
+              <Card.Body className="pb-4">
+                <ReactApexChart series={seriesSeven} options={optionSeven} height={200} type="bar" />
+              </Card.Body>
+            </Card>
+          </Col>
+
+
+          {/**<Col md="5" xl="4">
             <Card className="card-one">
               <Card.Header>
                 <Card.Title as="h6">Complaints Received</Card.Title>
@@ -356,6 +502,8 @@ export default function HelpdeskService() {
               </Card.Body>
             </Card>
           </Col>
+
+
           <Col md="6">
             <Card className="card-one">
               <Card.Body className="p-3">
@@ -399,15 +547,18 @@ export default function HelpdeskService() {
                 </Row>
               </Card.Body>
             </Card>
-          </Col>
-          <Col xl="5">
+          </Col> */}
+
+
+
+          {/**<Col xl="5">
             <Card className="card-one">
               <Card.Header>
-                <Card.Title as="h6">Tickets By Request Type</Card.Title>
-                <Nav className="nav-icon nav-icon-sm ms-auto">
+                <Card.Title as="h6">Venta de artículos</Card.Title>
+               <Nav className="nav-icon nav-icon-sm ms-auto">
                   <Nav.Link href=""><i className="ri-refresh-line"></i></Nav.Link>
                   <Nav.Link href=""><i className="ri-more-2-fill"></i></Nav.Link>
-                </Nav>
+                </Nav> 
               </Card.Header>
               <Card.Body>
                 <div className="chartjs-two">
@@ -415,8 +566,11 @@ export default function HelpdeskService() {
                 </div>
               </Card.Body>
             </Card>
-          </Col>
-          <Col sm="6" xl>
+          </Col> */}
+
+
+
+          {/**<Col sm="6" xl>
             <Card className="card-one">
               <Card.Header>
                 <Card.Title as="h6">Overall Rating</Card.Title>
@@ -548,15 +702,17 @@ export default function HelpdeskService() {
                 </Table>
               </Card.Body>
             </Card>
-          </Col>
+          </Col> */}
+
+          
           <Col xs="12">
             <Card className="card-one">
               <Card.Header>
-                <Card.Title as="h6">Agent Performance Score</Card.Title>
-                <Nav className="nav-icon nav-icon-sm ms-auto">
+                <Card.Title as="h6">Ventas Mensuales</Card.Title>
+                {/**<Nav className="nav-icon nav-icon-sm ms-auto">
                   <Nav.Link href=""><i className="ri-refresh-line"></i></Nav.Link>
                   <Nav.Link href=""><i className="ri-more-2-fill"></i></Nav.Link>
-                </Nav>
+                </Nav> */}
               </Card.Header>
               <Card.Body>
                 <ReactApexChart series={seriesOne} options={optionTwo} type="area" height={200} className="apex-chart-four mb-5" />
@@ -565,16 +721,15 @@ export default function HelpdeskService() {
                   <thead>
                     <tr>
                       <th>
-                        <Form.Check type="checkbox" />
+                        {/**<Form.Check type="checkbox" /> */}
                       </th>
-                      <th>Agent ID</th>
-                      <th>Agent Name</th>
-                      <th>Status</th>
-                      <th>Quota</th>
-                      <th>Reached</th>
-                      <th>Progress</th>
-                      <th>Rating</th>
-                      <th>&nbsp;</th>
+                      <th>Recibo</th>
+                      <th>Cliente</th>
+                      <th>Monto</th>
+                      <th>Fecha</th>
+                      <th>Hora</th> 
+                      <th>Estado</th>                     
+                      {/**<th>&nbsp;</th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -584,75 +739,48 @@ export default function HelpdeskService() {
                         "avatar": img6,
                         "name": "Allan R. Palban",
                         "email": "allan@themepixels.me",
+                        "quota": '$100.00',//Monto
+                        "reached": 'Oct 08',//Fecha
+                        "hour": '8:00 - 9:00',//Hora
                         "status": {
-                          "badge": "success",
-                          "label": "Active"
-                        },
-                        "quota": 120,
-                        "reached": 64,
-                        "progress": 50,
-                        "star": ["fill","fill","fill","half-fill","line"]
+                          "badge": "danger",
+                          "label": "Pendiente"
+                        },                        
+                       
                       }, {
                         "id": "00028",
                         "avatar": img8,
                         "name": "Charlene S. Plateros",
                         "email": "charlene@themepixels.me",
-                        "status": {
-                          "badge": "info",
-                          "label": "Away"
-                        },
-                        "quota": 100,
-                        "reached": 79,
-                        "progress": 70,
-                        "star": ["fill","fill","fill","fill","line"]
-                      }, {
-                        "id": "00025",
-                        "avatar": img10,
-                        "name": "Adrian M. Moniño",
-                        "email": "adrian@themepixels.me",
+                        "quota": '$150.00',//Monto
+                        "reached": 'Mar 24',//Fecha
+                        "hour": '13:00 - 14:30',//Hora
                         "status": {
                           "badge": "success",
-                          "label": "Active"
-                        },
-                        "quota": 130,
-                        "reached": 108,
-                        "progress": 75,
-                        "star": ["fill","fill","fill","line","line"]
-                      }, {
-                        "id": "00024",
-                        "avatar": img11,
-                        "name": "Marianne B. Audrey",
-                        "email": "marianne@themepixels.me",
+                          "label": "Finalizada"
+                        },                                                                      
+                      },{
+                        "id": "00035",
+                        "avatar": img6,
+                        "name": "Allan R. Palban",
+                        "email": "allan@themepixels.me",
+                        "quota": '$100.00',//Monto
+                        "reached": 'Oct 08',//Fecha
+                        "hour": '8:00 - 9:00',//Hora
                         "status": {
-                          "badge": "warning",
-                          "label": "Pending"
-                        },
-                        "quota": 110,
-                        "reached": 45,
-                        "progress": 50,
-                        "star": ["fill","fill","fill","fill","line"]
-                      }, {
-                        "id": "00023",
-                        "avatar": img12,
-                        "name": "Carlyn Y. Salomon",
-                        "email": "carlyn@themepixels.me",
-                        "status": {
-                          "badge": "secondary",
-                          "label": "Inactive"
-                        },
-                        "quota": 125,
-                        "reached": 32,
-                        "progress": 25,
-                        "star": ["fill","fill","fill","half-fill","line"]
-                      }
+                          "badge": "info",
+                          "label": "Confirmada"
+                        },                        
+                       
+                      }, 
                     ].map((item, index) => (
                       <tr key={index}>
                         <td>
-                          <Form.Check type="checkbox" />
+                         {/** <Form.Check type="checkbox" /> */}
                         </td>
                         <td><span className="ff-numerals">{item.id}</span></td>
                         <td>
-                          <div className="d-flex align-items-center gap-2">
+                          <div className="d-flex align-items-center gap-3">
                             <Avatar img={item.avatar} />
                             <div>
                               <h6 className="mb-0">{item.name}</h6>
@@ -660,10 +788,12 @@ export default function HelpdeskService() {
                             </div>
                           </div>
                         </td>
-                        <td><span className={"badge bg-" + item.status.badge}>{item.status.label}</span></td>
-                        <td><span className="ff-numerals">{item.quota}</span></td>
+                        <td><span className="ff-numerals">{item.quota}</span></td>                                               
                         <td><span className="ff-numerals">{item.reached}</span></td>
-                        <td>
+                        <td><span className="ff-numerals">{item.hour}</span></td>
+                        <td><span className={"badge bg-" + item.status.badge}>{item.status.label}</span></td> 
+                        
+                        {/**<td>
                           <ProgressBar now={item.progress} className="ht-5 mb-0" />
                         </td>
                         <td>
@@ -672,11 +802,11 @@ export default function HelpdeskService() {
                               <i key={ind} className={"ri-star-" + star}></i>
                             ))}
                           </div>
-                        </td>
+                        </td> */}
                         <td>
-                          <div className="d-flex justify-content-end">
+                          {/**<div className="d-flex justify-content-end">
                             <Link to="" className="link-more"><i className="ri-more-2-fill"></i></Link>
-                          </div>
+                          </div> */}
                         </td>
                       </tr>
                     ))}

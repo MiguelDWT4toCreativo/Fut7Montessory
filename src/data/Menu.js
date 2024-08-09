@@ -2,7 +2,7 @@
 const dashboardMenu = [
   {
     "label": "Inicio",
-    "link": "/dashboard/finance",
+    "link": "dashboard/helpdesk",
     "icon": "ri-pie-chart-2-line"
   }, {
     "label": "Calendar",
@@ -16,11 +16,17 @@ const dashboardMenu = [
   },
 
   
-  {/**{
+  {/**
+    ,{
+    "label": "Helpdesk Service",
+    "link": "/dashboard/helpdesk",
+    "icon": "ri-service-line"
+  },
+    ,{
     "label": "Events Management",
     "link": "/dashboard/events",
     "icon": "ri-calendar-todo-line"
-  },
+  }
   {
     "label": "Sales Monitoring",
     "link": "/dashboard/sales",
@@ -36,11 +42,7 @@ const dashboardMenu = [
     "link": "/dashboard/crypto",
     "icon": "ri-coin-line"
   },
-  {
-    "label": "Helpdesk Service",
-    "link": "/dashboard/helpdesk",
-    "icon": "ri-service-line"
-  },
+  
   {
     "label": "Storage Management",
     "link": "/dashboard/storage",
