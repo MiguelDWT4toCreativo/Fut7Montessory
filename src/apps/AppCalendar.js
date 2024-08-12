@@ -16,7 +16,6 @@ import {
   holidayEvents,
 } from "../data/CalendarEvents";
 
-
 export default function AppCalendar() {
 
   useEffect(() => {
@@ -28,6 +27,339 @@ export default function AppCalendar() {
 
   const [startDate, setStartDate] = useState(new Date());
 
+  //Inicio Funcion de guardar reserva
+
+  // Estado de la reserva
+  const [reserva, setReserva] = useState({
+    cliente: '',
+    asistentes: 0,
+    fecha: '',
+    horaInicio: '',
+    horaFin: '',
+    total: 'Automático',
+    estado: 'Pendiente',
+    metodoPago: '',
+    horaFinDisabled: true,  // Agregamos horaFinDisabled al estado de reserva
+    horaFinOptions: [],     // Opciones disponibles para horaFin
+  });
+
+  const [eventos, setEventos] = useState([]);
+
+  // Manejar el cambio de hora de inicio
+  const handleHoraInicioChange = (event) => {
+    const value = event.target.value;
+    let horaFinOptions = [];
+    let horaFinDisabled = true;
+
+    switch (value) {
+      case "08:00":
+        horaFinOptions = [
+          { value: '09:00', label: '09:00AM' },
+          { value: '09:30', label: '09:30AM' },
+          { value: '10:00', label: '10:00AM' },
+        ];
+        horaFinDisabled = false;
+        break;
+
+      case "08:30":
+        horaFinOptions = [
+          { value: '09:30', label: '09:30AM' },
+          { value: '10:00', label: '10:00AM' },
+          { value: '10:30', label: '10:30AM' },
+        ];
+        horaFinDisabled = false;
+        break;
+
+      case "09:00":
+        horaFinOptions = [
+          { value: '10:00', label: '10:00AM' },
+          { value: '10:30', label: '10:30AM' },
+          { value: '11:00', label: '11:00AM' },
+        ];
+        horaFinDisabled = false;
+        break;
+
+      case "09:30":
+        horaFinOptions = [
+          { value: '10:30', label: '10:30AM' },
+          { value: '11:00', label: '11:00AM' },
+          { value: '11:30', label: '11:30AM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "10:00":
+        horaFinOptions = [
+          { value: '11:00', label: '11:00AM' },
+          { value: '11:30', label: '11:30AM' },
+          { value: '12:00', label: '12:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "10:30":
+        horaFinOptions = [
+          { value: '11:30', label: '11:30AM' },
+          { value: '12:00', label: '12:00PM' },
+          { value: '12:30', label: '12:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "11:00":
+        horaFinOptions = [
+          { value: '12:00', label: '12:00PM' },
+          { value: '12:30', label: '12:30PM' },
+          { value: '13:00', label: '01:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "11:30":
+        horaFinOptions = [
+          { value: '12:30', label: '12:30PM' },
+          { value: '13:00', label: '01:00PM' },
+          { value: '13:30', label: '01:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "12:00":
+        horaFinOptions = [
+          { value: '13:00', label: '01:00PM' },
+          { value: '13:30', label: '01:30PM' },
+          { value: '14:00', label: '02:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "12:30":
+        horaFinOptions = [
+          { value: '13:30', label: '01:30PM' },
+          { value: '14:00', label: '02:00PM' },
+          { value: '14:30', label: '02:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "13:00":
+        horaFinOptions = [
+          { value: '14:00', label: '02:00PM' },
+          { value: '14:30', label: '02:30PM' },
+          { value: '15:00', label: '03:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "13:30":
+        horaFinOptions = [
+          { value: '14:30', label: '02:30PM' },
+          { value: '15:00', label: '03:00PM' },
+          { value: '15:30', label: '03:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "14:00":
+        horaFinOptions = [
+          { value: '15:00', label: '03:00PM' },
+          { value: '15:30', label: '03:30PM' },
+          { value: '16:00', label: '04:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "14:30":
+        horaFinOptions = [
+          { value: '15:30', label: '03:30PM' },
+          { value: '16:00', label: '04:00PM' },
+          { value: '16:30', label: '04:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "15:00":
+        horaFinOptions = [
+          { value: '16:00', label: '04:00PM' },
+          { value: '16:30', label: '04:30PM' },
+          { value: '17:00', label: '05:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "15:30":
+        horaFinOptions = [
+          { value: '16:30', label: '04:30PM' },
+          { value: '17:00', label: '05:00PM' },
+          { value: '17:30', label: '05:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "16:00":
+        horaFinOptions = [
+          { value: '17:00', label: '05:00PM' },
+          { value: '17:30', label: '05:30PM' },
+          { value: '18:00', label: '06:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "16:30":
+        horaFinOptions = [
+          { value: '17:30', label: '05:30PM' },
+          { value: '18:00', label: '06:00PM' },
+          { value: '18:30', label: '06:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "17:00":
+        horaFinOptions = [
+          { value: '18:00', label: '06:00PM' },
+          { value: '18:30', label: '06:30PM' },
+          { value: '19:00', label: '07:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "17:30":
+        horaFinOptions = [
+          { value: '18:30', label: '06:30PM' },
+          { value: '19:00', label: '07:00PM' },
+          { value: '19:30', label: '07:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "18:00":
+        horaFinOptions = [
+          { value: '19:00', label: '07:00PM' },
+          { value: '19:30', label: '07:30PM' },
+          { value: '20:00', label: '08:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "18:30":
+        horaFinOptions = [
+          { value: '19:30', label: '07:30PM' },
+          { value: '20:00', label: '08:00PM' },
+          { value: '20:30', label: '08:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "19:00":
+        horaFinOptions = [
+          { value: '20:00', label: '08:00PM' },
+          { value: '20:30', label: '08:30PM' },
+          { value: '21:00', label: '09:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "19:30":
+        horaFinOptions = [
+          { value: '20:30', label: '08:30PM' },
+          { value: '21:00', label: '09:00PM' },
+          { value: '21:30', label: '09:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "20:00":
+        horaFinOptions = [
+          { value: '21:00', label: '09:00PM' },
+          { value: '21:30', label: '09:30PM' },
+          { value: '22:00', label: '10:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "20:30":
+        horaFinOptions = [
+          { value: '21:30', label: '09:30PM' },
+          { value: '22:00', label: '10:00PM' },
+          { value: '22:30', label: '10:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "21:00":
+        horaFinOptions = [
+          { value: '22:00', label: '10:00PM' },
+          { value: '22:30', label: '10:30PM' },
+          { value: '23:00', label: '11:00PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "21:30":
+        horaFinOptions = [
+          { value: '22:30', label: '10:30PM' },
+          { value: '23:00', label: '11:00PM' },
+          { value: '23:30', label: '11:30PM' },
+        ];
+        horaFinDisabled = false;
+        break;
+
+      case "22:00":
+        horaFinOptions = [
+          { value: '23:00', label: '11:00PM' },
+          { value: '23:30', label: '11:30PM' },
+          { value: '00:00', label: '12:00AM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "22:30":
+        horaFinOptions = [
+          { value: '23:30', label: '11:30PM' },
+          { value: '00:00', label: '12:00AM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      case "23:00":
+        horaFinOptions = [
+          { value: '00:00', label: '12:00AM' },
+        ];
+        horaFinDisabled = false;
+        break;
+      default:
+        horaFinOptions = [];
+        horaFinDisabled = true;
+        break;
+    }
+
+    setReserva((prevState) => ({
+      ...prevState,
+      horaInicio: value,
+      horaFinDisabled: horaFinDisabled,
+      horaFinOptions: horaFinOptions,  // Guardamos las opciones de horaFin
+    }));
+  };
+
+  const handleSubmit = () => {
+    if (!reserva.cliente || !reserva.fecha || !reserva.horaInicio || !reserva.horaFin) {
+      alert('Por favor, complete todos los campos.');
+      return;
+    }
+
+    // Guardar la reserva y agregarla al calendario
+    const nuevoEvento = {
+      title: `Reserva: ${reserva.cliente}`,
+      start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
+      end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
+      allDay: false
+    };
+
+    setEventos([...eventos, nuevoEvento]);
+
+    console.log('Reserva guardada:', reserva);
+
+    // Iniciar proceso de pago
+    iniciarProcesoDePago();
+  };
+
+  const iniciarProcesoDePago = () => {
+    const metodoPago = prompt('Seleccione método de pago: 1) Tarjeta de débito/crédito 2) OXXO');
+
+    if (metodoPago === '1') {
+      setReserva((prevState) => ({
+        ...prevState,
+        metodoPago: 'Tarjeta de débito/crédito'
+      }));
+      alert('Redirigiendo a la pasarela de pago con tarjeta...');
+    } else if (metodoPago === '2') {
+      setReserva((prevState) => ({
+        ...prevState,
+        metodoPago: 'OXXO'
+      }));
+      alert('Generando referencia de pago para OXXO...');
+    } else {
+      alert('Método de pago no válido.');
+    }
+  };
+
+
+  //Fin Funcion de guardar reserva
+
   // toggle sidebar calendar
   const [isSidebarShow, setSidebarShow] = useState(false);
 
@@ -35,239 +367,6 @@ export default function AppCalendar() {
   const [modalShow, setModalShow] = useState(false);
   const handleModalClose = () => setModalShow(false);
   const handleModalShow = () => setModalShow(true);
-
-   // Inicio de funcion calendario horas
-  // console.log("script funcionando")
-
-  const [horaInicio, sethoraInicio] = useState('');
-  const [horaFinDisabled, setHoraFinDisabled] = useState(true);
-  const [horaFin, sethoraFin] = useState([]);
-
-  const handleHoraInicioChange = (event) => {
-    const value = event.target.value;
-    sethoraInicio(value);
-
-    if (value === "08:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '09:00', label: '09:00AM' },
-        { value: '09:30', label: '09:30AM' },
-        { value: '10:00', label: '10:00AM' },
-      ]);
-    } else if (value === "08:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '09:30', label: '09:30AM' },
-        { value: '10:00', label: '10:00AM' },
-        { value: '10:30', label: '10:30AM' },
-      ]);
-    } else if (value === "09:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '10:00', label: '10:00AM' },
-        { value: '10:30', label: '10:30AM' },
-        { value: '11:00', label: '11:00AM' },
-      ]);
-    } else if (value === "09:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '10:30', label: '10:30AM' },
-        { value: '11:00', label: '11:00AM' },
-        { value: '11:30', label: '11:30AM' },
-      ]);
-    } else if (value === "10:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '11:00', label: '11:00AM' },
-        { value: '11:30', label: '11:30AM' },
-        { value: '12:00', label: '12:00PM' },
-      ]);
-    } else if (value === "10:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '11:30', label: '11:30AM' },
-        { value: '12:00', label: '12:00PM' },
-        { value: '12:30', label: '12:30PM' },
-      ]);
-    } else if (value === "11:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '12:00', label: '12:00PM' },
-        { value: '12:30', label: '12:30PM' },
-        { value: '13:00', label: '01:00PM' },
-      ]);
-    } else if (value === "11:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '12:30', label: '12:30PM' },
-        { value: '13:00', label: '01:00PM' },
-        { value: '13:30', label: '01:30PM' },
-      ]);
-    } else if (value === "12:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '13:00', label: '01:00PM' },
-        { value: '13:30', label: '01:30PM' },
-        { value: '14:00', label: '02:00PM' },
-      ]);
-    } else if (value === "12:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '13:30', label: '01:30PM' },
-        { value: '14:00', label: '02:00PM' },
-        { value: '14:30', label: '02:30PM' },
-      ]);
-    } else if (value === "13:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '14:00', label: '02:00PM' },
-        { value: '14:30', label: '02:30PM' },
-        { value: '15:00', label: '03:00PM' },
-      ]);
-    } else if (value === "13:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '14:30', label: '02:30PM' },
-        { value: '15:00', label: '03:00PM' },
-        { value: '15:30', label: '03:30PM' },
-      ]);
-    } else if (value === "14:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '15:00', label: '03:00PM' },
-        { value: '15:30', label: '03:30PM' },
-        { value: '16:00', label: '04:00PM' },
-      ]);
-    } else if (value === "14:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '15:30', label: '03:30PM' },
-        { value: '16:00', label: '04:00PM' },
-        { value: '16:30', label: '04:30PM' },
-      ]);
-    } else if (value === "15:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '16:00', label: '04:00PM' },
-        { value: '16:30', label: '04:30PM' },
-        { value: '17:00', label: '05:00PM' },
-      ]);
-    } else if (value === "15:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '16:30', label: '04:30PM' },
-        { value: '17:00', label: '05:00PM' },
-        { value: '17:30', label: '05:30PM' },
-      ]);
-    } else if (value === "16:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '17:00', label: '05:00PM' },
-        { value: '17:30', label: '05:30PM' },
-        { value: '18:00', label: '06:00PM' },
-      ]);
-    } else if (value === "16:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '17:30', label: '05:30PM' },
-        { value: '18:00', label: '06:00PM' },
-        { value: '18:30', label: '06:30PM' },
-      ]);
-    } else if (value === "17:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '18:00', label: '06:00PM' },
-        { value: '18:30', label: '06:30PM' },
-        { value: '19:00', label: '07:00PM' },
-      ]);
-    } else if (value === "17:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '18:30', label: '06:30PM' },
-        { value: '19:00', label: '07:00PM' },
-        { value: '19:30', label: '06:30PM' },
-      ]);
-    } else if (value === "18:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '19:00', label: '07:00PM' },
-        { value: '19:30', label: '07:30PM' },
-        { value: '20:00', label: '08:00PM' },
-      ]);
-    } else if (value === "18:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '19:30', label: '07:30PM' },
-        { value: '20:00', label: '08:00PM' },
-        { value: '20:30', label: '08:30PM' },
-      ]);
-    } else if (value === "19:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '20:00', label: '08:00PM' },
-        { value: '20:30', label: '08:30PM' },
-        { value: '21:00', label: '09:00PM' },
-      ]);
-    } else if (value === "19:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '20:30', label: '08:30PM' },
-        { value: '21:00', label: '09:00PM' },
-        { value: '21:30', label: '09:30PM' },
-      ]);
-    } else if (value === "20:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '21:00', label: '09:00PM' },
-        { value: '21:30', label: '09:30PM' },
-        { value: '22:00', label: '10:00PM' },
-      ]);
-    } else if (value === "20:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '21:30', label: '09:30PM' },
-        { value: '22:00', label: '10:00PM' },
-        { value: '22:30', label: '10:30PM' },
-      ]);
-    } else if (value === "21:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '22:00', label: '10:00PM' },
-        { value: '22:30', label: '10:30PM' },
-        { value: '23:00', label: '11:00PM' },
-      ]);
-    } else if (value === "21:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '22:30', label: '10:30PM' },
-        { value: '23:00', label: '11:00PM' },
-        { value: '23:30', label: '11:30PM' },
-      ]);
-    } else if (value === "22:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '23:00', label: '11:00PM' },
-        { value: '23:30', label: '11:30PM' },
-        { value: '00:00', label: '12:00AM' },
-      ]);
-    } else if (value === "22:30") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '23:30', label: '11:30PM' },
-        { value: '00:00', label: '12:00AM' },
-      ]);
-    } else if (value === "23:00") {
-      setHoraFinDisabled(false);
-      sethoraFin([
-        { value: '00:00', label: '12:00AM' },
-      ]);
-    } else {
-      setHoraFinDisabled(true);
-      sethoraFin([]);
-    }
-  }
-
-  // Fin de funcion calendario horas
 
   return (
     <React.Fragment>
@@ -314,6 +413,7 @@ export default function AppCalendar() {
               ))}
             </ul>
 
+            {/** <h5 className="section-title section-title-sm mb-4">My Calendar</h5>*/}
             <Nav className="nav-calendar mb-4">
               <Nav.Link href="" className="calendar"><span></span> Confirmadas</Nav.Link>
               <Nav.Link href="" className="birthday"><span></span> Pendientes</Nav.Link>
@@ -323,7 +423,7 @@ export default function AppCalendar() {
           </PerfectScrollbar>
         </div>
         <div className="calendar-body">
-          
+
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin]}
             initialView="dayGridMonth"
@@ -355,16 +455,16 @@ export default function AppCalendar() {
               <Modal.Title>Nueva reserva</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-            <Row className="g-3 mb-3">
-            <Col xs="3" md="10">
-                <Form.Label>Cliente:</Form.Label>
-                <Form.Control type="text" placeholder="Ingrese Cliente" />
-                </Col>               
+              <Row className="g-3 mb-3">
+                <Col xs="3" md="10">
+                  <Form.Label>Cliente:</Form.Label>
+                  <Form.Control type="text" placeholder="Ingrese Cliente" />
+                </Col>
                 <Col xs="3" md="2">
                   <Form.Label>Asistentes:</Form.Label>
                   <Form.Control type="number" placeholder="#" />
-                </Col>   
-                
+                </Col>
+
               </Row>
               <Row className="g-3 mb-3">
                 <Col xs="7" md="5">
@@ -373,7 +473,7 @@ export default function AppCalendar() {
                 </Col>
                 <Col>
                   <Form.Label>Inicio:</Form.Label>
-                  <Form.Select id="horaInicio" name="horaInicio" required value={horaInicio}
+                  <Form.Select id="horaInicio" name="horaInicio" required value={reserva.horaInicio}
                     onChange={handleHoraInicioChange}>
                     <option>Hora...</option>
                     <option value="08:00">08:00 A.M</option>
@@ -411,9 +511,9 @@ export default function AppCalendar() {
                 </Col>
                 <Col>
                   <Form.Label>Finalización:</Form.Label>
-                  <Form.Select id="horaFin" name="horaFin" required disabled={horaFinDisabled}>
+                  <Form.Select id="horaFin" name="horaFin" disabled={reserva.horaFinDisabled} value={reserva.horaFin}>
                     <option value="">Hora</option>
-                    {horaFin.map((option) => (
+                    {reserva.horaFinOptions.map((option) => (
                       <option key={option.value} value={option.value}>
                         {option.label}
                       </option>
@@ -421,26 +521,19 @@ export default function AppCalendar() {
                   </Form.Select>
                 </Col>
               </Row>
-
-              <Row className="g-3 mb-3">
-                {/**<Col xs="7" md="8">
-                  <Form.Label>Fecha final:</Form.Label>
-                  <Form.Control type="text" placeholder="" />
-                </Col> */}               
-              </Row>
               <div className="mb-3">
                 <Col xs="3" md="3">
                   <Form.Label>Total: </Form.Label>
-                  <Form.Control type="text" placeholder="Automático" />
+                  <Form.Control type="text" placeholder="Automático" readOnly />
                 </Col>
-              </div>  
+              </div>
 
             </Modal.Body>
             <Modal.Footer>
               <Button variant="" className="btn-white" onClick={handleModalClose}>
                 Cancelar
               </Button>
-              <Button variant="primary" onClick={handleModalClose}>
+              <Button variant="primary" onClick={handleSubmit}>
                 Guardar
               </Button>
             </Modal.Footer>
