@@ -32,7 +32,7 @@ export default class Sidebar extends Component {
                             <img src={userAvatar} alt="" />
                         </div>
                         <div className="sidebar-footer-body">
-                            <h6><Link to="../pages/profile.html">Usuario</Link></h6>
+                            <h6><Link to="../pages/profile">Usuario</Link></h6>
                             {/**<p>Premium Member</p> */}
                         </div>
                         <Link onClick={this.toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link>
