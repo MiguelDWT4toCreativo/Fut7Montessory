@@ -14,17 +14,8 @@ import {
   calendarEvents,
   birthdayEvents,
   holidayEvents,
- // discoveredEvents,
-  //meetupEvents,
-  //otherEvents
 } from "../data/CalendarEvents";
 
-// import img6 from "../assets/img/img6.jpg";
-// import img8 from "../assets/img/img8.jpg";
-// import img10 from "../assets/img/img10.jpg";
-// import img12 from "../assets/img/img12.jpg";
-// import img14 from "../assets/img/img14.jpg";
-import img15 from "../assets/img/img15.jpg";
 
 export default function AppCalendar() {
 
@@ -323,7 +314,6 @@ export default function AppCalendar() {
               ))}
             </ul>
 
-            {/** <h5 className="section-title section-title-sm mb-4">My Calendar</h5>*/}
             <Nav className="nav-calendar mb-4">
               <Nav.Link href="" className="calendar"><span></span> Confirmadas</Nav.Link>
               <Nav.Link href="" className="birthday"><span></span> Pendientes</Nav.Link>
