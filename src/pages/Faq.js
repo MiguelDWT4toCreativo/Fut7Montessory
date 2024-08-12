@@ -26,9 +26,9 @@ export default function Faq() {
 
             <Accordion defaultActiveKey="0" className="accordion-faq">
               <Accordion.Item eventKey="0">
-                <Accordion.Header>What are tax summaries?</Accordion.Header>
+                <Accordion.Header>Devoluciones</Accordion.Header>
                 <Accordion.Body>
-                  <p>Tax summaries provide a summary of the income earned during an income year and the taxes paid on your behalf. Tax summaries are provided for both US sourced and Australian sourced income.</p>
+                  <p>.</p>
                   <p>There are 3 types of tax summaries:</p>
                   <ol>
                     <li>Form 1099 (US Citizens, or persons that do not provide details regarding tax residence);</li>

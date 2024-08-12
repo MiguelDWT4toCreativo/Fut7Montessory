@@ -118,18 +118,19 @@ export default function Header({ onSkin }) {
           <i className="ri-settings-3-line"></i>
         </Dropdown.Toggle>
         <Dropdown.Menu className="mt-10-f">
-          <label>Skin Mode</label>
+          <label>Tema</label>
           <nav className="nav nav-skin">
             <Link onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link" : "nav-link active"}>Light</Link>
             <Link onClick={skinMode} className={localStorage.getItem("skin-mode") ? "nav-link active" : "nav-link"}>Dark</Link>
           </nav>
-          <hr />
-          <label>Sidebar Skin</label>
+          
+          
+          {/**<label>Sidebar Skin</label>
           <nav id="sidebarSkin" className="nav nav-skin">
             <Link onClick={sidebarSkin} className={!(localStorage.getItem("sidebar-skin")) ? "nav-link active" : "nav-link"}>Default</Link>
             <Link onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "prime") ? "nav-link active" : "nav-link"}>Prime</Link>
             <Link onClick={sidebarSkin} className={(localStorage.getItem("sidebar-skin") === "dark") ? "nav-link active" : "nav-link"}>Dark</Link>
-          </nav>
+          </nav> */}
         </Dropdown.Menu>
       </Dropdown>
 
