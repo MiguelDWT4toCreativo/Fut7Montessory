@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import {Button, Form,Card, Col, Nav, Row } from "react-bootstrap";
+import { Button, Form, Card, Col, Nav, Row } from "react-bootstrap";
 import Footer from "../layouts/Footer";
 import HeaderMobile from "../layouts/HeaderMobile";
 import Avatar from "../components/Avatar";
@@ -81,26 +81,26 @@ export default function Profile() {
                 <Row>
                   <Col>
                     <h5 className="media-name">Usuario</h5>
-                    <p className="d-flex gap-2 mb-4"><i className="ri-user-line"></i> Tipo de usuario</p>                  
+                    <p className="d-flex gap-2 mb-4"><i className="ri-user-line"></i> Tipo de usuario</p>
                   </Col>
 
                   <Col className="d-flex">
-                      {/**<Button variant="primary" className="px-5"><i className="ri-delete-bin-line"></i> Eliminar cuenta</Button> 
+                    {/**<Button variant="primary" className="px-5"><i className="ri-delete-bin-line"></i> Eliminar cuenta</Button> 
                       <Button variant="" className="btn-icon btn-primary ms-1"><i className="ri-edit-line"></i></Button>
                       <Button variant="" className="btn-icon btn-danger ms-1"><i className="ri-delete-bin-line"></i></Button>*/}
-                  </Col>                
+                  </Col>
                 </Row>
-<ul className="list-contact-info">
-              {/*<h5 className="section-title mb-4">Contact Information</h5>
+                <ul className="list-contact-info">
+                  {/*<h5 className="section-title mb-4">Contact Information</h5>
               <li><i className="ri-building-fill"></i><span>Bay Area, San Francisco, CA</span></li>
               <li><i className="ri-home-8-fill"></i><span>Westfield, Oakland, CA</span></li>*/}
-              <li><i className="ri-phone-fill"></i><span>(+52) 771 345 6789</span></li>
-              <li><i className="ri-mail-fill"></i><span>you@youremail.com</span></li>
-            </ul>
-                  
-                  <hr className="my-4 opacity-0" />
+                  <li><i className="ri-phone-fill"></i><span>(+52) 771 345 6789</span></li>
+                  <li><i className="ri-mail-fill"></i><span>you@youremail.com</span></li>
+                </ul>
 
-            
+                <hr className="my-4 opacity-0" />
+
+
                 {/**<p className="mb-0">Redhead, Innovator, Saviour of Mankind, Hopeless Romantic, Attractive 20-something Yogurt Enthusiast. You can replace this with any content and adjust it as needed... <Link to="">Read more</Link></p> */}
               </div>
             </div>
@@ -239,90 +239,90 @@ export default function Profile() {
                 <div className="post-preview">
                   <Row className="g-2">
                     <Col sm="5">
-                    <div md="5" xl="5">
-                  <Card className="card-one card-wallet">
-                    <Card.Body>
-                      <div className="finance-icon">
-                        <i className="ri-mastercard-fill"></i>
-                        <i className="ri-visa-line"></i>
-                      </div>
-                      <label className="card-title mb-1">Available Balance</label>
-                      <h2 className="card-value mb-auto"><span>$</span>130,058.50</h2>
+                      <div md="5" xl="5">
+                        <Card className="card-one card-wallet">
+                          <Card.Body>
+                            <div className="finance-icon">
+                              <i className="ri-mastercard-fill"></i>
+                              <i className="ri-visa-line"></i>
+                            </div>
+                            <label className="card-title mb-1">Available Balance</label>
+                            <h2 className="card-value mb-auto"><span>$</span>130,058.50</h2>
 
-                      <label className="card-title mb-1">Account Number</label>
-                      <div className="d-flex align-items-center gap-4 mb-3">
-                        <div className="d-flex gap-1">
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                        </div>
-                        <div className="d-flex gap-1">
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                        </div>
-                        <div className="d-flex gap-1">
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                          <span className="badge-dot"></span>
-                        </div>
-                        <h5 className="ff-numerals mb-0">5314</h5>
-                      </div>
+                            <label className="card-title mb-1">Account Number</label>
+                            <div className="d-flex align-items-center gap-4 mb-3">
+                              <div className="d-flex gap-1">
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                              </div>
+                              <div className="d-flex gap-1">
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                              </div>
+                              <div className="d-flex gap-1">
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                                <span className="badge-dot"></span>
+                              </div>
+                              <h5 className="ff-numerals mb-0">5314</h5>
+                            </div>
 
-                      <label className="card-title mb-1">Account Name</label>
-                      <h5 className="mb-0">Richard M. Christensen</h5>
-                    </Card.Body>
-                    <ReactApexChart series={seriesSix} options={optionSix} height={268} type="area" className="apex-chart-two" />
-                  </Card>
-                </div>
+                            <label className="card-title mb-1">Account Name</label>
+                            <h5 className="mb-0">Richard M. Christensen</h5>
+                          </Card.Body>
+                          <ReactApexChart series={seriesSix} options={optionSix} height={268} type="area" className="apex-chart-two" />
+                        </Card>
+                      </div>
                     </Col>
                     <Col sm>
                       <h5>Información bancaria: </h5>
                       {/**<p>Full-time, $60,000 - $80,000 annual</p>
                       <span>Bay Area, San Francisco, California</span> */}
                       <div className="mb-4">
-                      <Row className="g-2 align-items-center mb-4">
-                        <Col md="5">
-                          <h6>Nombre: </h6>
-                        </Col>
-                        <Col md>
-                          <Form.Control type="text" placeholder="Ingrese el nombre completo" />
-                        </Col>
-                      </Row>
-                      <Row className="g-2 align-items-center mb-4">
-                        <Col md="5">
-                          <h6>Número de tarjeta: </h6>
-                        </Col>
-                        <Col md>
-                          <Form.Control type="text" placeholder="Ingrese el número correctamente" />
-                        </Col>
-                      </Row>
-                      <Row className="g-2 align-items-center mb-4">
-                        <Col md="5">
-                          <h6>Fecha válida: </h6>
-                        </Col>
-                        <Col md>
-                          <Form.Control type="date"  />
-                        </Col>
-                      </Row>
-                      <Row className="g-2 align-items-center mb-4">
-                        <Col md="5">
-                          <h6>CVV: </h6>
-                        </Col>
-                        <Col md>
-                          <Form.Control type="text" placeholder="Ingrese la clave correctamente" />
-                        </Col>
-                      </Row>
+                        <Row className="g-2 align-items-center mb-4">
+                          <Col md="5">
+                            <h6>Nombre: </h6>
+                          </Col>
+                          <Col md>
+                            <Form.Control type="text" placeholder="Ingrese el nombre completo" />
+                          </Col>
+                        </Row>
+                        <Row className="g-2 align-items-center mb-4">
+                          <Col md="5">
+                            <h6>Número de tarjeta: </h6>
+                          </Col>
+                          <Col md>
+                            <Form.Control type="text" placeholder="Ingrese el número correctamente" />
+                          </Col>
+                        </Row>
+                        <Row className="g-2 align-items-center mb-4">
+                          <Col md="5">
+                            <h6>Fecha válida: </h6>
+                          </Col>
+                          <Col md>
+                            <Form.Control type="date" />
+                          </Col>
+                        </Row>
+                        <Row className="g-2 align-items-center mb-4">
+                          <Col md="5">
+                            <h6>CVV: </h6>
+                          </Col>
+                          <Col md>
+                            <Form.Control type="text" placeholder="Ingrese la clave correctamente" />
+                          </Col>
+                        </Row>
                       </div>
-                    </Col> 
+                    </Col>
                   </Row>
                 </div>
               </Card.Body>
               <Card.Footer>
-               {/** <Nav>
+                {/** <Nav>
                   <Nav.Link href=""><i className="ri-thumb-up-line"></i> Like</Nav.Link>
                   <Nav.Link href=""><i className="ri-chat-1-line"></i> Comment</Nav.Link>
                   <Nav.Link href=""><i className="ri-share-forward-line"></i> Share</Nav.Link>
@@ -483,8 +483,8 @@ export default function Profile() {
               ))}
             </ul> */}
 
-            
-            {/**
+
+          {/**
             <hr className="my-4 opacity-0" />
 
             <h5 className="section-title mb-4">Social Channel</h5>
