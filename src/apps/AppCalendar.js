@@ -415,8 +415,8 @@ export default function AppCalendar() {
 
             {/** <h5 className="section-title section-title-sm mb-4">My Calendar</h5>*/}
             <Nav className="nav-calendar mb-4">
-              <Nav.Link href="" className="calendar"><span></span> Confirmadas</Nav.Link>
-              <Nav.Link href="" className="birthday"><span></span> Pendientes</Nav.Link>
+              <Nav.Link href="" className="birthday"><span></span> Confirmadas</Nav.Link>
+              <Nav.Link href="" className="calendar"><span></span> Pendientes</Nav.Link>
               <Nav.Link href="" className="holiday"><span></span> Finalizadas</Nav.Link>
             </Nav>
 

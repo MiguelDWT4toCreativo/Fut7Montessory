@@ -26,8 +26,8 @@ const birthdayEvents = {
   events: [
     {
       id: '11',
-      start: curYear+'-'+curMonth+'-06',
-      end: curYear+'-'+curMonth+'-06',
+      start: curYear+'-'+curMonth+'-13',
+      end: curYear+'-'+curMonth+'-13',
       title: 'Yoali'
     },
    
