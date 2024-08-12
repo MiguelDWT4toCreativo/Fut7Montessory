@@ -210,13 +210,46 @@ export default function Profile() {
             </Card>
  */}
 
-
-
-
-
-
-
-
+            <Card className="card-settings mt-4">
+              <Card.Header>
+                <Card.Title>Editar perfíl</Card.Title>
+                <Card.Text>Actualiza tu información.</Card.Text>
+              </Card.Header>
+              <Card.Body className="p-0">
+                <div className="setting-item">
+                  <Row className="g-2 align-items-center">
+                    <Col md="5">
+                      <h6>Nombre</h6>                      
+                    </Col>
+                    <Col md>
+                      <Form.Control type="text" placeholder="Ingrese su nombre completo" />
+                    </Col>
+                  </Row>
+                </div>
+                <div className="setting-item">
+                  <Row className="g-2">
+                    <Col md="5">
+                      <h6>Teléfono</h6>
+                    </Col>
+                    <Col md>
+                      <Form.Control type="text" placeholder="Ingrese su número de teléfono" />
+                      {/**<Form.Control as="textarea" rows="3" placeholder="Ingrese su número de teléfono" /> */}
+                    </Col>
+                  </Row>
+                </div>
+                <div className="setting-item">
+                  <Row className="g-2 align-items-center">
+                    <Col md="5">
+                      <h6>¿Estás de acuerdo con los cambios?</h6>
+                    </Col>
+                    <Col md>
+                            <Button type="submit" variant="danger" className="btn-sign">Cancelar</Button>&nbsp;
+                            <Button type="submit" variant="success" className="btn-sign">Actualizar</Button>
+                    </Col>
+                  </Row>
+                </div>                
+              </Card.Body>
+            </Card>
 
 
 
@@ -316,6 +349,16 @@ export default function Profile() {
                             <Form.Control type="text" placeholder="Ingrese la clave correctamente" />
                           </Col>
                         </Row>
+
+                        <Row className="g-2 align-items-center mb-4">  
+                          <Col md-11></Col>
+                          <Col md>
+                            <Button type="submit" variant="danger" className="btn-sign">Cancelar</Button>&nbsp;
+                            <Button type="submit" variant="success" className="btn-sign">Actualizar</Button>
+                          </Col>
+                        </Row>
+                        
+
                       </div>
                     </Col>
                   </Row>
@@ -329,6 +372,7 @@ export default function Profile() {
                 </Nav> */}
               </Card.Footer>
             </Card>
+
 
             {/**<Card className="card-post mt-4">
               <Card.Header>
