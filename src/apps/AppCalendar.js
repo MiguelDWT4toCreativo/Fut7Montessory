@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import Header from "../layouts/Header";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import { Button, Col, Form, Modal, Nav, Row } from "react-bootstrap";
@@ -42,6 +42,33 @@ export default function AppCalendar() {
     horaFinDisabled: true,  // Agregamos horaFinDisabled al estado de reserva
     horaFinOptions: [],     // Opciones disponibles para horaFin
   });
+
+  // Manejar el cambio de cliente
+  const handleClienteChange = (event) => {
+    const value = event.target.value;
+    setReserva((prevState) => ({
+      ...prevState,
+      cliente: value,
+    }));
+  };
+
+  // Manejar el cambio de fecha
+  const handleFechaChange = (event) => {
+    const value = event.target.value;
+    setReserva((prevState) => ({
+      ...prevState,
+      fecha: value,
+    }));
+  };
+
+  // Manejar el cambio de hora de fin
+  const handleHoraFinChange = (event) => {
+    const value = event.target.value;
+    setReserva((prevState) => ({
+      ...prevState,
+      horaFin: value,
+    }));
+  };
 
   const [eventos, setEventos] = useState([]);
 
@@ -351,7 +378,9 @@ export default function AppCalendar() {
         ...prevState,
         metodoPago: 'OXXO'
       }));
-      alert('Generando referencia de pago para OXXO...');
+      // alert('Generando referencia de pago para OXXO...');
+      
+      
     } else {
       alert('Método de pago no válido.');
     }
@@ -458,23 +487,22 @@ export default function AppCalendar() {
               <Row className="g-3 mb-3">
                 <Col xs="3" md="10">
                   <Form.Label>Cliente:</Form.Label>
-                  <Form.Control type="text" placeholder="Ingrese Cliente" />
+                  <Form.Control type="text" placeholder="Ingrese Cliente" value={reserva.cliente} onChange={handleClienteChange} />
                 </Col>
                 <Col xs="3" md="2">
                   <Form.Label>Asistentes:</Form.Label>
-                  <Form.Control type="number" placeholder="#" />
+                  <Form.Control type="number" placeholder="#" min="1" />
                 </Col>
 
               </Row>
               <Row className="g-3 mb-3">
                 <Col xs="7" md="5">
                   <Form.Label>Fecha:</Form.Label>
-                  <Form.Control type="date" placeholder="Escoge una fecha" />
+                  <Form.Control type="date" placeholder="Escoge una fecha" value={reserva.fecha} onChange={handleFechaChange} />
                 </Col>
                 <Col>
                   <Form.Label>Inicio:</Form.Label>
-                  <Form.Select id="horaInicio" name="horaInicio" required value={reserva.horaInicio}
-                    onChange={handleHoraInicioChange}>
+                  <Form.Select id="horaInicio" name="horaInicio" value={reserva.horaInicio} onChange={handleHoraInicioChange} required>
                     <option>Hora...</option>
                     <option value="08:00">08:00 A.M</option>
                     <option value="08:30">08:30 A.M</option>
@@ -511,7 +539,7 @@ export default function AppCalendar() {
                 </Col>
                 <Col>
                   <Form.Label>Finalización:</Form.Label>
-                  <Form.Select id="horaFin" name="horaFin" disabled={reserva.horaFinDisabled} value={reserva.horaFin}>
+                  <Form.Select id="horaFin" name="horaFin" disabled={reserva.horaFinDisabled} value={reserva.horaFin} onChange={handleHoraFinChange}>
                     <option value="">Hora</option>
                     {reserva.horaFinOptions.map((option) => (
                       <option key={option.value} value={option.value}>
@@ -524,7 +552,7 @@ export default function AppCalendar() {
               <div className="mb-3">
                 <Col xs="3" md="3">
                   <Form.Label>Total: </Form.Label>
-                  <Form.Control type="text" placeholder="Automático" readOnly />
+                  <Form.Control type="text" placeholder="Automático" />
                 </Col>
               </div>
 
