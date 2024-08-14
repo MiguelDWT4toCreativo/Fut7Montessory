@@ -27,7 +27,7 @@ export default function NotFound() {
               <h1 className="error-number">404</h1>
               <h2 className="error-title">Página no encontrada</h2>
               <p className="error-text">Oops. La página que estabas buscando no existe. Es posible que hayas escrito mal la dirección o que la página se haya movido.</p>
-              <Link to="/dashboard/finance" className="btn btn-primary btn-error">Regresar al inicio</Link>
+              <Link to="/dashboard/helpdesk" className="btn btn-primary btn-error">Regresar al inicio</Link>
             </Col>
             <Col xs="8" lg="6" className="mb-5 mb-lg-0">
               <object type="image/svg+xml" data={pageSvg} className="w-100" aria-label="svg image"></object>

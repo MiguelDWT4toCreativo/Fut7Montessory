@@ -22,9 +22,6 @@ export default function Signin() {
               <Form.Control type="password" placeholder="Ingrese su constraseña" value="password123" />
             </div>
             <Button type="submit" variant="primary" className="btn-sign">Ingresar</Button>
-
-            
-
             {/**<Row className="gx-2">
               <Col><Button variant="" className="btn-facebook"><i className="ri-facebook-fill"></i> Facebook</Button></Col>
               <Col><Button variant="" className="btn-google"><i className="ri-google-fill"></i> Google</Button></Col>

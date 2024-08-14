@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion, Row, Col, Form, Nav, Breadcrumb } from "react-bootstrap";
+import { Accordion, Row, Table, Col, Form, Nav, Breadcrumb } from "react-bootstrap";
 import Footer from "../layouts/Footer";
 import HeaderMobile from "../layouts/HeaderMobile";
 
@@ -25,71 +25,105 @@ export default function Faq() {
             </div> */}
 
             <Accordion defaultActiveKey="0" className="accordion-faq">
-              <Accordion.Item eventKey="0">
-                <Accordion.Header>Devoluciones</Accordion.Header>
-                <Accordion.Body>
-                  <p>.</p>
-                  <p>There are 3 types of tax summaries:</p>
-                  <ol>
-                    <li>Form 1099 (US Citizens, or persons that do not provide details regarding tax residence);</li>
-                    <li>Form 1042 (non-US Citizens); and</li>
-                    <li>Australian withholding tax payment summaries.</li>
-                  </ol>
 
-                  <p>The IRS requires Envato to provide you with either a Form 1099 or a Form 1042 for income which is deemed to have a US source (subject to certain exceptions).</p>
-                  <p>The Australian Tax Office similarly requires Envato to provide an Australian payment summary for Australian sourced income.</p>
-                  <p className="mb-0">This information may be used when completing your tax return (and potentially claiming a credit for any taxes paid on your behalf), so make sure you give them to your tax advisor/accountant.</p>
+            <Accordion.Item eventKey="0">
+                <Accordion.Header><i class="ri-reserved-line"></i> &nbsp; Política de Reservas</Accordion.Header>
+                <Accordion.Body>
+                  <p><strong>Límite de Personas:</strong> </p>                    
+                    <p>Cada reserva o renta de cancha está limitada a un máximo de 14 personas por cancha.</p>
+                    <p></p>  
+
+                  <p><strong>Horarios y Tarifas:</strong></p>
+                  <p>Los horarios oficiales para la reserva o renta de la cancha son los siguientes:</p>
+                  <Table className="table-agent mb-5" responsive>
+                    <thead>
+                      <tr>                        
+                        <th>Cantidad de horas</th>
+                        <th>Precio</th>                                            
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {[
+                      {
+                        "id": "1 hora",                       
+                        "quota": '$500.00',//Monto                        
+                      },{
+                        "id": "1 hora y media",                       
+                        "quota": '$750.00',//Monto                        
+                      },{
+                        "id": "2 horas",                       
+                        "quota": '$800.00',//Monto                        
+                      }, 
+                    ].map((item, index) => (
+                      <tr key={index}>                       
+                        <td><span className="ff-numerals">{item.id}</span></td>                        
+                        <td><span className="ff-numerals">{item.quota}</span></td>                                                                       
+                      </tr>
+                    ))}
+                  </tbody>
+                  </Table>
+
+                                    
                 </Accordion.Body>
               </Accordion.Item>
               <Accordion.Item eventKey="1">
+                <Accordion.Header><i class="ri-bank-card-line"></i> &nbsp; Política de Pagos</Accordion.Header>
+                <Accordion.Body>
+                  <p><strong>Opciones de Pago:</strong> </p>                    
+                    <p>Al realizar una nueva reserva, el cliente podrá elegir entre dos métodos de pago...</p>
+                    <ul>                     
+                        <li>Oxxo</li>
+                        <li>Tarjeta</li>                                             
+                    </ul>
+                  <p> <strong>Tiempo de Confirmación:</strong> </p>                    
+                    <ul>
+                      <li>El proceso de pago tendrá un tiempo de <strong>espera de 1 hora</strong> para reflejarse en el sistema. Durante este tiempo, la reserva se mantendrá <strong>
+                      <a href="#">pendiente</a></strong> y el horario seleccionado será bloqueado para otros usuarios.</li>                      
+                      <li>Si después del tiempo de espera de 1 hora no se ha confirmado el pago, la reserva de la cancha se eliminará, y el horario seleccionado será liberado como disponible para cualquier otro usuario.</li>
+                      </ul>                     
+                </Accordion.Body>
+              </Accordion.Item>
+
+              <Accordion.Item eventKey="2">
+                <Accordion.Header><i class="ri-wallet-3-line"></i> &nbsp; Política de Devoluciones</Accordion.Header>
+                <Accordion.Body>
+                  <p><strong>Cancelación con más de 24 horas de antelación:</strong> </p>                    
+                    <ul>
+                      <li>Si el cliente desea cancelar su reserva y lo hace con al menos 24 horas de antelación al evento, se le reembolsará el 100% del monto pagado.</li>                      
+                    </ul>
+                  <p> <strong>Cancelación con menos de 24 horas de antelación:</strong> </p>                    
+                    <ul>
+                      <li>Si el cliente cancela su reserva con menos de 24 horas de antelación al evento, se le reembolsará solo el 50% del monto pagado.</li>                      
+                    </ul>                          
+                </Accordion.Body>
+              </Accordion.Item>
+
+
+              {/** <Accordion.Item eventKey="2">
                 <Accordion.Header>How do I access my tax summary?</Accordion.Header>
                 <Accordion.Body>
                   <p>Tax summaries are available electronically from your account settings, but we've made a slight change in how you access them to help protect your information.</p>
-                  <p>Previously the 'Tax Summaries' option was available for everyone from the Author Tools menu in your account settings once you were logged in. Now, you will need to enable Two-Factor Authentication (2FA) before this option is visible, as well as update your preferences in 'Tax Information' - also available under Author Tools.</p>
                   <p><strong>Please follow these steps to view your tax summary</strong></p>
                   <ol>
-                    <li>Once you're logged into your account, go to your settings and under the “Author Tools” section on the left, click on Tax Information.</li>
-                    <li>At the top of the Tax Information section you will be able to 'opt in' to view your online Tax Summary by ticking 'Access Digital Tax Summaries'</li>
+                    <li>123.</li>
                   </ol>
-
                   <p className="mb-0"><i><strong>Please note:</strong> You can opt-out of having your tax summary available digitally at any time, as well as disabling 2FA, however, we don't recommend this.</i></p>
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="2">
-                <Accordion.Header>Why has tax been withheld from my earnings?</Accordion.Header>
-                <Accordion.Body>
-                  <p>Envato is required by law to withhold certain taxes from your earnings as an author. The relevant section of the author agreement says:</p>
                   <p><i>If required by law, we may deduct or withhold taxes (including withholding tax) in connection with your being an author. If so, we will give you relevant document that's required by law about the deduction or withholding (like documentation allowing you to access rebates or credits, or to manage your tax affairs).</i></p>
-                  <p>As an Australian company, Envato Elements Pty Ltd is required to withhold Australian Royalty Withholding Tax (AU RWT) from earnings paid out to authors located in other countries. The tax rate that applies can vary between 0% and 30%, depending on the tax treaty (if any) between Australia and your country.</p>
-                  <p>We use the country information from your tax form (W8/W9) to calculate the amount to withhold. So please make sure you keep this information up to date if you move countries.</p>
-                  <p className="mb-0">If taxes are withheld from your earnings, we will provide you with a relevant document each year to help you manage your tax affairs, for example, to claim a credit on your tax return for the amount withheld.</p>
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="3">
-                <Accordion.Header>Why would a customer ask for my tax information?</Accordion.Header>
-                <Accordion.Body>
-                  <p>From time to time you may receive requests from customers requesting a certificate of residency from you.</p>
-                  <p>There are a number of reasons why they might be doing this, a couple are:</p>
                   <ul>
                     <li>Some countries, such as Poland, require customers to submit certain tax information that includes information about where they have purchased from, and how much they paid.</li>
                     <li>Some companies, such as US companies, may have a code of business conduct that requires proper certification from you as to your tax residency status.</li>
                   </ul>
-                  <p className="mb-0">Please note that if you do not provide your tax information to the customer, they may not be able to purchase your item.</p>
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="4">
-                <Accordion.Header>Do I need to pay taxes on my Envato Market earnings?</Accordion.Header>
-                <Accordion.Body>
-                  <p>Any earnings that you receive from Envato Market are your responsibility to manage appropriately within your local country. We cannot provide advice on how you should proceed to pay taxes on your author earnings as tax laws vary greatly from country to country.</p>
-                  <p>We encourage you to seek out professional advice on tax-law and filing taxes. While the specifics of your country's tax laws might be different, there's a good chance that your government still wants you to declare your income.</p>
-                </Accordion.Body>
-              </Accordion.Item>
-              <Accordion.Item eventKey="5">
-                <Accordion.Header>What happens to funds that are held by Envato?</Accordion.Header>
-                <Accordion.Body>
                   <p>It is Envato's policy to suspend access to and prohibit the removal of funds from author accounts that Envato determines are related to individuals located in or associated with restricted countries. Funds held in suspended accounts will be held by Envato until the user is permitted to receive them. If you believe your account has been suspended in error, please <a href="/">Contact Us</a> immediately.</p>
                 </Accordion.Body>
-              </Accordion.Item>
+              </Accordion.Item>     */}
+
+
+
+
+
+
+
+                       
             </Accordion>
           </Col>
          {/** <Col md="6" lg="7" xl="4" xxl="3">
