@@ -3,14 +3,16 @@ import { Button, Card, Col, Form } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { setResult } from '../features/auth/authSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Signin() {
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
-    // event.preventDefault();
+    event.preventDefault();
 
     const data = {
       correo,
@@ -28,6 +30,7 @@ export default function Signin() {
     .then(result => {
       console.log('Success:', result);
       dispatch(setResult(result));  // Guarda el resultado en la variable global
+      navigate('/dashboard/helpdesk')
     })
     .catch(error => {
       console.error('Error:', error);

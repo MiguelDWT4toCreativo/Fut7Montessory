@@ -9,6 +9,7 @@ import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import esLocale from '@fullcalendar/core/locales/es';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { useSelector } from 'react-redux';
 
 import {
   calendarEvents,
@@ -31,6 +32,7 @@ export default function AppCalendar() {
 
   // Estado de la reserva
   const [reserva, setReserva] = useState({
+    token: useSelector((state) => state.auth.result),
     cliente: '',
     asistentes: 0,
     fecha: '',
@@ -342,6 +344,8 @@ export default function AppCalendar() {
     }));
   };
 
+  // const result = useSelector((state) => state.auth.result);
+  
   const handleSubmit = () => {
     if (!reserva.cliente || !reserva.fecha || !reserva.horaInicio || !reserva.horaFin) {
       alert('Por favor, complete todos los campos.');
@@ -360,8 +364,40 @@ export default function AppCalendar() {
 
     console.log('Reserva guardada:', reserva);
 
+    // cliente: reserva.token.user,
+    // cliente: "miguel@miguel.com",
+    const data = {
+      token: reserva.token.token,
+      cliente: "14",
+      numero_asistentes: reserva.asistentes,
+      fecha: reserva.fecha,
+      inicio: reserva.horaInicio,
+      finalizacion: reserva.horaFin,
+      total: 100,
+    }
+
+    console.log(data.token);
+    
+
+    fetch('http://localhost:8080/reserva.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams(data)
+    })
+    .then(response => response.json())
+    .then(result => {
+      console.log('Success:', result);
+      // dispatch(setResult(result));  // Guarda el resultado en la variable global
+      // navigate('/dashboard/helpdesk')
+    })
+    .catch(error => {
+      console.error('Error:', error);
+    });
+
     // Iniciar proceso de pago
-    iniciarProcesoDePago();
+    // iniciarProcesoDePago();
   };
 
   const iniciarProcesoDePago = () => {
