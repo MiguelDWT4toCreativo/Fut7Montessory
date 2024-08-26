@@ -4,10 +4,10 @@ const curYear = moment().format('YYYY');
 const curMonth = moment().format('MM');
 
 // Calendar Event Source
-const calendarEvents = {
-  id: 1,
-  backgroundColor: '#c3edd5',
-  borderColor: '#10b759',
+const holidayEvents = {
+  id: 3,
+  backgroundColor: '#ea4b58',
+  borderColor: '#00194f',
   events: [
     {
       id: '12',
@@ -34,76 +34,53 @@ const birthdayEvents = {
   ]
 };
 
-const holidayEvents = {
-  id: 3,
-  backgroundColor: '#ea4b58',
-  borderColor: '#00194f',
-  events: [
-    {
-      id: '10',
-      start: curYear+'-'+curMonth+'-04',
-      end: curYear+'-'+curMonth+'-04',
-      title: 'Miguel'
-    },
-    
-  ]
+const calendarEvents = {
+  id: 1,
+  backgroundColor: '#c3edd5',
+  borderColor: '#10b759',
+  events: []
+  // Alternativamente, si quieres mantener el evento estático además de los que traigas de la API:
+  // events: [
+  //   {
+  //     id: '10',
+  //     start: curYear + '-' + curMonth + '-04',
+  //     end: curYear + '-' + curMonth + '-04',
+  //     title: 'Miguel'
+  //   },
+  //   ...await fetchEvents()
+  // ]
 };
 
-{/**
-  const discoveredEvents = {
-  id: 4,
-  backgroundColor: '#bff2f2',
-  borderColor: '#00cccc',
-  events: [
-    {
-      id: '13',
-      start: curYear+'-'+curMonth+'-17T08:00:00',
-      end: curYear+'-'+curMonth+'-18T11:00:00',
-      title: 'Web Design Workshop Seminar'
-    }
-  ]
-};
+async function fetchEvents() {
+  try {
+    const response = await fetch('http://localhost:8080/fetchReservas.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      // body: new URLSearchParams(data)
+    });
 
-const meetupEvents = {
-  id: 5,
-  backgroundColor: '#dedafe',
-  borderColor: '#5b47fb',
-  events: [
-    {
-      id: '14',
-      start: curYear+'-'+curMonth+'-03',
-      end: curYear+'-'+curMonth+'-05',
-      title: 'UI/UX Meetup Conference'
-    },
-    {
-      id: '15',
-      start: curYear+'-'+curMonth+'-18',
-      end: curYear+'-'+curMonth+'-20',
-      title: 'Angular Conference Meetup'
-    }
-  ]
-};
+    const result = await response.json();
+    console.log('Success:', result);
 
+    // Mapea las reservas a eventos
+    const events = result.map(reservation => ({
+      id: reservation.id,
+      start: reservation.inicio,
+      end: reservation.finalizacion,
+      title: `Cliente ${reservation.clienteId}`
+    }));
 
-const otherEvents = {
-  id: 6,
-  backgroundColor: '#ffdec4',
-  borderColor: '#fd7e14',
-  events: [
-    {
-      id: '16',
-      start: curYear+'-'+curMonth+'-06',
-      end: curYear+'-'+curMonth+'-08',
-      title: 'My Rest Day'
-    },
-    {
-      id: '17',
-      start: curYear+'-'+curMonth+'-29',
-      end: curYear+'-'+curMonth+'-31',
-      title: 'My Rest Day'
-    }
-  ]
-};
- */}
+    // Asigna los eventos al objeto holidayEvents
+    calendarEvents.events = events;
 
-export { calendarEvents, birthdayEvents, holidayEvents,  };//discoveredEvents, meetupEvents, otherEvents
+  } catch (error) {
+    console.error('Error:', error);
+  }
+}
+
+// Llama a fetchEvents para cargar los eventos
+fetchEvents();
+
+export { calendarEvents, birthdayEvents, holidayEvents };

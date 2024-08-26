@@ -29,8 +29,8 @@ export default function Signin() {
     .then(response => response.json())
     .then(result => {
       console.log('Success:', result);
-      dispatch(setResult(result));  // Guarda el resultado en la variable global
-      navigate('/dashboard/helpdesk')
+      dispatch(setResult({...result, email: correo}));
+      navigate('/dashboard/helpdesk');
     })
     .catch(error => {
       console.error('Error:', error);

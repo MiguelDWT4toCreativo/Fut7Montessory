@@ -10,6 +10,8 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import esLocale from '@fullcalendar/core/locales/es';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 
 import {
   calendarEvents,
@@ -17,7 +19,11 @@ import {
   holidayEvents,
 } from "../data/CalendarEvents";
 
+// console.log(calendarEvents);
+
+
 export default function AppCalendar() {
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.body.classList.add('app-calendar');
@@ -340,14 +346,14 @@ export default function AppCalendar() {
       ...prevState,
       horaInicio: value,
       horaFinDisabled: horaFinDisabled,
-      horaFinOptions: horaFinOptions,  // Guardamos las opciones de horaFin
+      horaFinOptions: horaFinOptions,
     }));
   };
-
-  // const result = useSelector((state) => state.auth.result);
   
   const handleSubmit = () => {
-    if (!reserva.cliente || !reserva.fecha || !reserva.horaInicio || !reserva.horaFin) {
+    if (!reserva.token) { navigate('/pages/signin'); return; }
+
+    if (!reserva.fecha || !reserva.horaInicio || !reserva.horaFin) {
       alert('Por favor, complete todos los campos.');
       return;
     }
@@ -362,22 +368,15 @@ export default function AppCalendar() {
 
     setEventos([...eventos, nuevoEvento]);
 
-    console.log('Reserva guardada:', reserva);
-
-    // cliente: reserva.token.user,
-    // cliente: "miguel@miguel.com",
     const data = {
       token: reserva.token.token,
-      cliente: "14",
+      cliente: reserva.token.email,
       numero_asistentes: reserva.asistentes,
       fecha: reserva.fecha,
       inicio: reserva.horaInicio,
       finalizacion: reserva.horaFin,
       total: 100,
     }
-
-    console.log(data.token);
-    
 
     fetch('http://localhost:8080/reserva.php', {
       method: 'POST',
@@ -431,7 +430,44 @@ export default function AppCalendar() {
   // Modal
   const [modalShow, setModalShow] = useState(false);
   const handleModalClose = () => setModalShow(false);
-  const handleModalShow = () => setModalShow(true);
+  const handleModalShow = () => setModalShow(true); 
+  const [events, setEvents] = useState([]);  // Estado para almacenar los eventos
+  
+  const [loading, setLoading] = useState(true);  // Estado para manejar la carga
+
+  useEffect(() => {
+    async function loadEvents() {
+      try {
+        const response = await fetch('http://localhost:8080/fetchReservas.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          // body: new URLSearchParams(data)
+        });
+
+        const result = await response.json();
+        const events = result.map(reservation => ({
+          id: reservation.clienteId,
+          start: reservation.inicio,
+          end: reservation.finalizacion,
+          title: `Cliente ${reservation.clienteId}`
+        }));
+
+        setEvents(events);  // Actualiza el estado con los eventos cargados
+        setLoading(false);  // Indica que la carga ha finalizado
+      } catch (error) {
+        console.error('Error:', error);
+        setLoading(false);  // Aún si hay un error, detén el estado de "cargando"
+      }
+    }
+
+    loadEvents();
+  }, []);  // El arreglo vacío asegura que este efecto solo se ejecute una vez cuando el componente se monta
+
+  if (loading) {
+    return <div>Loading...</div>;  // Muestra un mensaje de carga mientras los datos se obtienen
+  }
 
   return (
     <React.Fragment>
@@ -499,9 +535,14 @@ export default function AppCalendar() {
               "right": "dayGridMonth,timeGridWeek,timeGridDay"
             }}
             eventSources={[
-              calendarEvents,
-              birthdayEvents,
-              holidayEvents,
+              {
+                id: 1,
+                backgroundColor: '#c3edd5',
+                borderColor: '#10b759',
+                events: events
+              },
+              // birthdayEvents,
+              // holidayEvents,
             ]}
             customButtons={
               {
@@ -521,13 +562,14 @@ export default function AppCalendar() {
             </Modal.Header>
             <Modal.Body>
               <Row className="g-3 mb-3">
-                <Col xs="3" md="10">
+                {/* <Col xs="3" md="10">
                   <Form.Label>Cliente:</Form.Label>
                   <Form.Control type="text" placeholder="Ingrese Cliente" value={reserva.cliente} onChange={handleClienteChange} />
-                </Col>
+                </Col> */}
                 <Col xs="3" md="2">
                   <Form.Label>Asistentes:</Form.Label>
-                  <Form.Control type="number" placeholder="#" min="1" />
+                  <Form.Control type="number" placeholder="#" min="1"
+                   value={reserva.asistentes || 0} onChange={e => setReserva({...reserva, asistentes: e.target.value})} />
                 </Col>
 
               </Row>
@@ -597,9 +639,18 @@ export default function AppCalendar() {
               <Button variant="" className="btn-white" onClick={handleModalClose}>
                 Cancelar
               </Button>
-              <Button variant="primary" onClick={handleSubmit}>
+              {/* <Button variant="primary" onClick={handleSubmit}>
                 Guardar
-              </Button>
+              </Button> */}
+              
+              <stripe-buy-button
+                buy-button-id="buy_btn_1PrA7KEXIQ5E926CVHYUi3Lg"
+                publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
+                // customer-email={reserva.token.email || ''}
+              >
+              </stripe-buy-button>
+
+              
             </Modal.Footer>
           </Modal>
         </div>
