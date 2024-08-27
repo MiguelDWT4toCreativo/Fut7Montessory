@@ -380,7 +380,7 @@ export default function AppCalendar() {
       allDay: false
     };
 
-    setEventos([...eventos, nuevoEvento]);
+    setEvents([...events, nuevoEvento]);
 
     const data = {
       token: reserva.token.token,
