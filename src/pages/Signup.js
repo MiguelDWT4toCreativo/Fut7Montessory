@@ -71,6 +71,7 @@ export default function Signup() {
                 type="email" 
                 placeholder="Ingrese su Correo Electrónico"
                 value={correo}
+                pattern="[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}"
                 onChange={(e) => setCorreo(e.target.value)}
               />
             </div>
