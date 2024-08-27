@@ -83,6 +83,9 @@ export default function AppCalendar() {
       case 3: setCost(800); break;
       default: setCost(0); break;
     }
+
+    // setReserva({...reserva, total: cost});
+
     setReserva((prevState) => ({
       ...prevState,
       horaFin: value,
@@ -386,7 +389,7 @@ export default function AppCalendar() {
       fecha: reserva.fecha,
       inicio: reserva.horaInicio,
       finalizacion: reserva.horaFin,
-      total: 0,
+      total: cost,
     }
 
     fetch('http://localhost:8080/reserva.php', {
@@ -650,7 +653,7 @@ export default function AppCalendar() {
               <div className="mb-3">
                 <Col xs="3" md="3">
                   <Form.Label>Total: </Form.Label>
-                  <Form.Control type="text" placeholder="Automático" value={cost} />
+                  <Form.Control type="text" placeholder="Automático" value={cost} onChange={e => e.preventDefault()} />
                 </Col>
               </div>
 
@@ -659,9 +662,9 @@ export default function AppCalendar() {
               <Button variant="" className="btn-white" onClick={handleModalClose}>
                 Cancelar
               </Button>
-              {/* <Button variant="primary" onClick={handleSubmit}>
+              <Button variant="primary" onClick={handleSubmit}>
                 Guardar
-              </Button> */}
+              </Button>
   
               {
                 pricing == 1 &&
