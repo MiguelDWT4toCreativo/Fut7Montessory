@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { Button, Card, Col, Form, Row } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Signup() {
   const [nombre, setNombre] = useState('');
   const [telefono, setTelefono] = useState('');
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
 
   const handleSubmit = (event) => {
@@ -29,6 +30,7 @@ export default function Signup() {
     .then(response => response.json())
     .then(result => {
       console.log('Success:', result);
+      navigate('/pages/signin')
     })
     .catch(error => {
       console.error('Error:', error);
