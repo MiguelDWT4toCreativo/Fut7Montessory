@@ -34,8 +34,10 @@ export default function AppCalendar() {
 
   const [startDate, setStartDate] = useState(new Date());
 
+  const [pricing, setPricing] = useState(0);
+  const [cost, setCost] = useState(0);
+  
   //Inicio Funcion de guardar reserva
-
   // Estado de la reserva
   const [reserva, setReserva] = useState({
     token: useSelector((state) => state.auth.result),
@@ -72,6 +74,15 @@ export default function AppCalendar() {
   // Manejar el cambio de hora de fin
   const handleHoraFinChange = (event) => {
     const value = event.target.value;
+    const selectedIndex = event.target.selectedIndex;
+    setPricing(selectedIndex);
+
+    switch (selectedIndex) {
+      case 1: setCost(500); break;
+      case 2: setCost(750); break;
+      case 3: setCost(800); break;
+      default: setCost(0); break;
+    }
     setReserva((prevState) => ({
       ...prevState,
       horaFin: value,
@@ -375,7 +386,7 @@ export default function AppCalendar() {
       fecha: reserva.fecha,
       inicio: reserva.horaInicio,
       finalizacion: reserva.horaFin,
-      total: 100,
+      total: 0,
     }
 
     fetch('http://localhost:8080/reserva.php', {
@@ -617,20 +628,29 @@ export default function AppCalendar() {
                 </Col>
                 <Col>
                   <Form.Label>Finalización:</Form.Label>
-                  <Form.Select id="horaFin" name="horaFin" disabled={reserva.horaFinDisabled} value={reserva.horaFin} onChange={handleHoraFinChange}>
+                  <Form.Select
+                    id="horaFin"
+                    name="horaFin"
+                    disabled={reserva.horaFinDisabled}
+                    value={reserva.horaFin}
+                    onChange={handleHoraFinChange} // Esto actualizará el pricing basado en el índice de la opción seleccionada
+                  >
                     <option value="">Hora</option>
-                    {reserva.horaFinOptions.map((option) => (
-                      <option key={option.value} value={option.value}>
-                        {option.label}
-                      </option>
-                    ))}
+                    {
+                      reserva.horaFinOptions.map((option, index) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))
+                    }
                   </Form.Select>
+
                 </Col>
               </Row>
               <div className="mb-3">
                 <Col xs="3" md="3">
                   <Form.Label>Total: </Form.Label>
-                  <Form.Control type="text" placeholder="Automático" />
+                  <Form.Control type="text" placeholder="Automático" value={cost} />
                 </Col>
               </div>
 
@@ -642,14 +662,31 @@ export default function AppCalendar() {
               {/* <Button variant="primary" onClick={handleSubmit}>
                 Guardar
               </Button> */}
-              
-              <stripe-buy-button
-                buy-button-id="buy_btn_1PrA7KEXIQ5E926CVHYUi3Lg"
-                publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                // customer-email={reserva.token.email || ''}
-              >
-              </stripe-buy-button>
-
+  
+              {
+                pricing == 1 &&
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1PsVA8EXIQ5E926Cq0A8EsJE"
+                  publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
+                >
+                </stripe-buy-button>
+              }
+              {
+                pricing == 2 &&
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1PsU5bEXIQ5E926CvsFcXl0f"
+                  publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
+                >
+                </stripe-buy-button>
+              }             
+              {
+                pricing == 3 &&
+                <stripe-buy-button
+                  buy-button-id="buy_btn_1PrA7KEXIQ5E926CVHYUi3Lg"
+                  publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
+                >
+                </stripe-buy-button>
+              }
               
             </Modal.Footer>
           </Modal>
