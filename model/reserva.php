@@ -44,6 +44,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$clienteData || $auth['customer_id'] !== $clienteData['id']) {
             sendResponse(403, 'Cliente no autorizado o no encontrado');
         }
+        
+        // Verificar que el cliente existe y su id coincide con el customer_id del token
+        $stmt = $pdo->prepare("SELECT NOT EXISTS (SELECT 1 FROM Reserva WHERE inicio < ? AND finalizacion > ?) AS no_registros;");
+        $stmt->execute([$fecha . "T" . $finalizacion . ":00", $fecha . "T" . $inicio . ":00"]);
+        $existentDate = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Si no hay registros, enviar una respuesta indicando que el horario no está disponible
+        if ($existentDate['no_registros'] == 0) {
+            sendResponse(403, 'Horario no disponible');
+        }
+
 
         // Insertar la reserva si las validaciones son correctas
         $stmt = $pdo->prepare("INSERT INTO Reserva (clienteId, numeroAsistentes, fecha, inicio, finalizacion, total) VALUES (?, ?, NOW(), ?, ?, ?)");

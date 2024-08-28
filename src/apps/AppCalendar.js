@@ -371,17 +371,6 @@ export default function AppCalendar() {
       alert('Por favor, complete todos los campos.');
       return;
     }
-
-    // Guardar la reserva y agregarla al calendario
-    const nuevoEvento = {
-      title: `Reserva: ${reserva.cliente}`,
-      start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
-      end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
-      allDay: false
-    };
-
-    setEvents([...events, nuevoEvento]);
-
     const data = {
       token: reserva.token.token,
       cliente: reserva.token.email,
@@ -401,7 +390,19 @@ export default function AppCalendar() {
     })
     .then(response => response.json())
     .then(result => {
+
+      // Guardar la reserva y agregarla al calendario
+      const nuevoEvento = {
+        title: `Reserva: ${reserva.cliente}`,
+        start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
+        end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
+        allDay: false
+      };
+
+      setEvents([...events, nuevoEvento]);
+
       console.log('Success:', result);
+
       // dispatch(setResult(result));  // Guarda el resultado en la variable global
       // navigate('/dashboard/helpdesk')
     })
