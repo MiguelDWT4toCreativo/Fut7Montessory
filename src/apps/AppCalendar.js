@@ -390,17 +390,17 @@ export default function AppCalendar() {
     })
     .then(response => response.json())
     .then(result => {
+      if (result.status !== "Horario no disponible") {
 
-      // Guardar la reserva y agregarla al calendario
-      const nuevoEvento = {
-        title: `Reserva: ${reserva.cliente}`,
-        start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
-        end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
-        allDay: false
-      };
+        const nuevoEvento = {
+          title: `Reserva: ${reserva.cliente}`,
+          start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
+          end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
+          allDay: false
+        };
 
-      setEvents([...events, nuevoEvento]);
-
+        setEvents([...events, nuevoEvento]);
+      }
       console.log('Success:', result);
 
       // dispatch(setResult(result));  // Guarda el resultado en la variable global
