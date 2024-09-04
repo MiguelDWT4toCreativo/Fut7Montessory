@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import Header from "../layouts/Header";
 import PerfectScrollbar from "react-perfect-scrollbar";
@@ -24,6 +24,7 @@ import {
 
 export default function AppCalendar() {
   const navigate = useNavigate();
+  // const stripeButtons = useRef([])
 
   useEffect(() => {
     document.body.classList.add('app-calendar');
@@ -400,7 +401,14 @@ export default function AppCalendar() {
         };
 
         setEvents([...events, nuevoEvento]);
+        
+        const stripeButtons = Array.from(document.getElementsByTagName('stripe-buy-button'));
+        // console.log(stripeButtons);
+        
+        stripeButtons[pricing-1].click();
+        // if (pricing > 0) stripeButtons[pricing-1].click();
       }
+
       console.log('Success:', result);
 
       // dispatch(setResult(result));  // Guarda el resultado en la variable global
@@ -666,32 +674,24 @@ export default function AppCalendar() {
               <Button variant="primary" onClick={handleSubmit}>
                 Guardar
               </Button>
-  
-              {
-                pricing == 1 &&
                 <stripe-buy-button
+                  //  ref={(el) => (stripeButtons.current[0] = el)}
+                   hidden
                   buy-button-id="buy_btn_1PsVA8EXIQ5E926Cq0A8EsJE"
                   publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                >
-                </stripe-buy-button>
-              }
-              {
-                pricing == 2 &&
+                ></stripe-buy-button>
                 <stripe-buy-button
+                  // ref={(el) => (stripeButtons.current[1] = el)}
+                  hidden
                   buy-button-id="buy_btn_1PsU5bEXIQ5E926CvsFcXl0f"
                   publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                >
-                </stripe-buy-button>
-              }             
-              {
-                pricing == 3 &&
+                ></stripe-buy-button>
                 <stripe-buy-button
+                  // ref={(el) => (stripeButtons.current[2] = el)}
+                  // hidden
                   buy-button-id="buy_btn_1PrA7KEXIQ5E926CVHYUi3Lg"
                   publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                >
-                </stripe-buy-button>
-              }
-              
+                ></stripe-buy-button>
             </Modal.Footer>
           </Modal>
         </div>

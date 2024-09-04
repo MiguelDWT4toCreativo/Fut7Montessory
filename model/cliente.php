@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = password_hash($_POST['password'], PASSWORD_BCRYPT);
 
     try {
-        $stmt = $pdo->prepare("INSERT INTO Cliente (nombre, telefono, correo, password) VALUES (?, ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO Cliente (status, nombre, telefono, correo, password) VALUES ('pendiente', ?, ?, ?, ?)");
         $stmt->execute([$nombre, $telefono, $correo, $password]);
         sendResponse(200, 'Éxito');
     } catch (PDOException $e) {

@@ -1,5 +1,6 @@
 CREATE TABLE `Cliente` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
+    `status` VARCHAR(10) NOT NULL,
     `nombre` VARCHAR(191) NOT NULL,
     `telefono` VARCHAR(191) NOT NULL,
     `correo` VARCHAR(191) NOT NULL,
@@ -12,11 +13,15 @@ CREATE TABLE `Cliente` (
 CREATE TABLE `Reserva` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `clienteId` INTEGER NOT NULL,
+    `paymentIntent` VARCHAR(191) NOT NULL,
+    `status` VARCHAR(10) NOT NULL,
+    `customerData` JSON NOT NULL,
     `numeroAsistentes` INTEGER NOT NULL,
     `fecha` DATETIME(3) NOT NULL,
     `inicio` DATETIME(3) NOT NULL,
     `finalizacion` DATETIME(3) NOT NULL,
     `total` DOUBLE NOT NULL,
+    `refund` DOUBLE,
 
     INDEX `Reserva_clienteId_idx`(`clienteId`),
     PRIMARY KEY (`id`)

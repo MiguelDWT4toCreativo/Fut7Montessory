@@ -57,7 +57,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         // Insertar la reserva si las validaciones son correctas
-        $stmt = $pdo->prepare("INSERT INTO Reserva (clienteId, numeroAsistentes, fecha, inicio, finalizacion, total) VALUES (?, ?, NOW(), ?, ?, ?)");
+        $stmt = $pdo->prepare("INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
+         VALUES (?, 'asdfasdf123', 'pendiente', '{}', ?, NOW(), ?, ?, ?)");
         $stmt->execute([
             $auth['customer_id'], 
             $numero_asistentes, 
