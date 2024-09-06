@@ -4,6 +4,8 @@ header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json');
 
+require_once './lib/stripe-php-15.7.0/init.php';
+
 include 'db.php';
 
 function sendResponse($status, $message) {
@@ -26,56 +28,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $finalizacion = $_POST['finalizacion'];
     $total = $_POST['total'];
 
+    switch ($total) {
+        case 1: $total = 500; break;
+        case 2: $total = 750; break;
+        case 3: $total = 800; break;
+        default: sendResponse(400, 'Datos incompletos');
+    }
+
     try {
-        // Verificar si el token existe y no ha expirado
         $stmt = $pdo->prepare("SELECT customer_id FROM customer_auth WHERE token = ? AND expires_at > NOW()");
         $stmt->execute([$token]);
         $auth = $stmt->fetch(PDO::FETCH_ASSOC);
-
         if (!$auth) {
             sendResponse(401, 'Token inválido o expirado');
         }
-
-        // Verificar que el cliente existe y su id coincide con el customer_id del token
-        $stmt = $pdo->prepare("SELECT id FROM Cliente WHERE correo = ?");
-        $stmt->execute([$cliente]);
-        $clienteData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (!$clienteData || $auth['customer_id'] !== $clienteData['id']) {
-            sendResponse(403, 'Cliente no autorizado o no encontrado');
-        }
         
-        // Verificar que el cliente existe y su id coincide con el customer_id del token
         $stmt = $pdo->prepare("SELECT NOT EXISTS (SELECT 1 FROM Reserva WHERE inicio < ? AND finalizacion > ?) AS no_registros;");
         $stmt->execute([$fecha . "T" . $finalizacion . ":00", $fecha . "T" . $inicio . ":00"]);
         $existentDate = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        // Si no hay registros, enviar una respuesta indicando que el horario no está disponible
         if ($existentDate['no_registros'] == 0) {
             sendResponse(403, 'Horario no disponible');
         }
+                
+        $stripe = new \Stripe\StripeClient('sk_test_51Pr9eEEXIQ5E926COkT4CoZRiVSIa2hAmuNzWOPVBZoqASP37iC8UOtYU1tC7ZT2QCuA6u5CyNZO4udf9U03388R0018rrvRHE');
 
+        $intent = $stripe->paymentIntents->create([
+        'amount' => $total,
+        'currency' => 'usd',
+        ]);
 
-        // Insertar la reserva si las validaciones son correctas
+        // $stripe->paymentIntents->create([
+        //     'amount' => 1099,
+        //     'currency' => 'usd',
+        //     'payment_method_types' => ['card'],
+        //     'metadata' => ['order_id' => '6735'],
+        //   ]);
+                
         $stmt = $pdo->prepare("INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
-         VALUES (?, 'asdfasdf123', 'pendiente', '{}', ?, NOW(), ?, ?, ?)");
+         VALUES (?, ?, 'pendiente', '{}', ?, NOW(), ?, ?, ?)");
         $stmt->execute([
             $auth['customer_id'], 
+            $intent->client_secret,
             $numero_asistentes, 
             $fecha . "T" . $inicio . ":00", 
             $fecha . "T" . $finalizacion . ":00", 
             $total
         ]);
-
-        // Obtener el ID de la última inserción
+        
         $reservaId = $pdo->lastInsertId();
 
-        // Recuperar la información completa de la reserva recién insertada, incluyendo la fecha
-        $stmt = $pdo->prepare("SELECT fecha FROM Reserva WHERE id = ?");
-        $stmt->execute([$reservaId]);
-        $reservaData = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        sendResponse(200, $reservaData['fecha']);
+        sendResponse(200, $intent->client_secret);
     } catch (PDOException $e) {
         sendResponse(500, 'Error en la base de datos: ' . $e->getMessage());
     }

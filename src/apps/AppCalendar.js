@@ -11,20 +11,32 @@ import esLocale from '@fullcalendar/core/locales/es';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-
-
 import {
-  calendarEvents,
-  birthdayEvents,
-  holidayEvents,
-} from "../data/CalendarEvents";
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from 'react-router-dom';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from "./CheckoutForm";
 
-// console.log(calendarEvents);
-
+const stripePromise = loadStripe("pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K");
 
 export default function AppCalendar() {
   const navigate = useNavigate();
-  // const stripeButtons = useRef([])
+  const [clientSecret, setClientSecret] = useState("");
+  const [dpmCheckerLink, setDpmCheckerLink] = useState("");
+
+  const paymentElementOptions = {
+    layout: "tabs"
+  }
+  const appearance = {
+    theme: 'stripe',
+  };
+  const options = {
+    clientSecret,
+    appearance,
+  };
 
   useEffect(() => {
     document.body.classList.add('app-calendar');
@@ -85,15 +97,11 @@ export default function AppCalendar() {
       default: setCost(0); break;
     }
 
-    // setReserva({...reserva, total: cost});
-
     setReserva((prevState) => ({
       ...prevState,
       horaFin: value,
     }));
   };
-
-  const [eventos, setEventos] = useState([]);
 
   // Manejar el cambio de hora de inicio
   const handleHoraInicioChange = (event) => {
@@ -379,7 +387,7 @@ export default function AppCalendar() {
       fecha: reserva.fecha,
       inicio: reserva.horaInicio,
       finalizacion: reserva.horaFin,
-      total: cost,
+      total: pricing,
     }
 
     fetch('http://localhost:8080/reserva.php', {
@@ -393,6 +401,8 @@ export default function AppCalendar() {
     .then(result => {
       if (result.status !== "Horario no disponible") {
 
+        setClientSecret(result.status);
+
         const nuevoEvento = {
           title: `Reserva: ${reserva.cliente}`,
           start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
@@ -402,11 +412,11 @@ export default function AppCalendar() {
 
         setEvents([...events, nuevoEvento]);
         
-        const stripeButtons = Array.from(document.getElementsByTagName('stripe-buy-button'));
-        // console.log(stripeButtons);
+        // const stripeButtons = Array.from(document.getElementsByTagName('stripe-buy-button'));
+        // // console.log(stripeButtons);
         
-        stripeButtons[pricing-1].click();
-        // if (pricing > 0) stripeButtons[pricing-1].click();
+        // stripeButtons[pricing-1].click();
+        // // if (pricing > 0) stripeButtons[pricing-1].click();
       }
 
       console.log('Success:', result);
@@ -491,6 +501,8 @@ export default function AppCalendar() {
   if (loading) {
     return <div>Loading...</div>;  // Muestra un mensaje de carga mientras los datos se obtienen
   }
+
+
 
   return (
     <React.Fragment>
@@ -673,8 +685,14 @@ export default function AppCalendar() {
               </Button>
               <Button variant="primary" onClick={handleSubmit}>
                 Guardar
-              </Button>
-                <stripe-buy-button
+              </Button>              
+              {clientSecret && (    
+                
+                <Elements options={options} stripe={stripePromise}>
+                  <CheckoutForm dpmCheckerLink={dpmCheckerLink}/>    
+                </Elements>                
+              )}
+                {/* <stripe-buy-button
                   //  ref={(el) => (stripeButtons.current[0] = el)}
                    hidden
                   buy-button-id="buy_btn_1PsVA8EXIQ5E926Cq0A8EsJE"
@@ -691,7 +709,7 @@ export default function AppCalendar() {
                   // hidden
                   buy-button-id="buy_btn_1PrA7KEXIQ5E926CVHYUi3Lg"
                   publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                ></stripe-buy-button>
+                ></stripe-buy-button> */}
             </Modal.Footer>
           </Modal>
         </div>
