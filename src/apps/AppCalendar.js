@@ -572,8 +572,8 @@ export default function AppCalendar() {
             eventSources={[
               {
                 id: 1,
-                backgroundColor: '#c3edd5',
-                borderColor: '#10b759',
+                backgroundColor: '#DA9401',
+                borderColor: '#c6931f',
                 events: events
               },
               // birthdayEvents,
