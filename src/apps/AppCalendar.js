@@ -472,7 +472,7 @@ export default function AppCalendar() {
     async function loadEvents() {
       try {
         const response = await fetch('http://localhost:8080/fetchReservas.php', {
-          method: 'POST',
+          method: 'GET',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
           },
