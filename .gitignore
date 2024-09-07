@@ -1,0 +1,8 @@
+**/node_modules
+**/package-lock.json
+**/model/lib
+**/secrets.php
+**/stripe
+**/.env
+**/build
+**/.DS_Store
