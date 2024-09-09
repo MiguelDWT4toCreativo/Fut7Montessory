@@ -390,7 +390,7 @@ export default function AppCalendar() {
       total: pricing,
     }
 
-    fetch('http://localhost:8080/reserva.php', {
+    fetch('http://localhost:3306/reserva.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -471,7 +471,7 @@ export default function AppCalendar() {
   useEffect(() => {
     async function loadEvents() {
       try {
-        const response = await fetch('http://localhost:8080/fetchReservas.php', {
+        const response = await fetch('http://localhost:3306/fetchReservas.php', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'
