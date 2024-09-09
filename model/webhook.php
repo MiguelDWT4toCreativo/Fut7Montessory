@@ -1,6 +1,13 @@
 <?php
-require_once '../lib/stripe-php-15.7.0/init.php';
-require_once '../secrets.php';
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: POST, OPTIONS");
+header("Access-Control-Allow-Headers: Content-Type");
+header('Content-Type: application/json');
+
+include 'db.php';
+
+require_once './lib/stripe-php-15.7.0/init.php';
+require_once './secrets.php';
 
 \Stripe\Stripe::setApiKey($stripeSecretKey);
 // Replace this endpoint secret with your endpoint's unique secret
@@ -41,9 +48,9 @@ if ($endpoint_secret) {
 // Handle the event
 switch ($event->type) {
   case 'payment_intent.succeeded':
-    $paymentIntent = $event->data->object; // contains a \Stripe\PaymentIntent
-    // Then define and call a method to handle the successful payment intent.
-    // handlePaymentIntentSucceeded($paymentIntent);
+    $paymentIntent = $event->data->object->client_secret; // contains a \Stripe\PaymentIntent
+    $stmt = $pdo->prepare("UPDATE Reserva SET status = 'confirmada' WHERE paymentIntent = ?;");
+    $stmt->execute([$paymentIntent]);    
     break;
   case 'payment_method.attached':
     $paymentMethod = $event->data->object; // contains a \Stripe\PaymentMethod
