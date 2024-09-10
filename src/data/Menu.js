@@ -13,17 +13,21 @@ const dashboardMenu = [
     "label": "Chat",
     "link": "/apps/email",
     "icon": "ri-mail-send-line"
-  },{
+  }, {
     "label": "Clientes",
     "link": "/apps/contacts",
     "icon": "ri-contacts-book-line"
-  },{
+  }, {
     "label": "Reglamento",
     "link": "/pages/faq",
     "icon": "ri-file-list-3-line"
   },
+  {
+    "label": "Políticas de Privacidad",
+    "link": "/pages/pricing",
+    "icon": "ri-suitcase-2-line"
+  },
 
-  
   {/**
     ,{
     "label": "Helpdesk Service",
@@ -71,14 +75,14 @@ const applicationsMenu = [
     "icon": "ri-folder-2-line"
   },
    */
- 
+
   /**
   {
     "label": "Chat",
     "link": "/apps/chat",
     "icon": "ri-question-answer-line"
   }, */
-  
+
   {
     "label": "Task Manager",
     "link": "/apps/tasks",
@@ -192,7 +196,7 @@ const pagesMenu = [
         "label": "Pricing",
         "link": "/pages/pricing"
       },
-      
+
     ]
   }
 ];
