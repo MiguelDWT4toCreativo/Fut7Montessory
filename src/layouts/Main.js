@@ -12,7 +12,7 @@ export default function Main() {
   (offsets.includes(pathname)) ? bc.add("sidebar-offset") : bc.remove("sidebar-offset");
 
   // auto close sidebar when switching pages in mobile
-  bc.remove("sidebar-show");
+  // bc.remove("sidebar-show");
 
   // scroll to top when switching pages
   window.scrollTo(0, 0);

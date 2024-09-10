@@ -33,7 +33,6 @@ export default class Sidebar extends Component {
                         </div>
                         <div className="sidebar-footer-body">
                             <h6><Link to="../pages/profile">Usuario</Link></h6>
-                            {/**<p>Premium Member</p> */}
                         </div>
                         <Link onClick={this.toggleFooterMenu} to="" className="dropdown-link"><i className="ri-arrow-down-s-line"></i></Link>
                     </div>
