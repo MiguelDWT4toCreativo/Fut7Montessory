@@ -19,6 +19,7 @@ export default function Main() {
   const { pathname } = useLocation();
   const bc = document.body.classList;
   const [data, setData] = useState('');
+  const navigate = useNavigate();
 
   // set sidebar to offset
   (offsets.includes(pathname)) ? bc.add("sidebar-offset") : bc.remove("sidebar-offset");
@@ -35,7 +36,7 @@ export default function Main() {
     if (savedData) {
       setData(savedData);
     }
-    if (pathname !== "/apps/calendar") {
+    if (pathname === "/") {
       navigate("/apps/calendar");
     }
   }, [pathname, navigate]);
