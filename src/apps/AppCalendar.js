@@ -22,6 +22,17 @@ import CheckoutForm from "./CheckoutForm";
 
 const stripePromise = loadStripe("pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K");
 
+function getCookie(name) {
+  const nameEQ = name + "=";
+  const ca = document.cookie.split(';');
+  for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+    if (c.indexOf(nameEQ) === 0) return c.substring(nameEQ.length, c.length);
+  }
+  return null;
+}
+
 export default function AppCalendar() {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
@@ -39,6 +50,11 @@ export default function AppCalendar() {
   };
 
   useEffect(() => {
+    const savedData = getCookie('user');
+    if (savedData) {
+      // setData(savedData);
+      // console.log(`${JSON.parse(savedData)}`);      
+    }
     document.body.classList.add('app-calendar');
     return () => {
       document.body.classList.remove('app-calendar');

@@ -5,12 +5,22 @@ import { useDispatch } from 'react-redux';
 import { setResult } from '../features/auth/authSlice';
 import { useNavigate } from 'react-router-dom';
 
+function setCookie(name, value, days) {
+  let expires = "";
+  if (days) {
+    const date = new Date();
+    date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+    expires = "; expires=" + date.toUTCString();
+  }
+  document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
 export default function Signin() {
   const [correo, setCorreo] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -19,7 +29,7 @@ export default function Signin() {
       password
     };
 
-    fetch('http://localhost:3306/signin.php', {
+    fetch('http://localhost:8080/signin.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -28,8 +38,9 @@ export default function Signin() {
     })
     .then(response => response.json())
     .then(result => {
-      console.log('Success:', result);
-      dispatch(setResult({...result, email: correo}));
+      if (result.status) return;
+      dispatch(setResult(result));
+      setCookie('user', JSON.stringify(result), 7);
       navigate('/dashboard/helpdesk');
     })
     .catch(error => {
