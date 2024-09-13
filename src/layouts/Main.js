@@ -35,6 +35,7 @@ export default function Main() {
     const savedData = getCookie('user');
     if (savedData) {
       setData(savedData);
+      // console.log(JSON.parse(data));      
       console.log(data);      
     }
     if (pathname === "/") {

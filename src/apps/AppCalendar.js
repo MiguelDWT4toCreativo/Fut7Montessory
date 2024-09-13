@@ -50,11 +50,11 @@ export default function AppCalendar() {
   };
 
   useEffect(() => {
-    const savedData = getCookie('user');
-    if (savedData) {
-      // setData(savedData);
-      // console.log(`${JSON.parse(savedData)}`);      
-    }
+    // const savedData = getCookie('user');
+    // if (savedData) {
+    //   // setData(savedData);
+    //   // console.log(`${JSON.parse(savedData)}`);      
+    // }
     document.body.classList.add('app-calendar');
     return () => {
       document.body.classList.remove('app-calendar');

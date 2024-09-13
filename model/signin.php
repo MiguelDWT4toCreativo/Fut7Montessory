@@ -14,7 +14,14 @@ function sendResponse($status, $message) {
 
 function sendData($status, $token, $user) {
     http_response_code($status);
-    echo json_encode(['token' => $token, 'user' => $user]);
+    echo json_encode([
+        'token' => $token,
+        'id' => $user['id'],
+        'userStatus' => $user['status'],
+        'name' => $user['nombre'],
+        'email' => $user['correo'],
+        'phone' => $user['telefono']
+    ]);
     exit;
 }
 
@@ -28,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     try {
         // Verificar si el usuario existe
-        $stmt = $pdo->prepare("SELECT id, nombre, password FROM Cliente WHERE correo = ?");
+        $stmt = $pdo->prepare("SELECT * FROM Cliente WHERE correo = ?");
         $stmt->execute([$correo]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -43,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insertStmt = $pdo->prepare("INSERT INTO customer_auth (token, customer_id, expires_at) VALUES (?, ?, ?)");
             $insertStmt->execute([$token, $user['id'], $expires_at]);
 
-            sendData(200, $token, $user['nombre']); // Enviar el token como respuesta
+            sendData(200, $token, $user); // Enviar el token como respuesta
         } else {
             sendResponse(401, 'Correo o contraseña incorrectos');
         }
