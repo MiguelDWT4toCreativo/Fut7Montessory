@@ -49,7 +49,7 @@ export default function Faq() {
                         "quota": '$500.00',//Monto                        
                       },{
                         "id": "1 hora y media",                       
-                        "quota": '$750.00',//Monto                        
+                        "quota": '$650.00',//Monto                        
                       },{
                         "id": "2 horas",                       
                         "quota": '$800.00',//Monto                        

@@ -3,7 +3,7 @@ import { Accordion, Row, Table, Col, Form, Nav, Breadcrumb } from "react-bootstr
 import Footer from "../layouts/Footer";
 import HeaderMobile from "../layouts/HeaderMobile";
 
-export default function Pricing() {
+export default function PrivacyPolicies() {
   return (
     <React.Fragment>
       <HeaderMobile />

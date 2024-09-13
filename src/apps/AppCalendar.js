@@ -92,7 +92,7 @@ export default function AppCalendar() {
 
     switch (selectedIndex) {
       case 1: setCost(500); break;
-      case 2: setCost(750); break;
+      case 2: setCost(650); break;
       case 3: setCost(800); break;
       default: setCost(0); break;
     }
@@ -420,12 +420,15 @@ export default function AppCalendar() {
       }
 
       console.log('Success:', result);
+      // alert('Pago Realizado con exito!', result);
+
 
       // dispatch(setResult(result));  // Guarda el resultado en la variable global
       // navigate('/dashboard/helpdesk')
     })
     .catch(error => {
       console.error('Error:', error);
+      // alert('Horario no disponible', error);
     });
 
     // Iniciar proceso de pago
@@ -562,7 +565,7 @@ export default function AppCalendar() {
 
           <FullCalendar
             plugins={[dayGridPlugin, timeGridPlugin]}
-            initialView="dayGridMonth"
+            initialView="timeGridWeek"
             locale={esLocale}// Configura el idioma a español
             headerToolbar={{
               "left": "custom1 prev,next today",
@@ -692,24 +695,6 @@ export default function AppCalendar() {
                   <CheckoutForm dpmCheckerLink={dpmCheckerLink}/>    
                 </Elements>                
               )}
-                {/* <stripe-buy-button
-                  //  ref={(el) => (stripeButtons.current[0] = el)}
-                   hidden
-                  buy-button-id="buy_btn_1PsVA8EXIQ5E926Cq0A8EsJE"
-                  publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                ></stripe-buy-button>
-                <stripe-buy-button
-                  // ref={(el) => (stripeButtons.current[1] = el)}
-                  hidden
-                  buy-button-id="buy_btn_1PsU5bEXIQ5E926CvsFcXl0f"
-                  publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                ></stripe-buy-button>
-                <stripe-buy-button
-                  // ref={(el) => (stripeButtons.current[2] = el)}
-                  // hidden
-                  buy-button-id="buy_btn_1PrA7KEXIQ5E926CVHYUi3Lg"
-                  publishable-key="pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K"
-                ></stripe-buy-button> */}
             </Modal.Footer>
           </Modal>
         </div>

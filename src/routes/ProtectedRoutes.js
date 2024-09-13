@@ -21,7 +21,7 @@ import Email from "../apps/Email";
 import FileManager from "../apps/FileManager";
 
 // Pages
-import Pricing from "../pages/Pricing";
+import PrivacyPolicies from "../pages/PrivacyPolicies";
 import Faq from "../pages/Faq";
 import Profile from "../pages/Profile";
 import People from "../pages/People";
@@ -98,7 +98,7 @@ const protectedRoutes = [
   { path: "apps/calendar", element: <AppCalendar /> },
   { path: "apps/email", element: <Email /> },
   { path: "apps/file-manager", element: <FileManager /> },
-  { path: "pages/pricing", element: <Pricing /> },
+  { path: "pages/PrivacyPolicies", element: <PrivacyPolicies /> },
   { path: "pages/faq", element: <Faq /> },
   { path: "pages/profile", element: <Profile /> },
   { path: "pages/people", element: <People /> },

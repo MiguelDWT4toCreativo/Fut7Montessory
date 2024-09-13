@@ -24,64 +24,12 @@ const dashboardMenu = [
   },
   {
     "label": "Políticas de Privacidad",
-    "link": "/pages/pricing",
+    "link": "/pages/privacyPolicies",
     "icon": "ri-suitcase-2-line"
   },
-
-  {/**
-    ,{
-    "label": "Helpdesk Service",
-    "link": "/dashboard/helpdesk",
-    "icon": "ri-service-line"
-  },
-    ,{
-    "label": "Events Management",
-    "link": "/dashboard/events",
-    "icon": "ri-calendar-todo-line"
-  }
-  {
-    "label": "Sales Monitoring",
-    "link": "/dashboard/sales",
-    "icon": "ri-shopping-bag-3-line"
-  },
-  {
-    "label": "Website Analytics",
-    "link": "/dashboard/analytics",
-    "icon": "ri-bar-chart-2-line"
-  },
-  {
-    "label": "Cryptocurrency",
-    "link": "/dashboard/crypto",
-    "icon": "ri-coin-line"
-  },
-  
-  {
-    "label": "Storage Management",
-    "link": "/dashboard/storage",
-    "icon": "ri-hard-drive-2-line"
-  },
-  {
-    "label": "Product Management",
-    "link": "/dashboard/product",
-    "icon": "ri-suitcase-2-line"
-  } */}
 ];
 
 const applicationsMenu = [
-  /**
-   * {
-    "label": "File Manager",
-    "link": "/apps/file-manager",
-    "icon": "ri-folder-2-line"
-  },
-   */
-
-  /**
-  {
-    "label": "Chat",
-    "link": "/apps/chat",
-    "icon": "ri-question-answer-line"
-  }, */
 
   {
     "label": "Task Manager",
@@ -193,8 +141,8 @@ const pagesMenu = [
     "icon": "ri-file-text-line",
     "submenu": [
       {
-        "label": "Pricing",
-        "link": "/pages/pricing"
+        "label": "privacyPolicies",
+        "link": "/pages/privacyPolicies"
       },
 
     ]
