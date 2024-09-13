@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import SidebarAdmin from "./SidebarAdmin";
 
 function getCookie(name) {
   const nameEQ = name + "=";
@@ -30,8 +31,8 @@ export default function Main() {
   // scroll to top when switching pages
   window.scrollTo(0, 0);
   
+  const user = JSON.parse(getCookie('user'));
   useEffect(() => {
-    const user = JSON.parse(getCookie('user'));
     // console.log(user);    
     if (!user){ navigate("/pages/signin"); return; }
     if (user.email === "admin@admin.com") navigate("/dashboard/helpdesk");
@@ -40,8 +41,10 @@ export default function Main() {
 
   return (
     <React.Fragment>
-      <Sidebar />
+      {user && (user.email === "admin@admin.com"
+        ? <SidebarAdmin />
+        : <Sidebar />)}
       <Outlet />
     </React.Fragment>
-  )
+  )  
 }

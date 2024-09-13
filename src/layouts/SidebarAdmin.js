@@ -9,7 +9,7 @@ import {
     uiElementsMenu
 } from "../data/Menu";
 
-export default class Sidebar extends Component {
+export default class SidebarAdmin extends Component {
     toggleFooterMenu = (e) => {
         e.preventDefault();
 
@@ -113,6 +113,10 @@ class SidebarMenu extends Component {
                 <div className="nav-group show">
                     {this.populateMenu([
                             {
+                                "label": "Inicio",
+                                "link": "dashboard/helpdesk",
+                                "icon": "ri-pie-chart-2-line"
+                            }, {
                                 "label": "Calendario Rentas",
                                 "link": "/apps/calendar",
                                 "icon": "ri-calendar-line"
@@ -121,6 +125,10 @@ class SidebarMenu extends Component {
                                 "label": "Chat",
                                 "link": "/apps/email",
                                 "icon": "ri-mail-send-line"
+                            }, {
+                                "label": "Clientes",
+                                "link": "/apps/contacts",
+                                "icon": "ri-contacts-book-line"
                             }, {
                                 "label": "Reglamento",
                                 "link": "/pages/faq",
