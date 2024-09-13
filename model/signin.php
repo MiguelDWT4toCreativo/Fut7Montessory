@@ -1,4 +1,7 @@
 <?php
+
+use Stripe\Billing\Alert;
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
@@ -6,13 +9,15 @@ header('Content-Type: application/json');
 
 include 'db.php';
 
-function sendResponse($status, $message) {
+function sendResponse($status, $message)
+{
     http_response_code($status);
     echo json_encode(['status' => $message]);
     exit;
 }
 
-function sendData($status, $token, $user) {
+function sendData($status, $token, $user)
+{
     http_response_code($status);
     echo json_encode(['token' => $token, 'user' => $user]);
     exit;
@@ -43,7 +48,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $insertStmt = $pdo->prepare("INSERT INTO customer_auth (token, customer_id, expires_at) VALUES (?, ?, ?)");
             $insertStmt->execute([$token, $user['id'], $expires_at]);
 
-            sendData(200, $token, $user['nombre']); // Enviar el token como respuesta
+            // Verificar si el usuario es administrador (correo == 'admin@admin.com')
+            $isAdmin = ($correo === 'miguel@gmail.com') ? true : false;
+
+            // Enviar respuesta con token, nombre y si es admin o no
+            sendResponse(200, ['token' => $token, 'nombre' => $user['nombre'], 'isAdmin' => $isAdmin]);
         } else {
             sendResponse(401, 'Correo o contraseña incorrectos');
         }
@@ -53,4 +62,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 } else {
     sendResponse(405, 'Método no permitido');
 }
-?>
