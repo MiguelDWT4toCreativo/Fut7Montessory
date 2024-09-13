@@ -40,8 +40,9 @@ export default function Signin() {
     .then(result => {
       if (result.status) return;
       dispatch(setResult(result));
+      // console.log(result);      
       setCookie('user', JSON.stringify(result), 7);
-      navigate('/dashboard/helpdesk');
+      navigate('/');
     })
     .catch(error => {
       console.error('Error:', error);

@@ -15,11 +15,10 @@ function getCookie(name) {
 
 export default function Main() {
 
-  // const offsets = ["/apps/file-manager", "/apps/email", "/apps/calendar"];
-  const offsets = ["/pages/signup", "/pages/signin"];
+  const offsets = ["/pages/signup", "/pages/signin", "/apps/calendar" , "/dashboard/helpdesk"];
   const { pathname } = useLocation();
   const bc = document.body.classList;
-  const [data, setData] = useState('');
+  // const [data, setData] = useState('');
   const navigate = useNavigate();
 
   // set sidebar to offset
@@ -30,20 +29,14 @@ export default function Main() {
 
   // scroll to top when switching pages
   window.scrollTo(0, 0);
-
-  // Automatically navigate to /apps/calendar if not already on that page
+  
   useEffect(() => {
-    const savedData = getCookie('user');
-    if (savedData) {
-      setData(savedData);
-      // console.log(JSON.parse(data));      
-      console.log(data);      
-    }
-    if (pathname === "/") {
-      // navigate("/apps/calendar");
-      navigate("/pages/signup");
-    }
-  }, [pathname, navigate]);
+    const user = JSON.parse(getCookie('user'));
+    // console.log(user);    
+    if (!user){ navigate("/pages/signin"); return; }
+    if (user.email === "admin@admin.com") navigate("/dashboard/helpdesk");
+    else navigate("/apps/calendar");
+  }, []);
 
   return (
     <React.Fragment>
