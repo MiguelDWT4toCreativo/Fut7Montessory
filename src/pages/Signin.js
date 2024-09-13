@@ -19,7 +19,7 @@ export default function Signin() {
       password
     };
 
-    fetch('http://localhost:3306/signin.php', {
+    fetch('http://localhost:8080/signin.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
