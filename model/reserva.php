@@ -67,11 +67,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
          VALUES (?, ?, 'pendiente', '{}', ?, NOW(), ?, ?, ?)");
         $stmt->execute([
-            $auth['customer_id'], 
+            $auth['customer_id'],
             $intent->client_secret,
-            $numero_asistentes, 
-            $fecha . "T" . $inicio . ":00", 
-            $fecha . "T" . $finalizacion . ":00", 
+            $numero_asistentes,
+            $fecha . "T" . $inicio . ":00",
+            $fecha . "T" . $finalizacion . ":00",
             $total
         ]);
         

@@ -15,7 +15,7 @@ function sendResponse($status, $message) {
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
         $stmt = $pdo->prepare("SELECT * FROM Reserva;");
-        $stmt->execute();    
+        $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         http_response_code(200);

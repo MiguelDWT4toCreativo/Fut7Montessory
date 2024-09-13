@@ -15,7 +15,8 @@ function getCookie(name) {
 
 export default function Main() {
 
-  const offsets = ["/apps/file-manager", "/apps/email", "/apps/calendar"];
+  // const offsets = ["/apps/file-manager", "/apps/email", "/apps/calendar"];
+  const offsets = ["/pages/signup", "/pages/signin"];
   const { pathname } = useLocation();
   const bc = document.body.classList;
   const [data, setData] = useState('');
@@ -39,7 +40,8 @@ export default function Main() {
       console.log(data);      
     }
     if (pathname === "/") {
-      navigate("/apps/calendar");
+      // navigate("/apps/calendar");
+      navigate("/pages/signup");
     }
   }, [pathname, navigate]);
 
