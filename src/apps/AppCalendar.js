@@ -134,15 +134,19 @@ export default function AppCalendar() {
       fecha: value,
     }));
 
-    const date = value.split('-');
-    console.log(value.split('-'));
-    const year = hourlyCalendar.find(year => year.year === date[0]);
-    const month = year.months.find(month => month.month === date[1]);
-    const day = month.days.find(day => day.day === date[2]);
-    console.log(day.hours);    
-    const filteredHours = hourOptions.filter(hour => !day.hours.includes(hour));
-    console.log(filteredHours);    
-    setChangingHourOptions(filteredHours);    
+    try {
+      const date = value.split('-');
+      console.log(value.split('-'));
+      const year = hourlyCalendar.find(year => year.year === date[0]);
+      const month = year.months.find(month => month.month === date[1]);
+      const day = month.days.find(day => day.day === date[2]);
+      console.log(day.hours);    
+      const filteredHours = hourOptions.filter(hour => !day.hours.includes(hour));
+      console.log(filteredHours);    
+      setChangingHourOptions(filteredHours);      
+    } catch (error) {
+      console.log(error);      
+    }
   };
 
   // Manejar el cambio de hora de fin
@@ -529,30 +533,7 @@ export default function AppCalendar() {
   const handleModalClose = () => setModalShow(false);
   const handleModalShow = () => setModalShow(true); 
   const [events, setEvents] = useState([]);  // Estado para almacenar los eventos
-  const [hourlyCalendar, setHourlyCalendar] = useState([
-    {
-      year: '2024',
-      months: [
-        {
-         month: '09',
-         days:[
-          {
-            day: '13',
-            hours: [
-              '08:00',
-            ]
-          },
-          {
-            day: '14',
-            hours: [
-              '08:00',
-            ]
-          }
-         ]
-        }
-      ]
-    }
-  ]);
+  const [hourlyCalendar, setHourlyCalendar] = useState([]);
   
   const [loading, setLoading] = useState(true);  // Estado para manejar la carga
 
@@ -568,26 +549,98 @@ export default function AppCalendar() {
         });
 
         const result = await response.json();
-        // const fetchedHourlyCalendar = result.map(reservation => {
-        //   [
-        //     {
-        //       year: 2024,
-        //       months: [
-        //         {
-        //          month: 3,
-        //          days:[
-        //           {
-        //             day: 9,
-        //             hours: [
+        result.forEach(reservation => {
+          const [strStartDate, strStartTime] = reservation.inicio.split(' ');
+          const strEndTime = reservation.finalizacion.split(' ')[1];
+          const [strStartHour, strStartMinutes, strStartSeconds] = strStartTime.split(':');
+          const [startHour, startMinutes] = [+strStartHour, +strStartMinutes];
+          const [strEndHour, strEndMinutes, strEndSeconds] = strEndTime.split(':');
+          const [endHour, endMinutes] = [+strEndHour, +strEndMinutes];
+          const [decimalEndTime, decimalStartTime] = [(endHour + (endMinutes/60)), (startHour + (startMinutes/60))];
 
-        //             ]
-        //           }
-        //          ]
-        //         }
-        //       ]
-        //     }
-        //   ]
-        // })
+          
+          const bussyHours = [];
+          for (let i = decimalStartTime; i < decimalEndTime; i+=.5) {
+            const [hour, minutes] = [Math.floor(i), i - Math.floor(i)];
+            let strMinutes = `${minutes*60}`;
+            if (minutes == 0) strMinutes = '00';
+            if (hour < 10) {bussyHours.push(`0${hour}:${strMinutes}`); continue;}
+            bussyHours.push(`${hour}:${strMinutes}`);
+        }
+
+          const [reservationYear, reservationMonth, reservationDay] = strStartDate.split('-');
+          setHourlyCalendar((prevCalendar) => {
+            // Verificar si existe el año
+            let updatedCalendar = prevCalendar.map((yearItem) => {
+              if (yearItem.year === reservationYear) {
+                // Encontrar o crear el mes
+                const updatedMonths = yearItem.months.map((monthItem) => {
+                  if (monthItem.month === reservationMonth) {
+                    // Encontrar o crear el día
+                    const updatedDays = monthItem.days.map((dayItem) => {
+                      if (dayItem.day === reservationDay) {
+                        // Agregar las horas ocupadas al día existente
+                        return {
+                          ...dayItem,
+                          hours: [...dayItem.hours, ...bussyHours]
+                        };
+                      }
+                      return dayItem;
+                    });
+          
+                    // Si no se encuentra el día, agregarlo
+                    if (!updatedDays.some(day => day.day === reservationDay)) {
+                      updatedDays.push({
+                        day: reservationDay,
+                        hours: bussyHours
+                      });
+                    }
+          
+                    return { ...monthItem, days: updatedDays };
+                  }
+                  return monthItem;
+                });
+          
+                // Si no se encuentra el mes, agregarlo
+                if (!updatedMonths.some(month => month.month === reservationMonth)) {
+                  updatedMonths.push({
+                    month: reservationMonth,
+                    days: [{
+                      day: reservationDay,
+                      hours: bussyHours
+                    }]
+                  });
+                }
+          
+                return { ...yearItem, months: updatedMonths };
+              }
+              return yearItem;
+            });
+          
+            // Si no se encuentra el año, agregarlo al final
+            if (!updatedCalendar.some(year => year.year === reservationYear)) {
+              updatedCalendar.push({
+                year: reservationYear,
+                months: [
+                  {
+                    month: reservationMonth,
+                    days: [
+                      {
+                        day: reservationDay,
+                        hours: bussyHours
+                      }
+                    ]
+                  }
+                ]
+              });
+            }
+          
+            return updatedCalendar;
+          });
+          
+          
+        })
+
         const fetchedEvents = result.map(reservation => ({
           id: reservation.clienteId,
           start: reservation.inicio,
