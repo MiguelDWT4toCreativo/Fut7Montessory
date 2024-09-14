@@ -53,7 +53,7 @@ const calendarEvents = {
 
 async function fetchEvents() {
   try {
-    const response = await fetch('http://localhost:8080/fetchReservas.php', {
+    const response = await fetch('https://networkingelite.com.mx/model/fetchReservas.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
