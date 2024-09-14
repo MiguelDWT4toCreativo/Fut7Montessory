@@ -19,6 +19,7 @@ import {
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
+import { months } from "moment/moment";
 
 const stripePromise = loadStripe("pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K");
 
@@ -37,6 +38,40 @@ export default function AppCalendar() {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
   const [dpmCheckerLink, setDpmCheckerLink] = useState("");
+  const hourOptions = [
+    '08:00',
+    '08:30',
+    '09:00',
+    '09:30',
+    '10:00',
+    '10:30',
+    '11:00',
+    '11:30',
+    '12:00',
+    '12:30',
+    '13:00',
+    '13:30',
+    '14:00',
+    '14:30',
+    '15:00',
+    '15:30',
+    '16:00',
+    '16:30',
+    '17:00',
+    '17:30',
+    '18:00',
+    '18:30',
+    '19:00',
+    '19:30',
+    '20:00',
+    '20:30',
+    '21:00',
+    '21:30',
+    '22:00',
+    '22:30',
+    '23:00',
+  ]
+  const [changingHourOptions, setChangingHourOptions] = useState(hourOptions);
 
   const paymentElementOptions = {
     layout: "tabs"
@@ -93,11 +128,21 @@ export default function AppCalendar() {
 
   // Manejar el cambio de fecha
   const handleFechaChange = (event) => {
-    const value = event.target.value;
+    const value = event.target.value;    
     setReserva((prevState) => ({
       ...prevState,
       fecha: value,
     }));
+
+    const date = value.split('-');
+    console.log(value.split('-'));
+    const year = hourlyCalendar.find(year => year.year === date[0]);
+    const month = year.months.find(month => month.month === date[1]);
+    const day = month.days.find(day => day.day === date[2]);
+    console.log(day.hours);    
+    const filteredHours = hourOptions.filter(hour => !day.hours.includes(hour));
+    console.log(filteredHours);    
+    setChangingHourOptions(filteredHours);    
   };
 
   // Manejar el cambio de hora de fin
@@ -484,6 +529,30 @@ export default function AppCalendar() {
   const handleModalClose = () => setModalShow(false);
   const handleModalShow = () => setModalShow(true); 
   const [events, setEvents] = useState([]);  // Estado para almacenar los eventos
+  const [hourlyCalendar, setHourlyCalendar] = useState([
+    {
+      year: '2024',
+      months: [
+        {
+         month: '09',
+         days:[
+          {
+            day: '13',
+            hours: [
+              '08:00',
+            ]
+          },
+          {
+            day: '14',
+            hours: [
+              '08:00',
+            ]
+          }
+         ]
+        }
+      ]
+    }
+  ]);
   
   const [loading, setLoading] = useState(true);  // Estado para manejar la carga
 
@@ -499,14 +568,33 @@ export default function AppCalendar() {
         });
 
         const result = await response.json();
-        const events = result.map(reservation => ({
+        // const fetchedHourlyCalendar = result.map(reservation => {
+        //   [
+        //     {
+        //       year: 2024,
+        //       months: [
+        //         {
+        //          month: 3,
+        //          days:[
+        //           {
+        //             day: 9,
+        //             hours: [
+
+        //             ]
+        //           }
+        //          ]
+        //         }
+        //       ]
+        //     }
+        //   ]
+        // })
+        const fetchedEvents = result.map(reservation => ({
           id: reservation.clienteId,
           start: reservation.inicio,
           end: reservation.finalizacion,
           title: `Cliente ${reservation.clienteId}`
-        }));
-
-        setEvents(events);  // Actualiza el estado con los eventos cargados
+        }));      
+        setEvents(fetchedEvents);  // Actualiza el estado con los eventos cargados
         setLoading(false);  // Indica que la carga ha finalizado
       } catch (error) {
         console.error('Error:', error);
@@ -521,7 +609,13 @@ export default function AppCalendar() {
     return <div>Loading...</div>;  // Muestra un mensaje de carga mientras los datos se obtienen
   }
 
-
+  const convertirHora = (hora24) => {
+    const [hora, minutos] = hora24.split(':');
+    const horaInt = parseInt(hora, 10);
+    const sufijo = horaInt >= 12 ? 'P.M.' : 'A.M.';
+    const hora12 = horaInt % 12 === 0 ? 12 : horaInt % 12; // Convierte a formato 12 horas
+    return `${hora12}:${minutos} ${sufijo}`;
+  };
 
   return (
     <React.Fragment>
@@ -636,37 +730,11 @@ export default function AppCalendar() {
                   <Form.Label>Inicio:</Form.Label>
                   <Form.Select id="horaInicio" name="horaInicio" value={reserva.horaInicio} onChange={handleHoraInicioChange} required>
                     <option>Hora...</option>
-                    <option value="08:00">08:00 A.M</option>
-                    <option value="08:30">08:30 A.M</option>
-                    <option value="09:00">09:00 A.M</option>
-                    <option value="09:30">09:30 A.M</option>
-                    <option value="10:00">10:00 A.M</option>
-                    <option value="10:30">10:30 A.M</option>
-                    <option value="11:00">11:00 A.M</option>
-                    <option value="11:30">11:30 A.M</option>
-                    <option value="12:00">12:00 P.M</option>
-                    <option value="12:30">12:30 P.M</option>
-                    <option value="13:00">01:00 P.M</option>
-                    <option value="13:30">01:30 P.M</option>
-                    <option value="14:00">02:00 P.M</option>
-                    <option value="14:30">02:30 P.M</option>
-                    <option value="15:00">03:00 P.M</option>
-                    <option value="15:30">03:30 P.M</option>
-                    <option value="16:00">04:00 P.M</option>
-                    <option value="16:30">04:30 P.M</option>
-                    <option value="17:00">05:00 P.M</option>
-                    <option value="17:30">05:30 P.M</option>
-                    <option value="18:00">06:00 P.M</option>
-                    <option value="18:30">06:30 P.M</option>
-                    <option value="19:00">07:00 P.M</option>
-                    <option value="19:30">07:30 P.M</option>
-                    <option value="20:00">08:00 P.M</option>
-                    <option value="20:30">08:30 P.M</option>
-                    <option value="21:00">09:00 P.M</option>
-                    <option value="21:30">09:30 P.M</option>
-                    <option value="22:00">10:00 P.M</option>
-                    <option value="22:30">10:30 P.M</option>
-                    <option value="23:00">11:00 P.M</option>
+                    {changingHourOptions.map((hour) => (
+                      <option value={hour} key={hour}>
+                        {convertirHora(hour)}
+                      </option>
+                    ))}
                   </Form.Select>
                 </Col>
                 <Col>
