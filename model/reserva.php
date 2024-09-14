@@ -7,6 +7,7 @@ header('Content-Type: application/json');
 require_once './lib/stripe-php-15.7.0/init.php';
 
 include 'db.php';
+include 'secrets.php';
 
 function sendResponse($status, $message) {
     http_response_code($status);
@@ -50,7 +51,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             sendResponse(403, 'Horario no disponible');
         }
                 
-        $stripe = new \Stripe\StripeClient('sk_test_51Pr9eEEXIQ5E926COkT4CoZRiVSIa2hAmuNzWOPVBZoqASP37iC8UOtYU1tC7ZT2QCuA6u5CyNZO4udf9U03388R0018rrvRHE');
+        $stripe = new \Stripe\StripeClient($stripeSecretKey);
 
         $intent = $stripe->paymentIntents->create([
         'amount' => $total,
