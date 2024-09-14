@@ -136,16 +136,17 @@ export default function AppCalendar() {
 
     try {
       const date = value.split('-');
-      console.log(value.split('-'));
+      // console.log(value.split('-'));
       const year = hourlyCalendar.find(year => year.year === date[0]);
       const month = year.months.find(month => month.month === date[1]);
       const day = month.days.find(day => day.day === date[2]);
-      console.log(day.hours);    
+      // console.log(day.hours);    
       const filteredHours = hourOptions.filter(hour => !day.hours.includes(hour));
-      console.log(filteredHours);    
+      // console.log(filteredHours);    
       setChangingHourOptions(filteredHours);      
     } catch (error) {
-      console.log(error);      
+      setChangingHourOptions(hourOptions);      
+      // console.error(error);      
     }
   };
 
@@ -560,7 +561,7 @@ export default function AppCalendar() {
 
           
           const bussyHours = [];
-          for (let i = decimalStartTime; i < decimalEndTime; i+=.5) {
+          for (let i = decimalStartTime-.5; i < decimalEndTime; i+=.5) {
             const [hour, minutes] = [Math.floor(i), i - Math.floor(i)];
             let strMinutes = `${minutes*60}`;
             if (minutes == 0) strMinutes = '00';
