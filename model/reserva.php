@@ -64,19 +64,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'amount' => $total*100,
         'currency' => 'mxn',
         ]);
-
-        // $stripe->paymentIntents->create([
-        //     'amount' => 1099,
-        //     'currency' => 'usd',
-        //     'payment_method_types' => ['card'],
-        //     'metadata' => ['order_id' => '6735'],
-        //   ]);
-
-        // Asegúrate de que $cliente sea un array o un objeto PHP si estás recibiendo un JSON desde JavaScript
-        $cliente_data = json_decode($cliente, true); // Decodifica el JSON si es un string, o si ya es un array, omítelo
-
-        // Codifica de nuevo el JSON para almacenarlo en la base de datos
-        $cliente_json = json_encode($cliente_data); // Convierte el array/objeto a formato JSON para almacenarlo
+        
+        $cliente_data = json_decode($cliente, true);
+        $cliente_json = json_encode($cliente_data);
 
         $sql = "INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
             VALUES (?, ?, 'pendiente', ?, ?, NOW(), ?, ?, ?)";

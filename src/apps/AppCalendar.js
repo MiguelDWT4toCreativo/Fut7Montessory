@@ -85,11 +85,6 @@ export default function AppCalendar() {
   };
 
   useEffect(() => {
-    // const savedData = getCookie('user');
-    // if (savedData) {
-    //   // setData(savedData);
-    //   // console.log(`${JSON.parse(savedData)}`);      
-    // }
     document.body.classList.add('app-calendar');
     return () => {
       document.body.classList.remove('app-calendar');
@@ -104,7 +99,7 @@ export default function AppCalendar() {
   //Inicio Funcion de guardar reserva
   // Estado de la reserva
   const [reserva, setReserva] = useState({
-    token: useSelector((state) => state.auth.result),
+    token: JSON.parse(getCookie('user')),
     cliente: '',
     asistentes: 0,
     fecha: '',
@@ -448,7 +443,7 @@ export default function AppCalendar() {
     }
     const data = {
       token: reserva.token.token,
-      cliente: JSON.stringify(reserva.token),
+      cliente: reserva.token,
       numero_asistentes: reserva.asistentes,
       fecha: reserva.fecha,
       inicio: reserva.horaInicio,
@@ -550,7 +545,7 @@ export default function AppCalendar() {
           const [startHour, startMinutes] = [+strStartHour, +strStartMinutes];
           const [strEndHour, strEndMinutes, strEndSeconds] = strEndTime.split(':');
           const [endHour, endMinutes] = [+strEndHour, +strEndMinutes];
-          const [decimalEndTime, decimalStartTime] = [(endHour + (endMinutes/60)), (startHour + (startMinutes/60))];
+          const [decimalEndTime, decimalStartTime] = [((endHour == 0 ? 24 : endHour) + (endMinutes/60)), (startHour + (startMinutes/60))];
 
           
           const bussyHours = [];
