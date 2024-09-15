@@ -448,7 +448,7 @@ export default function AppCalendar() {
     }
     const data = {
       token: reserva.token.token,
-      cliente: reserva.token.email,
+      cliente: JSON.stringify(reserva.token),
       numero_asistentes: reserva.asistentes,
       fecha: reserva.fecha,
       inicio: reserva.horaInicio,
@@ -465,25 +465,18 @@ export default function AppCalendar() {
     })
     .then(response => response.json())
     .then(result => {
-      if (result.status !== "Horario no disponible") {
+      if (result.status === "Horario no disponible") { console.log('Horario no disponible'); return;}
 
-        setClientSecret(result.status);
+      setClientSecret(result.status);
 
-        const nuevoEvento = {
-          title: `Reserva: ${reserva.cliente}`,
-          start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
-          end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
-          allDay: false
-        };
+      const nuevoEvento = {
+        title: `Reserva: ${reserva.cliente}`,
+        start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
+        end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
+        allDay: false
+      };
 
-        setEvents([...events, nuevoEvento]);
-        
-        // const stripeButtons = Array.from(document.getElementsByTagName('stripe-buy-button'));
-        // // console.log(stripeButtons);
-        
-        // stripeButtons[pricing-1].click();
-        // // if (pricing > 0) stripeButtons[pricing-1].click();
-      }
+      setEvents([...events, nuevoEvento]);
 
       console.log('Success:', result);
       // alert('Pago Realizado con exito!', result);

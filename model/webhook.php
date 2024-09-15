@@ -5,6 +5,7 @@ header("Access-Control-Allow-Headers: Content-Type");
 header('Content-Type: application/json');
 
 include 'db.php';
+include 'mailer.php';
 
 require_once './lib/stripe-php-15.7.0/init.php';
 require_once './secrets.php';
@@ -50,7 +51,25 @@ switch ($event->type) {
   case 'payment_intent.succeeded':
     $paymentIntent = $event->data->object->client_secret; // contains a \Stripe\PaymentIntent
     $stmt = $pdo->prepare("UPDATE Reserva SET status = 'confirmada' WHERE paymentIntent = ?;");
-    $stmt->execute([$paymentIntent]);    
+    $stmt->execute([$paymentIntent]);
+
+    // Preparamos la consulta para obtener el campo customerData
+    $stmt = $pdo->prepare("SELECT customerData FROM Reserva WHERE paymentIntent = ?;");
+    $stmt->execute([$paymentIntent]);
+
+    // Fetch para obtener el resultado
+    $customer_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Decodificamos el JSON almacenado en el campo customerData
+    $customer_data_json = json_decode($customer_data['customerData'], true);
+
+    // Verificamos si el JSON contiene el atributo 'name' y lo mostramos
+    if (isset($customer_data_json['email'])) {
+      sendConfirmMail($customer_data_json['email']);
+    } 
+    // else {
+    //     // echo "El atributo 'name' no está presente en el JSON.";
+    // }
     break;
   case 'payment_method.attached':
     $paymentMethod = $event->data->object; // contains a \Stripe\PaymentMethod

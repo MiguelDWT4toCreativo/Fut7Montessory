@@ -64,19 +64,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //     'payment_method_types' => ['card'],
         //     'metadata' => ['order_id' => '6735'],
         //   ]);
-                
+
+        // Asegúrate de que $cliente sea un array o un objeto PHP si estás recibiendo un JSON desde JavaScript
+        $cliente_data = json_decode($cliente, true); // Decodifica el JSON si es un string, o si ya es un array, omítelo
+
+        // Codifica de nuevo el JSON para almacenarlo en la base de datos
+        $cliente_json = json_encode($cliente_data); // Convierte el array/objeto a formato JSON para almacenarlo
+
         $stmt = $pdo->prepare("INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
-         VALUES (?, ?, 'pendiente', '{}', ?, NOW(), ?, ?, ?)");
+            VALUES (?, ?, 'pendiente', ?, ?, NOW(), ?, ?, ?)");
+            
         $stmt->execute([
-            $auth['customer_id'],
-            $intent->client_secret,
-            $numero_asistentes,
-            $fecha . "T" . $inicio . ":00",
-            $fecha . "T" . $finalizacion . ":00",
-            $total
+            $auth['customer_id'],                  // ID del cliente
+            $intent->client_secret,                // Payment Intent
+            $cliente_json,                         // JSON codificado para customerData
+            $numero_asistentes,                    // Número de asistentes
+            $fecha . "T" . $inicio . ":00",        // Fecha y hora de inicio
+            $fecha . "T" . $finalizacion . ":00",  // Fecha y hora de finalización
+            $total                                // Total
         ]);
+
         
-        $reservaId = $pdo->lastInsertId();
+        // $reservaId = $pdo->lastInsertId();
 
         sendResponse(200, $intent->client_secret);
     } catch (PDOException $e) {
