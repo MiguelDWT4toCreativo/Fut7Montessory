@@ -441,6 +441,7 @@ export default function AppCalendar() {
       alert('Por favor, complete todos los campos.');
       return;
     }
+    
     const data = {
       token: reserva.token.token,
       cliente: reserva.token,
@@ -471,7 +472,7 @@ export default function AppCalendar() {
         allDay: false
       };
 
-      setEvents([...events, nuevoEvento]);
+      // setEvents([...events, nuevoEvento]);
 
       console.log('Success:', result);
       // alert('Pago Realizado con exito!', result);
@@ -521,7 +522,10 @@ export default function AppCalendar() {
   const [modalShow, setModalShow] = useState(false);
   const handleModalClose = () => setModalShow(false);
   const handleModalShow = () => setModalShow(true); 
-  const [events, setEvents] = useState([]);  // Estado para almacenar los eventos
+  const [events, setEvents] = useState({
+    confirmEvents: [],
+    pendingEvents: []
+  });  // Estado para almacenar los eventos
   const [hourlyCalendar, setHourlyCalendar] = useState([]);
   
   const [loading, setLoading] = useState(true);  // Estado para manejar la carga
@@ -635,31 +639,37 @@ export default function AppCalendar() {
             id: reserva.clienteId,
             start: reserva.inicio,
             end: reserva.finalizacion,
-            title: `${JSON.parse(reserva.customerData).name}`
+            title: `${reserva.id}`
+            // title: `${JSON.parse(reserva.customerData).name}`
           }));
 
-        console.log(fetchedConfirmEvents);        
+        const fetchedPendingEvents = result
+          .filter(reserva => reserva.status === 'pendiente')
+          .map(reserva => ({
+            id: reserva.clienteId,
+            start: reserva.inicio,
+            end: reserva.finalizacion,
+            title: `${reserva.id}`
+            // title: `${JSON.parse(reserva.customerData).name}`
+          }));
 
-
-        const fetchedEvents = result.map(reservation => ({
-          id: reservation.clienteId,
-          start: reservation.inicio,
-          end: reservation.finalizacion,
-          title: `Cliente ${reservation.clienteId}`
-        }));      
-        setEvents(fetchedConfirmEvents);  // Actualiza el estado con los eventos cargados
-        setLoading(false);  // Indica que la carga ha finalizado
+        setEvents(prevState => ({
+          ...prevState,
+          confirmEvents: fetchedConfirmEvents,
+          pendingEvents: fetchedPendingEvents
+        }));
+        setLoading(false);
       } catch (error) {
         console.error('Error:', error);
-        setLoading(false);  // Aún si hay un error, detén el estado de "cargando"
+        setLoading(false);
       }
     }
 
     loadEvents();
-  }, []);  // El arreglo vacío asegura que este efecto solo se ejecute una vez cuando el componente se monta
+  }, []);
 
   if (loading) {
-    return <div>Loading...</div>;  // Muestra un mensaje de carga mientras los datos se obtienen
+    return <div>Loading...</div>;
   }
 
   const convertirHora = (hora24) => {
@@ -740,7 +750,13 @@ export default function AppCalendar() {
                 id: 1,
                 backgroundColor: '#DA9401',
                 borderColor: '#c6931f',
-                events: events
+                events: events.pendingEvents
+              },
+              {
+                id: 1,
+                backgroundColor: '#c3edd5',
+                borderColor: '#10b759',
+                events: events.confirmEvents
               },
               // birthdayEvents,
               // holidayEvents,
