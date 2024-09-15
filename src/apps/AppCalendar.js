@@ -465,12 +465,15 @@ export default function AppCalendar() {
 
       setClientSecret(result.status);
 
-      const nuevoEvento = {
-        title: `Reserva: ${reserva.cliente}`,
-        start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
-        end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
-        allDay: false
-      };
+      // const nuevoEvento = {
+      //   title: `Reserva: ${reserva.cliente}`,
+      //   start: new Date(`${reserva.fecha}T${reserva.horaInicio}`),
+      //   end: new Date(`${reserva.fecha}T${reserva.horaFin}`),
+      //   allDay: false
+      // };
+
+      // fetchReservas.php
+      loadEvents();
 
       // setEvents([...events, nuevoEvento]);
 
@@ -530,141 +533,141 @@ export default function AppCalendar() {
   
   const [loading, setLoading] = useState(true);  // Estado para manejar la carga
 
-  useEffect(() => {
-    async function loadEvents() {
-      try {
-        const response = await fetch('http://localhost:8080/fetchReservas.php', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-          },
-          // body: new URLSearchParams(data)
-        });
+  async function loadEvents() {
+    try {
+      const response = await fetch('http://localhost:8080/fetchReservas.php', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        // body: new URLSearchParams(data)
+      });
 
 
-        const result = await response.json();
-        result.forEach(reservation => {
-          const [strStartDate, strStartTime] = reservation.inicio.split(' ');
-          const strEndTime = reservation.finalizacion.split(' ')[1];
-          const [strStartHour, strStartMinutes, strStartSeconds] = strStartTime.split(':');
-          const [startHour, startMinutes] = [+strStartHour, +strStartMinutes];
-          const [strEndHour, strEndMinutes, strEndSeconds] = strEndTime.split(':');
-          const [endHour, endMinutes] = [+strEndHour, +strEndMinutes];
-          const [decimalEndTime, decimalStartTime] = [((endHour == 0 ? 24 : endHour) + (endMinutes/60)), (startHour + (startMinutes/60))];
-          
-          const bussyHours = [];
-          for (let i = decimalStartTime-.5; i < decimalEndTime; i+=.5) {
-            const [hour, minutes] = [Math.floor(i), i - Math.floor(i)];
-            let strMinutes = `${minutes*60}`;
-            if (minutes == 0) strMinutes = '00';
-            if (hour < 10) {bussyHours.push(`0${hour}:${strMinutes}`); continue;}
-            bussyHours.push(`${hour}:${strMinutes}`);
-        }
+      const result = await response.json();
+      result.forEach(reservation => {
+        const [strStartDate, strStartTime] = reservation.inicio.split(' ');
+        const strEndTime = reservation.finalizacion.split(' ')[1];
+        const [strStartHour, strStartMinutes, strStartSeconds] = strStartTime.split(':');
+        const [startHour, startMinutes] = [+strStartHour, +strStartMinutes];
+        const [strEndHour, strEndMinutes, strEndSeconds] = strEndTime.split(':');
+        const [endHour, endMinutes] = [+strEndHour, +strEndMinutes];
+        const [decimalEndTime, decimalStartTime] = [((endHour == 0 ? 24 : endHour) + (endMinutes/60)), (startHour + (startMinutes/60))];
+        
+        const bussyHours = [];
+        for (let i = decimalStartTime-.5; i < decimalEndTime; i+=.5) {
+          const [hour, minutes] = [Math.floor(i), i - Math.floor(i)];
+          let strMinutes = `${minutes*60}`;
+          if (minutes == 0) strMinutes = '00';
+          if (hour < 10) {bussyHours.push(`0${hour}:${strMinutes}`); continue;}
+          bussyHours.push(`${hour}:${strMinutes}`);
+      }
 
-          const [reservationYear, reservationMonth, reservationDay] = strStartDate.split('-');
-          setHourlyCalendar((prevCalendar) => {
-            // Verificar si existe el año
-            let updatedCalendar = prevCalendar.map((yearItem) => {
-              if (yearItem.year === reservationYear) {
-                // Encontrar o crear el mes
-                const updatedMonths = yearItem.months.map((monthItem) => {
-                  if (monthItem.month === reservationMonth) {
-                    // Encontrar o crear el día
-                    const updatedDays = monthItem.days.map((dayItem) => {
-                      if (dayItem.day === reservationDay) {
-                        // Agregar las horas ocupadas al día existente
-                        return {
-                          ...dayItem,
-                          hours: [...dayItem.hours, ...bussyHours]
-                        };
-                      }
-                      return dayItem;
-                    });
-          
-                    // Si no se encuentra el día, agregarlo
-                    if (!updatedDays.some(day => day.day === reservationDay)) {
-                      updatedDays.push({
-                        day: reservationDay,
-                        hours: bussyHours
-                      });
+        const [reservationYear, reservationMonth, reservationDay] = strStartDate.split('-');
+        setHourlyCalendar((prevCalendar) => {
+          // Verificar si existe el año
+          let updatedCalendar = prevCalendar.map((yearItem) => {
+            if (yearItem.year === reservationYear) {
+              // Encontrar o crear el mes
+              const updatedMonths = yearItem.months.map((monthItem) => {
+                if (monthItem.month === reservationMonth) {
+                  // Encontrar o crear el día
+                  const updatedDays = monthItem.days.map((dayItem) => {
+                    if (dayItem.day === reservationDay) {
+                      // Agregar las horas ocupadas al día existente
+                      return {
+                        ...dayItem,
+                        hours: [...dayItem.hours, ...bussyHours]
+                      };
                     }
-          
-                    return { ...monthItem, days: updatedDays };
-                  }
-                  return monthItem;
-                });
-          
-                // Si no se encuentra el mes, agregarlo
-                if (!updatedMonths.some(month => month.month === reservationMonth)) {
-                  updatedMonths.push({
-                    month: reservationMonth,
-                    days: [{
+                    return dayItem;
+                  });
+        
+                  // Si no se encuentra el día, agregarlo
+                  if (!updatedDays.some(day => day.day === reservationDay)) {
+                    updatedDays.push({
                       day: reservationDay,
                       hours: bussyHours
-                    }]
-                  });
-                }
-          
-                return { ...yearItem, months: updatedMonths };
-              }
-              return yearItem;
-            });
-          
-            // Si no se encuentra el año, agregarlo al final
-            if (!updatedCalendar.some(year => year.year === reservationYear)) {
-              updatedCalendar.push({
-                year: reservationYear,
-                months: [
-                  {
-                    month: reservationMonth,
-                    days: [
-                      {
-                        day: reservationDay,
-                        hours: bussyHours
-                      }
-                    ]
+                    });
                   }
-                ]
+        
+                  return { ...monthItem, days: updatedDays };
+                }
+                return monthItem;
               });
+        
+              // Si no se encuentra el mes, agregarlo
+              if (!updatedMonths.some(month => month.month === reservationMonth)) {
+                updatedMonths.push({
+                  month: reservationMonth,
+                  days: [{
+                    day: reservationDay,
+                    hours: bussyHours
+                  }]
+                });
+              }
+        
+              return { ...yearItem, months: updatedMonths };
             }
-          
-            return updatedCalendar;
-          });          
-        })
+            return yearItem;
+          });
+        
+          // Si no se encuentra el año, agregarlo al final
+          if (!updatedCalendar.some(year => year.year === reservationYear)) {
+            updatedCalendar.push({
+              year: reservationYear,
+              months: [
+                {
+                  month: reservationMonth,
+                  days: [
+                    {
+                      day: reservationDay,
+                      hours: bussyHours
+                    }
+                  ]
+                }
+              ]
+            });
+          }
+        
+          return updatedCalendar;
+        });          
+      })
 
 
-        const fetchedConfirmEvents = result
-          .filter(reserva => reserva.status === 'confirmada')
-          .map(reserva => ({
-            id: reserva.clienteId,
-            start: reserva.inicio,
-            end: reserva.finalizacion,
-            // title: `${reserva.id}`
-            title: `${JSON.parse(reserva.customerData).name}`
-          }));
-
-        const fetchedPendingEvents = result
-          .filter(reserva => reserva.status === 'pendiente')
-          .map(reserva => ({
-            id: reserva.clienteId,
-            start: reserva.inicio,
-            end: reserva.finalizacion,
-            // title: `${reserva.id}`
-            title: `${JSON.parse(reserva.customerData).name}`
-          }));
-
-        setEvents(prevState => ({
-          ...prevState,
-          confirmEvents: fetchedConfirmEvents,
-          pendingEvents: fetchedPendingEvents
+      const fetchedConfirmEvents = result
+        .filter(reserva => reserva.status === 'confirmada')
+        .map(reserva => ({
+          id: reserva.clienteId,
+          start: reserva.inicio,
+          end: reserva.finalizacion,
+          // title: `${reserva.id}`
+          title: `${JSON.parse(reserva.customerData).name}`
         }));
-        setLoading(false);
-      } catch (error) {
-        console.error('Error:', error);
-        setLoading(false);
-      }
-    }
 
+      const fetchedPendingEvents = result
+        .filter(reserva => reserva.status === 'pendiente')
+        .map(reserva => ({
+          id: reserva.clienteId,
+          start: reserva.inicio,
+          end: reserva.finalizacion,
+          // title: `${reserva.id}`
+          title: `${JSON.parse(reserva.customerData).name}`
+        }));
+
+      setEvents(prevState => ({
+        ...prevState,
+        confirmEvents: fetchedConfirmEvents,
+        pendingEvents: fetchedPendingEvents
+      }));
+      setLoading(false);
+    } catch (error) {
+      console.error('Error:', error);
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => {
     loadEvents();
   }, []);
 
