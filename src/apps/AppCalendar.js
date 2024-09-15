@@ -456,7 +456,7 @@ export default function AppCalendar() {
       total: pricing,
     }
 
-    fetch('https://networkingelite.com.mx/model/reserva.php', {
+    fetch('http://localhost:8080/reserva.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
@@ -534,7 +534,7 @@ export default function AppCalendar() {
   useEffect(() => {
     async function loadEvents() {
       try {
-        const response = await fetch('https://networkingelite.com.mx/model/fetchReservas.php', {
+        const response = await fetch('http://localhost:8080/fetchReservas.php', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded'

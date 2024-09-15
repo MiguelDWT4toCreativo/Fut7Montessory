@@ -29,7 +29,7 @@ export default function Signin() {
       password
     };
 
-    fetch('https://networkingelite.com.mx/model/signin.php', {
+    fetch('http://localhost:8080/signin.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'

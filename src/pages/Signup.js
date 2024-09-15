@@ -20,7 +20,7 @@ export default function Signup() {
       password
     };
 
-    fetch('https://networkingelite.com.mx/model/cliente.php', {
+    fetch('http://localhost:8080/cliente.php', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded'
