@@ -44,18 +44,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             sendResponse(401, 'Token inválido o expirado');
         }
         
-        $stmt = $pdo->prepare("SELECT NOT EXISTS (SELECT 1 FROM Reserva WHERE inicio < ? AND finalizacion > ?) AS no_registros;");
-        $stmt->execute([$fecha . "T" . $finalizacion . ":00", $fecha . "T" . $inicio . ":00"]);
+        $start_datetime = "{$fecha}T{$inicio}:00";
+        $end_datetime = "{$fecha}T{$finalizacion}:00";
+        $sql = "SELECT COUNT(*) AS solapamientos
+        FROM Reserva WHERE (inicio < ? AND finalizacion > ?)";
+        if ($finalizacion == '00:00')
+        $sql = "SELECT COUNT(*) AS solapamientos
+        FROM Reserva WHERE (inicio < (DATE_ADD(?, INTERVAL 1 DAY)) AND finalizacion > ?)";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$end_datetime, $start_datetime]);
         $existentDate = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($existentDate['no_registros'] == 0) {
+        if ($existentDate['solapamientos'] > 0) {
             sendResponse(403, 'Horario no disponible');
         }
                 
         $stripe = new \Stripe\StripeClient($stripeSecretKey);
 
         $intent = $stripe->paymentIntents->create([
-        'amount' => $total,
-        'currency' => 'usd',
+        'amount' => $total*100,
+        'currency' => 'mxn',
         ]);
 
         // $stripe->paymentIntents->create([
@@ -71,17 +78,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Codifica de nuevo el JSON para almacenarlo en la base de datos
         $cliente_json = json_encode($cliente_data); // Convierte el array/objeto a formato JSON para almacenarlo
 
-        $stmt = $pdo->prepare("INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
-            VALUES (?, ?, 'pendiente', ?, ?, NOW(), ?, ?, ?)");
+        $sql = "INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
+            VALUES (?, ?, 'pendiente', ?, ?, NOW(), ?, ?, ?)";
+        if ($finalizacion == '00:00')
+        $sql = "INSERT INTO Reserva (clienteId, paymentIntent, status, customerData, numeroAsistentes, fecha, inicio, finalizacion, total)
+            VALUES (?, ?, 'pendiente', ?, ?, NOW(), ?, (DATE_ADD(?, INTERVAL 1 DAY)), ?)";
+        $stmt = $pdo->prepare($sql);
             
         $stmt->execute([
-            $auth['customer_id'],                  // ID del cliente
-            $intent->client_secret,                // Payment Intent
-            $cliente_json,                         // JSON codificado para customerData
-            $numero_asistentes,                    // Número de asistentes
-            $fecha . "T" . $inicio . ":00",        // Fecha y hora de inicio
-            $fecha . "T" . $finalizacion . ":00",  // Fecha y hora de finalización
-            $total                                // Total
+            $auth['customer_id'],
+            $intent->client_secret,
+            $cliente_json,
+            $numero_asistentes,
+            $start_datetime,
+            $end_datetime,
+            $total
         ]);
 
         
