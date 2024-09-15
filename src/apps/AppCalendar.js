@@ -537,6 +537,7 @@ export default function AppCalendar() {
           // body: new URLSearchParams(data)
         });
 
+
         const result = await response.json();
         result.forEach(reservation => {
           const [strStartDate, strStartTime] = reservation.inicio.split(' ');
@@ -546,7 +547,6 @@ export default function AppCalendar() {
           const [strEndHour, strEndMinutes, strEndSeconds] = strEndTime.split(':');
           const [endHour, endMinutes] = [+strEndHour, +strEndMinutes];
           const [decimalEndTime, decimalStartTime] = [((endHour == 0 ? 24 : endHour) + (endMinutes/60)), (startHour + (startMinutes/60))];
-
           
           const bussyHours = [];
           for (let i = decimalStartTime-.5; i < decimalEndTime; i+=.5) {
@@ -625,10 +625,21 @@ export default function AppCalendar() {
             }
           
             return updatedCalendar;
-          });
-          
-          
+          });          
         })
+
+
+        const fetchedConfirmEvents = result
+          .filter(reserva => reserva.status === 'confirmada')
+          .map(reserva => ({
+            id: reserva.clienteId,
+            start: reserva.inicio,
+            end: reserva.finalizacion,
+            title: `${JSON.parse(reserva.customerData).name}`
+          }));
+
+        console.log(fetchedConfirmEvents);        
+
 
         const fetchedEvents = result.map(reservation => ({
           id: reservation.clienteId,
@@ -636,7 +647,7 @@ export default function AppCalendar() {
           end: reservation.finalizacion,
           title: `Cliente ${reservation.clienteId}`
         }));      
-        setEvents(fetchedEvents);  // Actualiza el estado con los eventos cargados
+        setEvents(fetchedConfirmEvents);  // Actualiza el estado con los eventos cargados
         setLoading(false);  // Indica que la carga ha finalizado
       } catch (error) {
         console.error('Error:', error);
