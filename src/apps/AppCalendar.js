@@ -444,7 +444,7 @@ export default function AppCalendar() {
     
     const data = {
       token: reserva.token.token,
-      cliente: reserva.token,
+      cliente: JSON.stringify(reserva.token),
       numero_asistentes: reserva.asistentes,
       fecha: reserva.fecha,
       inicio: reserva.horaInicio,
@@ -639,8 +639,8 @@ export default function AppCalendar() {
             id: reserva.clienteId,
             start: reserva.inicio,
             end: reserva.finalizacion,
-            title: `${reserva.id}`
-            // title: `${JSON.parse(reserva.customerData).name}`
+            // title: `${reserva.id}`
+            title: `${JSON.parse(reserva.customerData).name}`
           }));
 
         const fetchedPendingEvents = result
@@ -649,8 +649,8 @@ export default function AppCalendar() {
             id: reserva.clienteId,
             start: reserva.inicio,
             end: reserva.finalizacion,
-            title: `${reserva.id}`
-            // title: `${JSON.parse(reserva.customerData).name}`
+            // title: `${reserva.id}`
+            title: `${JSON.parse(reserva.customerData).name}`
           }));
 
         setEvents(prevState => ({
