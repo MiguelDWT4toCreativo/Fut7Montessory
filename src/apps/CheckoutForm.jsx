@@ -23,24 +23,35 @@ export default function CheckoutForm({dpmCheckerLink}) {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    // const { error } = await stripe.confirmPayment({
+    await stripe.confirmPayment({
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
         return_url: "http://localhost:3000/apps/calendar",
       },
-    });
+      redirect: "if_required"
+    })
+    .then(function(result) {
+      if (result.error) {
+        // Inform the customer that there was an error.
+        setMessage(result.error.message);
+      } else {
+        // El SetupIntent se confirmó correctamente.
+        setMessage("Gracias por tu pago, te hemos enviado un correo con los datos de la reservacion.");
+      }
+    });;
 
     // This point will only be reached if there is an immediate error when
     // confirming the payment. Otherwise, your customer will be redirected to
     // your `return_url`. For some payment methods like iDEAL, your customer will
     // be redirected to an intermediate site first to authorize the payment, then
     // redirected to the `return_url`.
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
-    } else {
-      setMessage("An unexpected error occurred.");
-    }
+    // if (error.type === "card_error" || error.type === "validation_error") {
+    //   setMessage(error.message);
+    // } else {
+    //   setMessage("An unexpected error occurred.");
+    // }
 
     setIsLoading(false);
   };
@@ -51,24 +62,34 @@ export default function CheckoutForm({dpmCheckerLink}) {
 
   return (
     <>
-      <form id="payment-form" onSubmit={handleSubmit}>
-
-        <PaymentElement id="payment-element" options={paymentElementOptions} />
-        <button disabled={isLoading || !stripe || !elements} id="submit">
-          <span id="button-text">
-            {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-          </span>
-        </button>
-        {/* Show any error or success messages */}
-        {message && <div id="payment-message">{message}</div>}
-      </form>
-      {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
-      <div id="dpm-annotation">
-        <p>
-          Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
-          <a href={dpmCheckerLink} target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">Preview payment methods by transaction</a>
-        </p>
-      </div>
+      {/* Mostrar el mensaje de error o éxito, si existe */}
+      {message ? (
+        <div id="payment-message">{message}</div>
+      ) : (
+        <>
+          <form id="payment-form" onSubmit={handleSubmit}>
+            {/* Elemento de pago */}
+            <PaymentElement id="payment-element" options={paymentElementOptions} />
+  
+            {/* Botón de envío */}
+            <button disabled={isLoading || !stripe || !elements} id="submit">
+              <span id="button-text">
+                {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+              </span>
+            </button>
+          </form>
+  
+          {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
+          <div id="dpm-annotation">
+            <p>
+              Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
+              <a href={dpmCheckerLink} target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">
+                Preview payment methods by transaction
+              </a>
+            </p>
+          </div>
+        </>
+      )}
     </>
-  );
+  );  
 }
