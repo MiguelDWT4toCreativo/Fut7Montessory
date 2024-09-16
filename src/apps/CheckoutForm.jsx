@@ -5,7 +5,7 @@ import {
   useElements
 } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm({dpmCheckerLink}) {
+export default function CheckoutForm({dpmCheckerLink, onPay}) {
   const stripe = useStripe();
   const elements = useElements();
 
@@ -39,6 +39,7 @@ export default function CheckoutForm({dpmCheckerLink}) {
       } else {
         // El SetupIntent se confirmó correctamente.
         setMessage("Gracias por tu pago, te hemos enviado un correo con los datos de la reservacion.");
+        onPay();
       }
     });;
 

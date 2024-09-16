@@ -847,7 +847,7 @@ export default function AppCalendar() {
               </Button>              
               {clientSecret && (                
                 <Elements options={options} stripe={stripePromise}>
-                  <CheckoutForm dpmCheckerLink={dpmCheckerLink}/>    
+                  <CheckoutForm dpmCheckerLink={dpmCheckerLink} onPay={() => setEvents([])}/>    
                 </Elements>                
               )}
             </Modal.Footer>
