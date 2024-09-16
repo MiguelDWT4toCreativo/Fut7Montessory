@@ -671,6 +671,12 @@ export default function AppCalendar() {
     loadEvents();
   }, []);
 
+  const [loadEventsOnPay, setLoadEventsOnPay] = useState(false);
+
+  useEffect(() => {
+    loadEvents();
+  }, [loadEvents]);
+
   if (loading) {
     return <div>Loading...</div>;
   }
@@ -847,7 +853,10 @@ export default function AppCalendar() {
               </Button>              
               {clientSecret && (                
                 <Elements options={options} stripe={stripePromise}>
-                  <CheckoutForm dpmCheckerLink={dpmCheckerLink} onPay={() => setEvents([])}/>    
+                  <CheckoutForm dpmCheckerLink={dpmCheckerLink} onPay={() => {
+                    setClientSecret('');
+                    setLoadEventsOnPay(!loadEventsOnPay ? false : true);
+                  }}/>    
                 </Elements>                
               )}
             </Modal.Footer>
