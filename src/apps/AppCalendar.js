@@ -845,8 +845,7 @@ export default function AppCalendar() {
               <Button variant="primary" onClick={handleSubmit}>
                 Guardar
               </Button>              
-              {clientSecret && (    
-                
+              {clientSecret && (                
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutForm dpmCheckerLink={dpmCheckerLink}/>    
                 </Elements>                

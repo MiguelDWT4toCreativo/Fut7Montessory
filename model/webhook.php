@@ -65,7 +65,7 @@ switch ($event->type) {
 
     // Verificamos si el JSON contiene el atributo 'name' y lo mostramos
     if (isset($customer_data_json['email'])) {
-      sendConfirmMail($customer_data_json['email']);
+      // sendConfirmMail($customer_data_json['email']);
     } 
     // else {
     //     // echo "El atributo 'name' no está presente en el JSON.";
