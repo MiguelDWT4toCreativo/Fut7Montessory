@@ -35,10 +35,10 @@ export default function CheckoutForm({dpmCheckerLink, onPay}) {
     .then(function(result) {
       if (result.error) {
         // Inform the customer that there was an error.
-        setMessage(result.error.message);
+        // setMessage(result.error.message);
       } else {
         // El SetupIntent se confirmó correctamente.
-        setMessage("Gracias por tu pago, te hemos enviado un correo con los datos de la reservacion.");
+        // setMessage("Gracias por tu pago, te hemos enviado un correo con los datos de la reservacion.");
         onPay();
       }
     });;
@@ -63,34 +63,27 @@ export default function CheckoutForm({dpmCheckerLink, onPay}) {
 
   return (
     <>
-      {/* Mostrar el mensaje de error o éxito, si existe */}
-      {message ? (
-        <div id="payment-message">{message}</div>
-      ) : (
-        <>
-          <form id="payment-form" onSubmit={handleSubmit}>
-            {/* Elemento de pago */}
-            <PaymentElement id="payment-element" options={paymentElementOptions} />
-  
-            {/* Botón de envío */}
-            <button disabled={isLoading || !stripe || !elements} id="submit">
-              <span id="button-text">
-                {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-              </span>
-            </button>
-          </form>
-  
-          {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
-          <div id="dpm-annotation">
-            <p>
-              Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
-              <a href={dpmCheckerLink} target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">
-                Preview payment methods by transaction
-              </a>
-            </p>
-          </div>
-        </>
-      )}
+      <form id="payment-form" onSubmit={handleSubmit}>
+        {/* Elemento de pago */}
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+
+        {/* Botón de envío */}
+        <button disabled={isLoading || !stripe || !elements} id="submit">
+          <span id="button-text">
+            {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+          </span>
+        </button>
+      </form>
+
+      {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
+      <div id="dpm-annotation">
+        <p>
+          Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
+          <a href={dpmCheckerLink} target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">
+            Preview payment methods by transaction
+          </a>
+        </p>
+      </div>
     </>
   );  
 }

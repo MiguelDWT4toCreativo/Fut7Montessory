@@ -72,6 +72,7 @@ export default function AppCalendar() {
     '23:00',
   ]
   const [changingHourOptions, setChangingHourOptions] = useState(hourOptions);
+  const [onPay, setOnPay] = useState(false);
 
   const paymentElementOptions = {
     layout: "tabs"
@@ -441,6 +442,8 @@ export default function AppCalendar() {
       alert('Por favor, complete todos los campos.');
       return;
     }
+
+    setOnPay(true);
     
     const data = {
       token: reserva.token.token,
@@ -848,13 +851,15 @@ export default function AppCalendar() {
               <Button variant="" className="btn-white" onClick={handleModalClose}>
                 Cancelar
               </Button>
+              {!onPay &&
               <Button variant="primary" onClick={handleSubmit}>
                 Guardar
-              </Button>              
+              </Button>              }
               {clientSecret && (                
                 <Elements options={options} stripe={stripePromise}>
                   <CheckoutForm dpmCheckerLink={dpmCheckerLink} onPay={() => {
                     setClientSecret('');
+                    setOnPay(false);
                     setLoadEventsOnPay(!loadEventsOnPay ? false : true);
                   }}/>    
                 </Elements>                
