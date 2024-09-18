@@ -28,7 +28,7 @@ export default function CheckoutForm({dpmCheckerLink, onPay}) {
       elements,
       confirmParams: {
         // Make sure to change this to your payment completion page
-        return_url: "http://localhost:3000/apps/calendar",
+        return_url: "https://fut7montessori.com.mx/apps/calendar",
       },
       redirect: "if_required"
     })
