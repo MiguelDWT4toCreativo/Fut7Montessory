@@ -64,24 +64,21 @@ export default function CheckoutForm({dpmCheckerLink, onPay}) {
   return (
     <>
       <form id="payment-form" onSubmit={handleSubmit}>
-        {/* Elemento de pago */}
-        <PaymentElement id="payment-element" options={paymentElementOptions} />
 
-        {/* Botón de envío */}
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
         <button disabled={isLoading || !stripe || !elements} id="submit">
           <span id="button-text">
             {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
           </span>
         </button>
+        {/* Show any error or success messages */}
+        {message && <div id="payment-message">{message}</div>}
       </form>
-
       {/* [DEV]: Display dynamic payment methods annotation and integration checker */}
       <div id="dpm-annotation">
         <p>
           Payment methods are dynamically displayed based on customer location, order amount, and currency.&nbsp;
-          <a href={dpmCheckerLink} target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">
-            Preview payment methods by transaction
-          </a>
+          <a href={dpmCheckerLink} target="_blank" rel="noopener noreferrer" id="dpm-integration-checker">Preview payment methods by transaction</a>
         </p>
       </div>
     </>

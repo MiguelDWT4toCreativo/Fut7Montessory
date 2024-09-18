@@ -1,0 +1,57 @@
+
+
+.success-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #4CAF50;
+    position: relative;
+    animation: circle-appear 0.3s ease-out;
+}
+
+.success-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 20px;
+    border-left: 3px solid #4CAF50;
+    border-bottom: 3px solid #4CAF50;
+    transform: translate(-50%, -60%) rotate(-45deg);
+}
+
+
+.error-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 3px solid #FF5252;
+    position: relative;
+    animation: circle-appear 0.3s ease-out;
+}
+
+.error-icon::before,
+.error-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60px;
+    height: 3px;
+    background-color: #FF5252;
+}
+
+.error-icon::before {
+    transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.error-icon::after {
+    transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+@keyframes circle-appear {
+    from { transform: scale(0); }
+    to { transform: scale(1); }
+}

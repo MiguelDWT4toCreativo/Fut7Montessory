@@ -20,8 +20,9 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "./CheckoutForm";
 import { months } from "moment/moment";
+import "./Transaction.css"
 
-const stripePromise = loadStripe("pk_test_51Pr9eEEXIQ5E926CxH0JZjmYCPr3vXfbZnb0OgCBtSsX7KNnVjHSqcHo7xprUKtA11EIcp6i7z1b5CBxqqWIodfL00WinpQj2K");
+const stripePromise = loadStripe("pk_test_51Q04kZ4JMGrzMiYBboWtWtAHMsACgQcYZQVlkKj14MQ7n7sfYy6idKDZqcoI19oyZ95BWAY3tW6w1ybovY1IgfUP00XXoauTNq");
 
 function getCookie(name) {
   const nameEQ = name + "=";
@@ -38,41 +39,11 @@ export default function AppCalendar() {
   const navigate = useNavigate();
   const [clientSecret, setClientSecret] = useState("");
   const [dpmCheckerLink, setDpmCheckerLink] = useState("");
-  const hourOptions = [
-    '08:00',
-    '08:30',
-    '09:00',
-    '09:30',
-    '10:00',
-    '10:30',
-    '11:00',
-    '11:30',
-    '12:00',
-    '12:30',
-    '13:00',
-    '13:30',
-    '14:00',
-    '14:30',
-    '15:00',
-    '15:30',
-    '16:00',
-    '16:30',
-    '17:00',
-    '17:30',
-    '18:00',
-    '18:30',
-    '19:00',
-    '19:30',
-    '20:00',
-    '20:30',
-    '21:00',
-    '21:30',
-    '22:00',
-    '22:30',
-    '23:00',
-  ]
+  const hourOptions = ['08:00','08:30','09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00'];
   const [changingHourOptions, setChangingHourOptions] = useState(hourOptions);
   const [onPay, setOnPay] = useState(false);
+  const [payError, setPayError] = useState(false);
+  const [paySucces, setPaySucces] = useState(false);
 
   const paymentElementOptions = {
     layout: "tabs"
@@ -555,13 +526,13 @@ export default function AppCalendar() {
         const [startHour, startMinutes] = [+strStartHour, +strStartMinutes];
         const [strEndHour, strEndMinutes, strEndSeconds] = strEndTime.split(':');
         const [endHour, endMinutes] = [+strEndHour, +strEndMinutes];
-        const [decimalEndTime, decimalStartTime] = [((endHour == 0 ? 24 : endHour) + (endMinutes/60)), (startHour + (startMinutes/60))];
+        const [decimalEndTime, decimalStartTime] = [((endHour === 0 ? 24 : endHour) + (endMinutes/60)), (startHour + (startMinutes/60))];
         
         const bussyHours = [];
         for (let i = decimalStartTime-.5; i < decimalEndTime; i+=.5) {
           const [hour, minutes] = [Math.floor(i), i - Math.floor(i)];
           let strMinutes = `${minutes*60}`;
-          if (minutes == 0) strMinutes = '00';
+          if (minutes === 0) strMinutes = '00';
           if (hour < 10) {bussyHours.push(`0${hour}:${strMinutes}`); continue;}
           bussyHours.push(`${hour}:${strMinutes}`);
       }
@@ -805,11 +776,11 @@ export default function AppCalendar() {
               <Row className="g-3 mb-3">
                 <Col xs="7" md="5">
                   <Form.Label>Fecha:</Form.Label>
-                  <Form.Control type="date" placeholder="Escoge una fecha" value={reserva.fecha} onChange={handleFechaChange} />
+                  <Form.Control type="date" placeholder="Escoge una fecha" value={reserva.fecha} onChange={handleFechaChange} disabled={onPay} />
                 </Col>
                 <Col>
                   <Form.Label>Inicio:</Form.Label>
-                  <Form.Select id="horaInicio" name="horaInicio" value={reserva.horaInicio} onChange={handleHoraInicioChange} required>
+                  <Form.Select id="horaInicio" name="horaInicio" value={reserva.horaInicio} onChange={handleHoraInicioChange} required disabled={onPay}>
                     <option>Hora...</option>
                     {changingHourOptions.map((hour) => (
                       <option value={hour} key={hour}>
@@ -823,7 +794,7 @@ export default function AppCalendar() {
                   <Form.Select
                     id="horaFin"
                     name="horaFin"
-                    disabled={reserva.horaFinDisabled}
+                    disabled={onPay}
                     value={reserva.horaFin}
                     onChange={handleHoraFinChange} // Esto actualizará el pricing basado en el índice de la opción seleccionada
                   >
@@ -842,28 +813,51 @@ export default function AppCalendar() {
               <div className="mb-3">
                 <Col xs="3" md="3">
                   <Form.Label>Total: </Form.Label>
-                  <Form.Control type="text" placeholder="Automático" value={cost} onChange={e => e.preventDefault()} />
+                  <Form.Control type="text" placeholder="Automático" value={cost} disabled onChange={e => e.preventDefault()} />
                 </Col>
               </div>
 
             </Modal.Body>
             <Modal.Footer>
-              <Button variant="" className="btn-white" onClick={handleModalClose}>
-                Cancelar
-              </Button>
               {!onPay &&
               <Button variant="primary" onClick={handleSubmit}>
                 Guardar
-              </Button>              }
-              {clientSecret && (                
-                <Elements options={options} stripe={stripePromise}>
-                  <CheckoutForm dpmCheckerLink={dpmCheckerLink} onPay={() => {
-                    setClientSecret('');
-                    setOnPay(false);
-                    setLoadEventsOnPay(!loadEventsOnPay ? false : true);
-                  }}/>    
-                </Elements>                
-              )}
+              </Button>}
+
+              <div style={{
+                display: 'grid',
+                placeItems: 'center',
+                width: '100%'
+              }}>
+                {clientSecret && (                
+                  <Elements options={options} stripe={stripePromise}>
+                    <CheckoutForm dpmCheckerLink={dpmCheckerLink} onPay={() => {
+                      setClientSecret('');
+                      setPaySucces(true);
+                      // setOnPay(false);
+                      setLoadEventsOnPay(!loadEventsOnPay ? false : true);
+                    }}
+                      onError={() => setPayError(true)}
+                    />    
+                  </Elements>                
+                )}
+                {(onPay && !paySucces && !payError) && <Button variant="" className="btn-white" onClick={() => {
+                  // setModalShow(false);
+                  setClientSecret('');
+                  setOnPay(false);
+                }}>
+                  Cancelar
+                </Button>}
+                {(paySucces || payError) &&  <div style={{display: 'grid', placeItems: 'center'}}>
+                  {paySucces &&
+                    <div className="success-icon"></div>
+                  }
+                  {payError &&
+                    <div className="error-icon"></div>
+                  }
+                  <button onClick={() => {setPaySucces(false); setPayError(false); setOnPay(false);}}>Cerrar</button>
+                </div>}
+              </div>
             </Modal.Footer>
           </Modal>
         </div>
