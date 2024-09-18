@@ -44,6 +44,7 @@ export default function AppCalendar() {
   const [onPay, setOnPay] = useState(false);
   const [payError, setPayError] = useState(false);
   const [paySucces, setPaySucces] = useState(false);
+  const [twelveHoursFormat, setTwelveHoursFormat] = useState([]);
 
   const paymentElementOptions = {
     layout: "tabs"
@@ -110,9 +111,13 @@ export default function AppCalendar() {
       // console.log(day.hours);    
       const filteredHours = hourOptions.filter(hour => !day.hours.includes(hour));
       // console.log(filteredHours);    
-      setChangingHourOptions(filteredHours);      
+      setChangingHourOptions(filteredHours);
+      
+      setTwelveHoursFormat(filteredHours)
+      setTwelveHoursFormat(filteredHours.map(filteredHour => convertirHora(filteredHour)));
     } catch (error) {
       setChangingHourOptions(hourOptions);      
+      setTwelveHoursFormat(hourOptions.map(hourOption => convertirHora(hourOption)));
       // console.error(error);      
     }
   };
@@ -148,11 +153,7 @@ export default function AppCalendar() {
       const floor = Math.floor(i);
       minutes = ((i-floor)*60) === 0 ? '00' : '30';
       hour = floor < 10 ? `0${floor}` : `${floor}`;
-      const nextDecimalHour = floor + 1;
-      const nextHour = nextDecimalHour < 10 ? `0${nextDecimalHour}` : `${nextDecimalHour}`;
-      const strTime = `${hour}:${minutes}`;
-      const nextStrTime = `${nextHour}:${minutes}`;
-      console.log(nextStrTime);      
+      const strTime = `${hour}:${minutes}`; 
       // if (changingHourOptions.includes(strTime)) {horaFinOptions.push({ value: strTime, label: convertirHora(strTime) }); break;}
       if (!changingHourOptions.includes(strTime) && i === decimalTime + 1 ) {horaFinOptions.push({ value: strTime, label: convertirHora(strTime) }); break;}
       if (!changingHourOptions.includes(strTime)) continue;
@@ -547,9 +548,9 @@ export default function AppCalendar() {
                   <Form.Label>Inicio:</Form.Label>
                   <Form.Select id="horaInicio" name="horaInicio" value={reserva.horaInicio} onChange={handleHoraInicioChange} required disabled={onPay}>
                     <option>Hora...</option>
-                    {changingHourOptions.map((hour) => (
+                    {twelveHoursFormat.map((hour) => (
                       <option value={hour} key={hour}>
-                        {convertirHora(hour)}
+                        {hour}
                       </option>
                     ))}
                   </Form.Select>
