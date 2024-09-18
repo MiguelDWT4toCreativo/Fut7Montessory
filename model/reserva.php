@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         FROM Reserva WHERE (inicio < ? AND finalizacion > ?)";
         if ($finalizacion == '00:00')
         $sql = "SELECT COUNT(*) AS solapamientos
-        FROM Reserva WHERE (inicio < (DATE_ADD(?, INTERVAL 1 DAY)) AND finalizacion > ?)";
+        FROM Reserva WHERE (inicio < (DATE_ADD(?, INTERVAL 1 DAY)) AND finalizacion > ?) AND status = 'pendiente' OR status = 'cofirmada'";
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$end_datetime, $start_datetime]);
         $existentDate = $stmt->fetch(PDO::FETCH_ASSOC);

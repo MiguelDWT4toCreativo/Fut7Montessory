@@ -138,270 +138,34 @@ export default function AppCalendar() {
 
   // Manejar el cambio de hora de inicio
   const handleHoraInicioChange = (event) => {
-    const value = event.target.value;
     let horaFinOptions = [];
-    let horaFinDisabled = true;
-
-    switch (value) {
-      case "08:00":
-        horaFinOptions = [
-          { value: '09:00', label: '09:00AM' },
-          { value: '09:30', label: '09:30AM' },
-          { value: '10:00', label: '10:00AM' },
-        ];
-        horaFinDisabled = false;
-        break;
-
-      case "08:30":
-        horaFinOptions = [
-          { value: '09:30', label: '09:30AM' },
-          { value: '10:00', label: '10:00AM' },
-          { value: '10:30', label: '10:30AM' },
-        ];
-        horaFinDisabled = false;
-        break;
-
-      case "09:00":
-        horaFinOptions = [
-          { value: '10:00', label: '10:00AM' },
-          { value: '10:30', label: '10:30AM' },
-          { value: '11:00', label: '11:00AM' },
-        ];
-        horaFinDisabled = false;
-        break;
-
-      case "09:30":
-        horaFinOptions = [
-          { value: '10:30', label: '10:30AM' },
-          { value: '11:00', label: '11:00AM' },
-          { value: '11:30', label: '11:30AM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "10:00":
-        horaFinOptions = [
-          { value: '11:00', label: '11:00AM' },
-          { value: '11:30', label: '11:30AM' },
-          { value: '12:00', label: '12:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "10:30":
-        horaFinOptions = [
-          { value: '11:30', label: '11:30AM' },
-          { value: '12:00', label: '12:00PM' },
-          { value: '12:30', label: '12:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "11:00":
-        horaFinOptions = [
-          { value: '12:00', label: '12:00PM' },
-          { value: '12:30', label: '12:30PM' },
-          { value: '13:00', label: '01:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "11:30":
-        horaFinOptions = [
-          { value: '12:30', label: '12:30PM' },
-          { value: '13:00', label: '01:00PM' },
-          { value: '13:30', label: '01:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "12:00":
-        horaFinOptions = [
-          { value: '13:00', label: '01:00PM' },
-          { value: '13:30', label: '01:30PM' },
-          { value: '14:00', label: '02:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "12:30":
-        horaFinOptions = [
-          { value: '13:30', label: '01:30PM' },
-          { value: '14:00', label: '02:00PM' },
-          { value: '14:30', label: '02:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "13:00":
-        horaFinOptions = [
-          { value: '14:00', label: '02:00PM' },
-          { value: '14:30', label: '02:30PM' },
-          { value: '15:00', label: '03:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "13:30":
-        horaFinOptions = [
-          { value: '14:30', label: '02:30PM' },
-          { value: '15:00', label: '03:00PM' },
-          { value: '15:30', label: '03:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "14:00":
-        horaFinOptions = [
-          { value: '15:00', label: '03:00PM' },
-          { value: '15:30', label: '03:30PM' },
-          { value: '16:00', label: '04:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "14:30":
-        horaFinOptions = [
-          { value: '15:30', label: '03:30PM' },
-          { value: '16:00', label: '04:00PM' },
-          { value: '16:30', label: '04:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "15:00":
-        horaFinOptions = [
-          { value: '16:00', label: '04:00PM' },
-          { value: '16:30', label: '04:30PM' },
-          { value: '17:00', label: '05:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "15:30":
-        horaFinOptions = [
-          { value: '16:30', label: '04:30PM' },
-          { value: '17:00', label: '05:00PM' },
-          { value: '17:30', label: '05:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "16:00":
-        horaFinOptions = [
-          { value: '17:00', label: '05:00PM' },
-          { value: '17:30', label: '05:30PM' },
-          { value: '18:00', label: '06:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "16:30":
-        horaFinOptions = [
-          { value: '17:30', label: '05:30PM' },
-          { value: '18:00', label: '06:00PM' },
-          { value: '18:30', label: '06:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "17:00":
-        horaFinOptions = [
-          { value: '18:00', label: '06:00PM' },
-          { value: '18:30', label: '06:30PM' },
-          { value: '19:00', label: '07:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "17:30":
-        horaFinOptions = [
-          { value: '18:30', label: '06:30PM' },
-          { value: '19:00', label: '07:00PM' },
-          { value: '19:30', label: '07:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "18:00":
-        horaFinOptions = [
-          { value: '19:00', label: '07:00PM' },
-          { value: '19:30', label: '07:30PM' },
-          { value: '20:00', label: '08:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "18:30":
-        horaFinOptions = [
-          { value: '19:30', label: '07:30PM' },
-          { value: '20:00', label: '08:00PM' },
-          { value: '20:30', label: '08:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "19:00":
-        horaFinOptions = [
-          { value: '20:00', label: '08:00PM' },
-          { value: '20:30', label: '08:30PM' },
-          { value: '21:00', label: '09:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "19:30":
-        horaFinOptions = [
-          { value: '20:30', label: '08:30PM' },
-          { value: '21:00', label: '09:00PM' },
-          { value: '21:30', label: '09:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "20:00":
-        horaFinOptions = [
-          { value: '21:00', label: '09:00PM' },
-          { value: '21:30', label: '09:30PM' },
-          { value: '22:00', label: '10:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "20:30":
-        horaFinOptions = [
-          { value: '21:30', label: '09:30PM' },
-          { value: '22:00', label: '10:00PM' },
-          { value: '22:30', label: '10:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "21:00":
-        horaFinOptions = [
-          { value: '22:00', label: '10:00PM' },
-          { value: '22:30', label: '10:30PM' },
-          { value: '23:00', label: '11:00PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "21:30":
-        horaFinOptions = [
-          { value: '22:30', label: '10:30PM' },
-          { value: '23:00', label: '11:00PM' },
-          { value: '23:30', label: '11:30PM' },
-        ];
-        horaFinDisabled = false;
-        break;
-
-      case "22:00":
-        horaFinOptions = [
-          { value: '23:00', label: '11:00PM' },
-          { value: '23:30', label: '11:30PM' },
-          { value: '00:00', label: '12:00AM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "22:30":
-        horaFinOptions = [
-          { value: '23:30', label: '11:30PM' },
-          { value: '00:00', label: '12:00AM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      case "23:00":
-        horaFinOptions = [
-          { value: '00:00', label: '12:00AM' },
-        ];
-        horaFinDisabled = false;
-        break;
-      default:
-        horaFinOptions = [];
-        horaFinDisabled = true;
-        break;
+    // let horaFinDisabled = true;
+    const value = event.target.value;
+    let [hour, minutes] = value.split(':');
+    const [decimalHour, decimalMinutes] = [+hour, +minutes/60];
+    const decimalTime = decimalHour + decimalMinutes;
+    for (let i = decimalTime + 1; i <= decimalTime + 2; i+=.5) {
+      const floor = Math.floor(i);
+      minutes = ((i-floor)*60) === 0 ? '00' : '30';
+      hour = floor < 10 ? `0${floor}` : `${floor}`;
+      const nextDecimalHour = floor + 1;
+      const nextHour = nextDecimalHour < 10 ? `0${nextDecimalHour}` : `${nextDecimalHour}`;
+      const strTime = `${hour}:${minutes}`;
+      const nextStrTime = `${nextHour}:${minutes}`;
+      console.log(nextStrTime);      
+      // if (changingHourOptions.includes(strTime)) {horaFinOptions.push({ value: strTime, label: convertirHora(strTime) }); break;}
+      if (!changingHourOptions.includes(strTime) && i === decimalTime + 1 ) {horaFinOptions.push({ value: strTime, label: convertirHora(strTime) }); break;}
+      if (!changingHourOptions.includes(strTime)) continue;
+      if (decimalTime === 23) {horaFinOptions.push('00:00'); break;}
+      horaFinOptions.push({ value: strTime, label: convertirHora(strTime) });
+      if (i === 24) break;
     }
+    console.log(horaFinOptions);      
 
     setReserva((prevState) => ({
       ...prevState,
       horaInicio: value,
-      horaFinDisabled: horaFinDisabled,
+      // horaFinDisabled: horaFinDisabled,
       horaFinOptions: horaFinOptions,
     }));
   };
@@ -520,6 +284,7 @@ export default function AppCalendar() {
 
       const result = await response.json();
       result.forEach(reservation => {
+        if (reservation.status === 'cancelada') return;
         const [strStartDate, strStartTime] = reservation.inicio.split(' ');
         const strEndTime = reservation.finalizacion.split(' ')[1];
         const [strStartHour, strStartMinutes, strStartSeconds] = strStartTime.split(':');
@@ -535,7 +300,7 @@ export default function AppCalendar() {
           if (minutes === 0) strMinutes = '00';
           if (hour < 10) {bussyHours.push(`0${hour}:${strMinutes}`); continue;}
           bussyHours.push(`${hour}:${strMinutes}`);
-      }
+        }
 
         const [reservationYear, reservationMonth, reservationDay] = strStartDate.split('-');
         setHourlyCalendar((prevCalendar) => {
