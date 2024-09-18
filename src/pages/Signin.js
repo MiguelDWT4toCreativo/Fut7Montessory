@@ -20,6 +20,7 @@ export default function Signin() {
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [wrongBadges, setWrongBadges] = useState(false);
   
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -38,7 +39,8 @@ export default function Signin() {
     })
     .then(response => response.json())
     .then(result => {
-      if (result.status) return;
+      if (result.status === 'Correo o contraseña incorrectos') setWrongBadges(true);
+      if (!result.userStatus) return;
       dispatch(setResult(result));
       // console.log(result);      
       setCookie('user', JSON.stringify(result), 7);
@@ -68,6 +70,7 @@ export default function Signin() {
               <Form.Control type="password" placeholder="Ingrese su contraseña" value={password} onChange={(e) => {setPassword(e.target.value)}} />
             </div>
             <Button type="submit" variant="primary" className="btn-sign">Ingresar</Button>
+            {wrongBadges && <div>Correo o contraseña incorrectos</div>}
           </Form>
         </Card.Body>
         <Card.Footer>
