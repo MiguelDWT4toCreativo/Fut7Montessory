@@ -14,7 +14,10 @@ function sendResponse($status, $message) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
-        $stmt = $pdo->prepare("SELECT * FROM Reserva;");
+        $stmt = $pdo->prepare("UPDATE Reserva SET status = 'cancelada' WHERE status = 'pendiente' AND fecha <= (NOW() - INTERVAL 15 MINUTE)");
+        $stmt->execute();
+
+        $stmt = $pdo->prepare("SELECT * FROM Reserva");
         $stmt->execute();
         $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
         

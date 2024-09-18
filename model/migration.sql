@@ -22,6 +22,7 @@ CREATE TABLE `Reserva` (
     `finalizacion` DATETIME(3) NOT NULL,
     `total` DOUBLE NOT NULL,
     `refund` DOUBLE,
+    `emailStatus` TINYINT(1) DEFAULT 0,
 
     INDEX `Reserva_clienteId_idx`(`clienteId`),
     PRIMARY KEY (`id`)
