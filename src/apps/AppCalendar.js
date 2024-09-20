@@ -22,7 +22,7 @@ import CheckoutForm from "./CheckoutForm";
 import { months } from "moment/moment";
 import "./Transaction.css"
 
-const stripePromise = loadStripe("pk_test_51Q04kZ4JMGrzMiYBboWtWtAHMsACgQcYZQVlkKj14MQ7n7sfYy6idKDZqcoI19oyZ95BWAY3tW6w1ybovY1IgfUP00XXoauTNq");
+const stripePromise = loadStripe("pk_live_51PyhP5KJQTnSHL1ZgCd4aiOMCm8i7w6EKzBzf2XsYUvAoSiUdHGbGrJT9myaYySsj2hNtSvNGyZZsJMGp941azbt003Rs2iw1X");
 
 function getCookie(name) {
   const nameEQ = name + "=";
@@ -155,10 +155,10 @@ export default function AppCalendar() {
       hour = floor < 10 ? `0${floor}` : `${floor}`;
       const strTime = `${hour}:${minutes}`; 
       // if (changingHourOptions.includes(strTime)) {horaFinOptions.push({ value: strTime, label: convertirHora(strTime) }); break;}
-      if (!changingHourOptions.includes(strTime) && i === decimalTime + 1 ) {horaFinOptions.push({ value: strTime, label: convertirHora(strTime) }); break;}
+      if (!changingHourOptions.includes(strTime) && i === decimalTime + 1 ) {horaFinOptions.push({ value: strTime, label: strTime }); break;}
       if (!changingHourOptions.includes(strTime)) continue;
       if (decimalTime === 23) {horaFinOptions.push('00:00'); break;}
-      horaFinOptions.push({ value: strTime, label: convertirHora(strTime) });
+      horaFinOptions.push({ value: strTime, label: strTime });
       if (i === 24) break;
     }
     console.log(horaFinOptions);      
@@ -377,22 +377,22 @@ export default function AppCalendar() {
 
       const fetchedConfirmEvents = result
         .filter(reserva => reserva.status === 'confirmada')
-        .map(reserva => ({
-          id: reserva.clienteId,
-          start: reserva.inicio,
-          end: reserva.finalizacion,
+        .map(event => ({
+          id: event.clienteId,
+          start: event.inicio,
+          end: event.finalizacion,
           // title: `${reserva.id}`
-          title: `${JSON.parse(reserva.customerData).name}`
+          title: `${reserva.token.email === 'admin@admin.com' ? JSON.parse(event.customerData).name : 'Reservada'}`
         }));
 
       const fetchedPendingEvents = result
         .filter(reserva => reserva.status === 'pendiente')
-        .map(reserva => ({
-          id: reserva.clienteId,
-          start: reserva.inicio,
-          end: reserva.finalizacion,
-          // title: `${reserva.id}`
-          title: `${JSON.parse(reserva.customerData).name}`
+        .map(event => ({
+          id: event.clienteId,
+          start: event.inicio,
+          end: event.finalizacion,
+          // title: `${reserva.id}`          
+          title: `${reserva.token.email === 'admin@admin.com' ? JSON.parse(event.customerData).name : 'Reservada'}`
         }));
 
       setEvents(prevState => ({
@@ -548,10 +548,8 @@ export default function AppCalendar() {
                   <Form.Label>Inicio:</Form.Label>
                   <Form.Select id="horaInicio" name="horaInicio" value={reserva.horaInicio} onChange={handleHoraInicioChange} required disabled={onPay}>
                     <option>Hora...</option>
-                    {twelveHoursFormat.map((hour) => (
-                      <option value={hour} key={hour}>
-                        {hour}
-                      </option>
+                    {changingHourOptions.map((hour) => (
+                      <option value={hour} key={hour}>{hour}</option>
                     ))}
                   </Form.Select>
                 </Col>

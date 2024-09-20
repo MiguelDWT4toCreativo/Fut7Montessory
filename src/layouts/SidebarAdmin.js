@@ -9,6 +9,21 @@ import {
     uiElementsMenu
 } from "../data/Menu";
 
+function setCookie(name, value, days) {
+    let expires = "";
+    if (days) {
+        const date = new Date();
+        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+        expires = "; expires=" + date.toUTCString();
+    }
+    document.cookie = name + "=" + (value || "") + expires + "; path=/";
+}
+
+function deleteCookie(name) {
+    // Establece la cookie con un valor vacío y una fecha de expiración en el pasado
+    setCookie(name, "", -1);
+}
+
 export default class SidebarAdmin extends Component {
     toggleFooterMenu = (e) => {
         e.preventDefault();
@@ -39,7 +54,9 @@ export default class SidebarAdmin extends Component {
                     <div className="sidebar-footer-menu">
                         <nav className="nav">
                             <Link to="/pages/profile"><i className="ri-edit-2-line"></i> Perfil</Link>
-                            <Link to="/pages/signin"><i className="ri-logout-box-r-line"></i> Cerrar sesión</Link>
+                            <Link to="/pages/signin" onClick={() => deleteCookie('user')}>
+                              <i className="ri-logout-box-r-line"></i> Cerrar sesión
+                            </Link>
                         </nav>
                     </div>
                 </div>
